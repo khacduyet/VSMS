@@ -1,0 +1,59 @@
+﻿@model IEnumerable<VSMS.Models.Admin>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+<h2>Account Manager</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            <img src="@item.Avatar" alt="Ảnh đại diện.." width="150" height="100"/>   
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+            @((item.Status == true) ? "Mở" : "Khóa")
+        </td>
+        <td>
+            <a href="@Url.Action("Edit","Account", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            <a href="@Url.Action("Details","Account", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+            <a href="@Url.Action("Delete","Account", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+}
+
+</table>
