@@ -48,7 +48,7 @@
         </dt>
 
         <dd>
-            <img src="@Model.Avatar" alt="Ảnh đại diện.." width="150" height="100" />
+            <img src="@Model.Avatar" alt="Avatar.." width="150" height="100" />
         </dd>
 
         <dt>
@@ -57,7 +57,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.Status)
-            @((Model.Status == true) ? "Mở" : "Khóa")
+            @((Model.Status == true) ? "Unlock" : "Lock")
         </dd>
 
     </dl>

@@ -19,7 +19,7 @@ namespace VSMS.Models
         [DisplayName("ID Permission")]
         [ForeignKey("Permission")]
         public int Id_per { get; set; }
-        [DisplayName("Ngày tạo")]
+        [DisplayName("Date Created")]
         public DateTime Date_created { get; set; }
         public Admin Admin { get; set; }
         public Permission Permission { get; set; }

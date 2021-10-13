@@ -27,33 +27,60 @@
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
+        <th>Permission</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            <img src="@item.Avatar" alt="Ảnh đại diện.." width="150" height="100"/>   
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-            @((item.Status == true) ? "Mở" : "Khóa")
-        </td>
-        <td>
-            <a href="@Url.Action("Edit","Account", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
-            <a href="@Url.Action("Details","Account", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
-            <a href="@Url.Action("Delete","Account", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <img src="@item.Avatar" alt="Avatar.." width="75" height="50" />
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Status)
+                    @((item.Status == true) ? "Unlock" : "Lock")*@
+                <a href="@Url.Action("ChangeStatus","Account", new { id = item.Id})" id="status" value="@item.Id" class="btn btn-success"><i id="icon-status" class="fas fa-thumbs-up"></i></a>
+            </td>
+            <td>
+                <a href="@Url.Action("SetPermission","Account", new { id = item.Id})" class="btn btn-dark"><i class="fas fa-user-tag"></i></a>
+                <a href="@Url.Action("ChangePassword","Account", new { id = item.Id})" class="btn btn-secondary"><i class="fas fa-key"></i></a>
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","Account", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                <a href="@Url.Action("Details","Account", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+                <a href="@Url.Action("Delete","Account", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+@section scripts{
+    <script>
+        $("#status").click(function () {
+            var getId = $("#status").val();
+            $.ajax({
+                type: "POST",
+                url: @Url.Action("ChangeStatus","Account"),
+                data: { id: getId },
+                dataType: "json",
+                success: function () {
+                    alert("success");
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+        });
+    </script>
+}

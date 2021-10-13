@@ -52,6 +52,7 @@ namespace VSMS.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Username,Password,ConfirmPassword,Name,Email,Avatar,Status")] Models.Admin admin, HttpPostedFileBase fileImage)
         {
+            bool UserNameExist = false;
             if (ModelState.IsValid)
             {
                 // Kiểm tra extension của image
@@ -69,24 +70,38 @@ namespace VSMS.Areas.Admin.Controllers
                         admin.Avatar = "/Areas/Admin/Data/Images/" + fileImage.FileName;
                     }
                 }
+                // Kiểm tra trùng tên
+                foreach (var item in db.Admins)
+                {
+                    if (item.Username.Equals(admin.Username))
+                    {
+                        UserNameExist = true;
+                        break;
+                    }
+                }
+                if (UserNameExist == false)
+                {
+                    //Mã hóa mật khẩu &Thêm vào bảng admin
+                    admin.Password = Common.Common.ParseMD5(admin.Password);
+                    admin.ConfirmPassword = Common.Common.ParseMD5(admin.ConfirmPassword);
+                    db.Admins.Add(admin);
+                    // Thêm mới quan hệ giữa Admin và Permission
+                    Per_relationship pr = new Per_relationship();
+                    pr.Id_admin = admin.Id;
+                    pr.Id_per = 3;
+                    pr.Date_created = DateTime.Now;
+                    db.Per_Relationships.Add(pr);
+                    db.SaveChanges();
+                    // Thông báo bằng Toastr
+                    @TempData["success"] = "Create new success!";
+                    return RedirectToAction("Index");
+                }
                 else
                 {
-                    ViewBag.message = "Please choose only Image file";
+                    ModelState.AddModelError("Username", "This account has already existed!");
+                    return View(admin);
                 }
-                // Mã hóa mật khẩu & Thêm vào bảng admin
-                admin.Password = Common.Common.ParseMD5(admin.Password);
-                admin.ConfirmPassword = Common.Common.ParseMD5(admin.ConfirmPassword);
-                db.Admins.Add(admin);
-                // Thêm mới quan hệ giữa Admin và Permission
-                Per_relationship pr = new Per_relationship();
-                pr.Id_admin = admin.Id;
-                pr.Id_per = 3;
-                pr.Date_created = DateTime.Now;
-                db.Per_Relationships.Add(pr);
-                db.SaveChanges();
-                // Thông báo bằng Toastr
-                @TempData["success"] = "Tạo mới thành công!";
-                return RedirectToAction("Index");
+
             }
             return View(admin);
         }
@@ -139,7 +154,7 @@ namespace VSMS.Areas.Admin.Controllers
                 // Cập nhật 
                 db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();
-                @TempData["success"] = "Sửa thành công!";
+                @TempData["success"] = "Successfully!";
                 return RedirectToAction("Index");
             }
             return View(admin);
@@ -166,17 +181,93 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Models.Admin admin = db.Admins.Find(id);
-            if (admin.Id.Equals("1"))
+            if (!admin.Id.Equals(1))
             {
                 db.Admins.Remove(admin);
                 Models.Per_relationship pr = db.Per_Relationships.Where(x => x.Id_admin == id).FirstOrDefault();
                 db.Per_Relationships.Remove(pr);
                 db.SaveChanges();
-                @TempData["success"] = "Xóa thành công!";
+                @TempData["success"] = "Erase successfully!";
                 return RedirectToAction("Index");
             }
-            @TempData["error"] = "Không thể xóa tài khoản Admin!";
+            @TempData["error"] = "Cannot delete Admin account!";
             return View(admin);
+        }
+
+        // Action New
+        public ActionResult SetPermission(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Models.Admin admin = db.Admins.Find(id);
+            var getSelect = db.Per_Relationships.Where(x => x.Id_admin == id).FirstOrDefault();
+            ViewBag.id = getSelect.Id_admin;
+            ViewBag.Id_per = new SelectList(db.Permissions, "PerId", "PerName", getSelect.Id_per);
+            if (admin == null)
+            {
+                return HttpNotFound();
+            }
+            return View(admin);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SetPermission([Bind(Include = "Id,Username,Name")] Models.Admin admin, int id, int Id_per)
+        {
+            var getSelect = db.Per_Relationships.SingleOrDefault(x => x.Id_admin.Equals(id));
+            if (admin.Id != 1)
+            {
+                getSelect.Id_per = Id_per;
+                db.SaveChanges();
+                TempData["success"] = "Successfully";
+                return RedirectToAction("Index");
+            }
+            ViewBag.id = getSelect.Id_admin;
+            ViewBag.Id_per = new SelectList(db.Permissions, "PerId", "PerName", getSelect.Id_per);
+            TempData["error"] = "Don't change admin!";
+            return View(admin);
+        }
+
+        public ActionResult ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Models.Admin admin = db.Admins.Find(id);
+            if (admin == null)
+            {
+                return HttpNotFound();
+            }
+            return View(admin);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword([Bind(Include = "Id,Username,Password,ConfirmPassword,Name,Email,Avatar,Status")] Models.Admin admin)
+        {
+            ModelState.Remove("Email");
+            if (ModelState.IsValid)
+            {
+                admin.Password = Common.Common.ParseMD5(admin.Password);
+                admin.ConfirmPassword = Common.Common.ParseMD5(admin.ConfirmPassword);
+                db.Entry(admin).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["success"] = "Change Password Successfully!";
+                return RedirectToAction("Index");
+            }
+            return View(admin);
+        }
+        [HttpPost]
+        public ActionResult ChangeStatus([Bind(Include = "Id,Username,Password,Name,Email,Avatar,Status")] Models.Admin admin, int id)
+        {
+            var chk = db.Admins.SingleOrDefault(x => x.Id.Equals(id));
+            admin.Status = !chk.Status;
+            db.Entry(admin).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["success"] = "Change status successfully!";
+            return Json(true);
         }
 
         protected override void Dispose(bool disposing)

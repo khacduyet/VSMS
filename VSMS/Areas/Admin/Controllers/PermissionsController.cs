@@ -52,7 +52,7 @@ namespace VSMS.Areas.Admin.Controllers
             {
                 db.Permissions.Add(permission);
                 db.SaveChanges();
-                @TempData["success"] = "Thêm mới thành công!";
+                @TempData["success"] = "Create new success!";
                 return RedirectToAction("Index");
             }
 
@@ -85,7 +85,7 @@ namespace VSMS.Areas.Admin.Controllers
             {
                 db.Entry(permission).State = EntityState.Modified;
                 db.SaveChanges();
-                @TempData["success"] = "Sửa thành công!";
+                @TempData["success"] = "Successfully!";
                 return RedirectToAction("Index");
             }
             return View(permission);
@@ -116,10 +116,10 @@ namespace VSMS.Areas.Admin.Controllers
             {
                 db.Permissions.Remove(permission);
                 db.SaveChanges();
-                @TempData["success"] = "Xóa thành công!";
+                @TempData["success"] = "Erase successfully!";
                 return RedirectToAction("Index");
             }
-            @TempData["error"] = "Quyền này không được phép xóa!";
+            @TempData["error"] = "This right is not allowed to delete!";
             return View(permission);
         }
 

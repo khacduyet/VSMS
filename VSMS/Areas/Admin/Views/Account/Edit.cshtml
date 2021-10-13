@@ -46,7 +46,8 @@
             @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input id="img" type="file" name="fileImage" class="form-control " hidden onchange="changeImg(this)">
-                <img id="avatar" style="cursor:pointer" class="thumbnail" width="150" height="100" src="@Model.Avatar">
+                <img id="avatar" style="cursor:pointer" class="thumbnail" width="150" height="100" src="">
+                <input name="" id="getAvt" hidden value="@Model.Avatar" />
             </div>
         </div>
 
@@ -54,7 +55,7 @@
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Status) Mở
+                    @Html.EditorFor(model => model.Status) Unlock
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -71,3 +72,14 @@
 <div>
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
 </div>
+
+@section scripts{
+    <script>
+        var getAvatar = $("#getAvt").val();
+        if (getAvatar != "") {
+            $(".thumbnail").attr("src", getAvatar);
+        } else {
+            $(".thumbnail").attr("src", "/Areas/Admin/Data/Images/clickme.png");
+        }
+    </script>
+}
