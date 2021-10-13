@@ -11,13 +11,13 @@ namespace VSMS.Models
     [Table("Permission")]
     public class Permission
     {
-        [Key, DisplayName("Mã quyền"), DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [Key, DisplayName("ID Permission"), DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int PerId { get; set; }
-        [DisplayName("Tên quyền"), Required(ErrorMessage = "Tên quyền không được để trống!")]
+        [DisplayName("Name Permission"), Required(ErrorMessage = "Name Permission not null!")]
         public string PerName { get; set; }
-        [DisplayName("Mô tả"), Required(AllowEmptyStrings = true)]
+        [DisplayName("Description"), Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
-        [DisplayName("Trạng thái")]
+        [DisplayName("Status")]
         public bool Status { get; set; }
 
         public ICollection<Permission_details> Permission_details { get; set; }

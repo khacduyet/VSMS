@@ -21,7 +21,7 @@ namespace VSMS.Areas.Admin.Controllers
                 return RedirectToAction("Login");
             }
             if (TempData.ContainsKey("userCurrent"))
-                TempData["info"] = "Xin chào " + TempData["userCurrent"].ToString() + "!";
+                TempData["info"] = "Hello " + TempData["userCurrent"].ToString() + "!";
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace VSMS.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            ViewBag.Error = "Sai tên tài khoản hoặc mật khẩu!";
+            ViewBag.Error = "Wrong account name or password!";
             return View();
         }
 

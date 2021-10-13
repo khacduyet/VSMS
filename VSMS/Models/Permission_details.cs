@@ -13,7 +13,7 @@ namespace VSMS.Models
     {
         [Key, DisplayName("ID"), DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Detail_Id { get; set; }
-        [DisplayName("Hành động")]
+        [DisplayName("Action")]
         public string Action { get; set; }
         [ForeignKey("Permission")]
         [DisplayName("ID Permission")]
