@@ -140,11 +140,24 @@
       <DependentUpon>202110110123453_v1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Admin.cs" />
-    <Compile Include="Models\Permission.cs" />
-    <Compile Include="Models\Permission_details.cs" />
-    <Compile Include="Models\Per_relationship.cs" />
-    <Compile Include="Models\VSMS_Entities.cs" />
+    <Compile Include="Models\DataModels\Admin.cs" />
+    <Compile Include="Models\DataModels\AdminOrder.cs" />
+    <Compile Include="Models\DataModels\Car.cs" />
+    <Compile Include="Models\DataModels\CarDetails.cs" />
+    <Compile Include="Models\DataModels\Category.cs" />
+    <Compile Include="Models\DataModels\DriveTest.cs" />
+    <Compile Include="Models\DataModels\Feature.cs" />
+    <Compile Include="Models\DataModels\Manuafature.cs" />
+    <Compile Include="Models\DataModels\Member.cs" />
+    <Compile Include="Models\DataModels\Mode.cs" />
+    <Compile Include="Models\DataModels\Order.cs" />
+    <Compile Include="Models\DataModels\OrderDetails.cs" />
+    <Compile Include="Models\DataModels\Permission.cs" />
+    <Compile Include="Models\DataModels\Permission_details.cs" />
+    <Compile Include="Models\DataModels\Per_relationship.cs" />
+    <Compile Include="Models\DataModels\VSMS_Entities.cs" />
+    <Compile Include="Models\Repository\IRepository.cs" />
+    <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
