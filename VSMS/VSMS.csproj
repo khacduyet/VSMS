@@ -129,15 +129,19 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeaturesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManuafaturesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ModesController.cs" />
     <Compile Include="Areas\Admin\Controllers\PermissionsController.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110110123453_v1.cs" />
-    <Compile Include="Migrations\202110110123453_v1.Designer.cs">
-      <DependentUpon>202110110123453_v1.cs</DependentUpon>
+    <Compile Include="Migrations\202110141813404_v2.cs" />
+    <Compile Include="Migrations\202110141813404_v2.Designer.cs">
+      <DependentUpon>202110141813404_v2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="Models\DataModels\Category.cs" />
     <Compile Include="Models\DataModels\DriveTest.cs" />
     <Compile Include="Models\DataModels\Feature.cs" />
+    <Compile Include="Models\DataModels\keyAttribute.cs" />
     <Compile Include="Models\DataModels\Manuafature.cs" />
     <Compile Include="Models\DataModels\Member.cs" />
     <Compile Include="Models\DataModels\Mode.cs" />
@@ -2166,6 +2171,26 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Areas\Admin\Views\Account\SetPermission.cshtml" />
     <Content Include="Areas\Admin\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Manuafatures\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Manuafatures\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Manuafatures\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Manuafatures\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Manuafatures\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Modes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Modes\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Modes\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Modes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Modes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2213,8 +2238,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110110123453_v1.resx">
-      <DependentUpon>202110110123453_v1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110141813404_v2.resx">
+      <DependentUpon>202110141813404_v2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
