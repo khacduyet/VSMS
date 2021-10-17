@@ -12,6 +12,11 @@
     @Styles.Render("~/Admin/css")
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     <!-- Tempusdominus Bootstrap 4 -->
+    <style>
+        #menu .nav-item .nav-treeview {
+            padding-left: 10px
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -220,31 +225,30 @@
                     <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
     with font-awesome or any other icon font library -->
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-warehouse"></i>
+                                <i class="fab fa-autoprefixer nav-icon"></i>
                                 <p>
-                                    Manufacturer
+                                    Characters
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", "Manuafatures")" class="nav-link">
-                                        <i class="fab fa-autoprefixer"></i>
-                                        <p>List Manuafature</p>
+                                        <i class="fas fa-cog  nav-icon"></i>
+                                        <p>Manufacturer</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", "Modes")" class="nav-link">
-                                        <i class="fab fa-monero"></i>
+                                        <i class="fab fa-monero  nav-icon"></i>
                                         <p>Modes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", "Categories")" class="nav-link">
-                                        <i class="fab fa-cuttlefish"></i>
+                                        <i class="fab fa-cuttlefish  nav-icon"></i>
                                         <p>Categories</p>
                                     </a>
                                 </li>
@@ -254,7 +258,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Feature Manager
+                                    Feature Management
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -279,15 +283,33 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/Admin/Account/Index" class="nav-link">
+                                    <a href="@Url.Action("Index","Account")" class="nav-link">
                                         <i class="fas fa-users nav-icon"></i>
                                         <p>Account</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/Admin/Permissions/Index" class="nav-link">
+                                    <a href="@Url.Action("Index","Permissions")" class="nav-link">
                                         <i class="fab fa-critical-role nav-icon"></i>
                                         <p>Permission</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-folder"></i>
+                                <p>
+                                    Member Management
+                                    <i class="fas fa-angle-left right"></i>
+                                    @*<span class="badge badge-info right">6</span>*@
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Members")" class="nav-link">
+                                        <i class="fas fa-user nav-icon"></i>
+                                        <p>Member</p>
                                     </a>
                                 </li>
                             </ul>
