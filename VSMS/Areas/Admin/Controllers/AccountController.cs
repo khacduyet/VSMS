@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Common;
+using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
@@ -245,29 +246,33 @@ namespace VSMS.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword([Bind(Include = "Id,Username,Password,ConfirmPassword,Name,Email,Avatar,Status")] Models.Admin admin)
+        public ActionResult ChangePassword(ChangePassword ChangePassword, int id)
         {
-            ModelState.Remove("Email");
+            Models.Admin admin = db.Admins.Find(id);
             if (ModelState.IsValid)
             {
-                admin.Password = Common.Common.ParseMD5(admin.Password);
-                admin.ConfirmPassword = Common.Common.ParseMD5(admin.ConfirmPassword);
-                db.Entry(admin).State = EntityState.Modified;
+                admin.Password = Common.Common.ParseMD5(ChangePassword.Password);
+                admin.ConfirmPassword = Common.Common.ParseMD5(ChangePassword.ConfirmPassword);
                 db.SaveChanges();
                 TempData["success"] = "Change Password Successfully!";
                 return RedirectToAction("Index");
             }
             return View(admin);
         }
-        [HttpPost]
-        public ActionResult ChangeStatus([Bind(Include = "Id,Username,Password,Name,Email,Avatar,Status")] Models.Admin admin, int id)
+
+        public ActionResult ChangeStatus(int id)
         {
-            var chk = db.Admins.SingleOrDefault(x => x.Id.Equals(id));
-            admin.Status = !chk.Status;
-            db.Entry(admin).State = EntityState.Modified;
+            var ad = db.Admins.Find(id);
+            ad.Name = ad.Name;
+            ad.Username = ad.Username;
+            ad.Password = ad.Password;
+            ad.Email = ad.Email;
+            ad.Avatar = ad.Avatar;
+            ad.ConfirmPassword = ad.Password;
+            ad.Status = !ad.Status;
             db.SaveChanges();
-            TempData["success"] = "Change status successfully!";
-            return Json(true);
+            TempData["info"] = "Change status successfully!";
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
