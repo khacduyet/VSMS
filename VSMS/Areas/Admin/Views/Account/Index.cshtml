@@ -47,9 +47,16 @@
                 <img src="@item.Avatar" alt="Avatar.." width="75" height="50" />
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.Status)
-                    @((item.Status == true) ? "Unlock" : "Lock")*@
-                <a href="@Url.Action("ChangeStatus","Account", new { id = item.Id})" id="status" value="@item.Id" class="btn btn-success"><i id="icon-status" class="fas fa-thumbs-up"></i></a>
+                @{
+                    if (item.Status)
+                    {
+                        <a href="@Url.Action("ChangeStatus","Account", new { id = item.Id})" id="Status" name="Status" value="@item.Id" class="btn btn-success"><i id="icon-status" class="fas fa-thumbs-up"></i></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ChangeStatus","Account", new { id = item.Id})" id="Status" name="Status" value="@item.Id" class="btn btn-danger"><i id="icon-status" class="fas fa-thumbs-down"></i></a>
+                    }
+                }
             </td>
             <td>
                 <a href="@Url.Action("SetPermission","Account", new { id = item.Id})" class="btn btn-dark"><i class="fas fa-user-tag"></i></a>
@@ -67,20 +74,6 @@
 
 @section scripts{
     <script>
-        $("#status").click(function () {
-            var getId = $("#status").val();
-            $.ajax({
-                type: "POST",
-                url: @Url.Action("ChangeStatus","Account"),
-                data: { id: getId },
-                dataType: "json",
-                success: function () {
-                    alert("success");
-                },
-                error: function() {
-                    alert("error");
-                }
-            });
-        });
+        
     </script>
 }
