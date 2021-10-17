@@ -5,3 +5,4 @@ VSMS/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 VSMS/obj/Debug/VSMS.csproj.AssemblyReference.cache
 .vs/VSMS/config/applicationhost.config
 VSMS/Web.config
+*.config
