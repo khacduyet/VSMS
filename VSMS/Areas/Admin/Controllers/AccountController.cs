@@ -127,7 +127,7 @@ namespace VSMS.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,Password,Name,Email,Avatar,Status")] Models.Admin admin, HttpPostedFileBase fileImage)
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Name,Email,Avatar, Status")] Models.Admin admin, HttpPostedFileBase fileImage, string getAvt)
         {
             // Bỏ qua bước Validate mật khẩu
             admin.Password = admin.Password;
@@ -150,8 +150,9 @@ namespace VSMS.Areas.Admin.Controllers
                 }
                 else
                 {
-                    admin.Avatar = admin.Avatar;
+                    admin.Avatar = getAvt;
                 }
+                admin.Status = admin.Status;
                 // Cập nhật 
                 db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();

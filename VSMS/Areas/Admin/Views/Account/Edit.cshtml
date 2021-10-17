@@ -17,6 +17,7 @@
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Password)
+        @Html.HiddenFor(model => model.Status)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -47,7 +48,7 @@
             <div class="col-md-10">
                 <input id="img" type="file" name="fileImage" class="form-control " hidden onchange="changeImg(this)">
                 <img id="avatar" style="cursor:pointer" class="thumbnail" width="150" height="100" src="">
-                <input name="" id="getAvt" hidden value="@Model.Avatar" />
+                <input name="getAvt" id="getAvt" hidden value="@Model.Avatar" />
             </div>
         </div>
 
