@@ -6,3 +6,4 @@ VSMS/obj/Debug/VSMS.csproj.AssemblyReference.cache
 .vs/VSMS/config/applicationhost.config
 VSMS/Web.config
 *.config
+VSMS/Web.config
