@@ -8,3 +8,6 @@ VSMS/Web.config
 *.config
 VSMS/Web.config
 VSMS/Web.config
+*.cache
+*.config
+.vs/VSMS/config/applicationhost.config
