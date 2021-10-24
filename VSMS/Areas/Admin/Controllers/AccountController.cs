@@ -83,8 +83,8 @@ namespace VSMS.Areas.Admin.Controllers
                 if (UserNameExist == false)
                 {
                     //Mã hóa mật khẩu &Thêm vào bảng admin
-                    admin.Password = Common.Common.ParseMD5(admin.Password);
-                    admin.ConfirmPassword = Common.Common.ParseMD5(admin.ConfirmPassword);
+                    admin.Password = Common.CommonConstants.ParseMD5(admin.Password);
+                    admin.ConfirmPassword = Common.CommonConstants.ParseMD5(admin.ConfirmPassword);
                     db.Admins.Add(admin);
                     // Thêm mới quan hệ giữa Admin và Permission
                     Per_relationship pr = new Per_relationship();
@@ -252,8 +252,8 @@ namespace VSMS.Areas.Admin.Controllers
             Models.Admin admin = db.Admins.Find(id);
             if (ModelState.IsValid)
             {
-                admin.Password = Common.Common.ParseMD5(ChangePassword.Password);
-                admin.ConfirmPassword = Common.Common.ParseMD5(ChangePassword.ConfirmPassword);
+                admin.Password = Common.CommonConstants.ParseMD5(ChangePassword.Password);
+                admin.ConfirmPassword = Common.CommonConstants.ParseMD5(ChangePassword.ConfirmPassword);
                 db.SaveChanges();
                 TempData["success"] = "Change Password Successfully!";
                 return RedirectToAction("Index");

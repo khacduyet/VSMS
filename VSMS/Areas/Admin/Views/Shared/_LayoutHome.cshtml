@@ -177,9 +177,14 @@
                     <ul id="infoAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                @*~/Areas/Admin/Content/dist/img/user2-160x160.jpg*@
-                                <img src="@ViewBag.Avatar" class="img-circle elevation-2" alt="User Image">
-                                <p style="padding-left:10px">@ViewBag.Name<i style="padding: 5px 0;" class="right fas fa-angle-left"></i></p>
+                                @{ var admin = Session["admin"] as VSMS.Models.Admin;
+                                    if (admin != null)
+                                    {
+                                        var avt = admin.Avatar; var name = admin.Name;
+                                        <img src="@avt" class="img-circle elevation-2" alt="User Image">
+                                        <p style="padding-left:10px">@name<i style="padding: 5px 0;" class="right fas fa-angle-left"></i></p>
+                                    }
+                                }
                             </a>
                             <ul class="nav nav-treeview" style="padding-left: 10px">
                                 <li class="nav-item">
@@ -224,7 +229,7 @@
                 <nav class="mt-2">
                     <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fab fa-autoprefixer nav-icon"></i>
@@ -365,7 +370,7 @@
         <div>
             <input type="hidden" id="success" value="@TempData["success"]" />
             <input type="hidden" id="info" value="@TempData["info"]" />
-            <input type="hidden" id="info" value="@TempData["warning"]" />
+            <input type="hidden" id="warning" value="@TempData["warning"]" />
             <input type="hidden" id="error" value="@TempData["error"]" />
         </div>
     </div>
