@@ -15,7 +15,6 @@ namespace VSMS.Models.DataModels
         public int Id { get; set; }
 
         [DisplayName("FullName")]
-        [Required(ErrorMessage = "This field cannot be left blank!")]
         [StringLength(200)]
         public string FullName{ get; set; }
 
@@ -30,7 +29,6 @@ namespace VSMS.Models.DataModels
         public string PassWord{ get; set; }
 
         [DisplayName("BirthDay")]
-        [Required(ErrorMessage = "This field cannot be left blank!")]
         [StringLength(200)]
         public string BirthDay{ get; set; }
 
@@ -40,16 +38,15 @@ namespace VSMS.Models.DataModels
         public string Email{ get; set; }
 
         [DisplayName("Address")]
-        [Required(ErrorMessage = "This field cannot be left blank!")]
         [StringLength(200)]
         public string Address{ get; set; }
 
         [DisplayName("Phone")]
-        [Required(ErrorMessage = "This field cannot be left blank!")]
         [StringLength(200)]
         public string Phone{ get; set; }
         public DateTime CreatedAt{ get; set; }
         public byte Status{ get; set; }
+        public bool EmailConfirmed{ get; set; }
         public ICollection<DriveTest> DriveTests{ get; set; }
         public ICollection<Order> Orders{ get; set; }
     }

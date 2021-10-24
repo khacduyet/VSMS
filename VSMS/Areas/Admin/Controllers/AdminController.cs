@@ -39,13 +39,14 @@ namespace VSMS.Areas.Admin.Controllers
             if (admin.Username != null && admin.Password != null)
             {
                 // Get pass to MD5
-                var passMD5 = Common.Common.ParseMD5(admin.Password);
+                var passMD5 = Common.CommonConstants.ParseMD5(admin.Password);
                 // Get the account to see if it exists or not
                 var acc = db.Admins.SingleOrDefault(x => x.Username == admin.Username && x.Password == passMD5);
                 if (acc != null)
                 {
                     Session["admin"] = acc;
                     TempData["userCurrent"] = acc.Name;
+                    //Session.Add(Common.CommonConstants.USER_SESSION, acc.Name);
                     return RedirectToAction("Index");
                 }
             }
@@ -55,7 +56,7 @@ namespace VSMS.Areas.Admin.Controllers
 
         public ActionResult Logout()
         {
-            Session.Clear();
+            Session["admin"] = null;
             return RedirectToAction("Login");
         }
     }

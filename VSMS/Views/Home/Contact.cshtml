@@ -1,17 +1,108 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="tt-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li>Contacts</li>
+        </ul>
+    </div>
+</div>
+<div id="tt-pageContent">
+    <div class="container-indent-04">
+        <div class="container">
+            <div class="tt-block-title tt-sub-pages">
+                <h1 class="tt-title">Contacts</h1>
+                <div class="tt-description">let's get in touch</div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="box-info box-info-indent">
+                        <h3 class="tt-title">Contact Information</h3>
+                        <div class="tt-item-layout">
+                            <div class="tt-item">
+                                <div class="tt-col">
+                                    <i class="icon-149984"></i>
+                                    Address:
+                                </div>
+                                <div class="tt-col">
+                                    3261 Anmoore Road, Brooklyn, NY 11230
+                                </div>
+                            </div>
+                            <div class="tt-item">
+                                <div class="tt-col">
+                                    <i class="icon-15874"></i>
+                                    Phone:
+                                </div>
+                                <div class="tt-col">
+                                    +01 123 456 78
+                                </div>
+                            </div>
+                            <div class="tt-item">
+                                <div class="tt-col">
+                                    <i class="icon-mail"></i>
+                                    E-mail:
+                                </div>
+                                <div class="tt-col">
+                                    info@youremal.com
+                                </div>
+                            </div>
+                            <div class="tt-item">
+                                <div class="tt-col">
+                                    <i class="icon-icon"></i>
+                                    Working time:
+                                </div>
+                                <div class="tt-col">
+                                    <strong>Sales Department</strong>
+                                    <p>
+                                        Mon-Sat: 8:00am - 5:00pm<br>Sunday is closed
+                                    </p>
+                                    <strong>Service Department</strong>
+                                    <p>
+                                        Mon-Sat: 8:00am - 5:00pm<br>Sunday is closed
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="tt-title">Stay Connected</h3>
+                        <ul class="tt-social-icon">
+                            <li><a href="#" class="icon-226234"></a></li>
+                            <li><a href="#" class="icon-8800"></a></li>
+                            <li><a href="#" class="icon-733613"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="divider divider--lg visible-xs"></div>
+                <div class="col-12 col-md-6">
+                    <h6 class="tt-title-default">Get in touch</h6>
+                    <p>
+                        Car Leader has a strong and committed sales staff with many years of experience satisfying our customers’ needs. Feel free to browse our massive inventory online, set up a test drive with a sales associate, or inquire about financing!
+                    </p>
+                    <form id="contactform" method="post" novalidate="novalidate" action="#" class="tt-form-default02 tt-form-review">
+                        <div class="tt-form-aside">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" id="inputName" placeholder="Your name*">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="E-mail*">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" class="form-control" placeholder="Message" id="textareaMessage"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-wide">LEAVE A MESSAGE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-indent container-indent-03 tt-mobile-hidden">
+        <div class="tt-map">
+            <a href="#" class="tt-btn-toggle"></a>
+            <div class="tt-box-map">
+                <div id="googleMapFooter" class="google-map"></div>
+            </div>
+        </div>
+    </div>
+</div>
