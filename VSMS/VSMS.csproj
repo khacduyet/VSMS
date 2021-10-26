@@ -141,18 +141,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110141813404_v2.cs" />
-    <Compile Include="Migrations\202110141813404_v2.Designer.cs">
-      <DependentUpon>202110141813404_v2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110200314301_v3.cs" />
-    <Compile Include="Migrations\202110200314301_v3.Designer.cs">
-      <DependentUpon>202110200314301_v3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110210221235_v4.cs" />
-    <Compile Include="Migrations\202110210221235_v4.Designer.cs">
-      <DependentUpon>202110210221235_v4.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
     <Compile Include="Models\DataModels\AdminOrder.cs" />
@@ -2452,17 +2440,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110141813404_v2.resx">
-      <DependentUpon>202110141813404_v2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110200314301_v3.resx">
-      <DependentUpon>202110200314301_v3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110210221235_v4.resx">
-      <DependentUpon>202110210221235_v4.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

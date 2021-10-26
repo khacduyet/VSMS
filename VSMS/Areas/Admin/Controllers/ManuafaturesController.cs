@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
@@ -15,10 +16,24 @@ namespace VSMS.Areas.Admin.Controllers
     {
         private VSMS_Entities db = new VSMS_Entities();
 
+        private Repository<Manuafature> dbManua;
+
+        public ManuafaturesController()
+        {
+            dbManua = new Repository<Manuafature>();
+        }
+
+
         // GET: Admin/Manuafatures
         public ActionResult Index()
         {
             return View(db.Manuafatures.ToList());
+        }
+
+        public JsonResult GetAllData()
+        {
+            var data = dbManua.GetAll();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/Manuafatures/Details/5

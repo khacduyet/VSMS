@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add New Record</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Car Name</label>
+                                    <input type="text" class="form-control" id="Name" placeholder="Enter car name...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Enginer</label>
+                                    <input type="text" class="form-control" id="Enginer" placeholder="Enginer...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Fuel Type</label>
+                                    <input type="text" class="form-control" id="fuelType" placeholder="Fuel Type...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Transmission</label>
+                                    <input type="text" class="form-control" id="Transmission" placeholder="Transmission...">
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="Status">
+                                    <label class="form-check-label" for="exampleCheck1">
+                                        Status(Hide/Show)
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control" id="cateDropDownList">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Manuafature</label>
+                                    <select class="form-control" id="manuaDropDownList">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mode</label>
+                                    <select class="form-control" id="modeDropDownList">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Descriptions</label>
+                                    <textarea class="form-control" id="Descriptions" rows="4" placeholder="Descriptions..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="carInputFile" multiple>
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button id="add" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            function AjaxCall(url, data, type) {
+                return $.ajax({
+                    url: url,
+                    type: type ? type : 'GET',
+                    data: data,
+                    contentType: 'application/json'
+                });
+            };
+
+            // ajax call category
+            AjaxCall('/Admin/Categories/GetAllData', null).done(function (response) {
+                console.log("oke");
+                console.log(response);
+                if (response.length > 0) {
+                    $('#cateDropDownList').html('');
+                    var options = '';
+                    options += '<option value="Select">   Select   </option>';
+                    $.each(response, function (key, item) {
+                        options += '<option value="' + item.Id + '">' + item.CateName + '</option>';
+                    });
+                    $('#cateDropDownList').html(options);
+                }
+            }).fail(function (error) {
+                alert(error.StatusText);
+            });
+
+            // ajax call mode
+            AjaxCall('/Admin/Manuafatures/GetAllData', null).done(function (response) {
+                console.log("oke");
+                console.log(response);
+                if (response.length > 0) {
+                    $('#manuaDropDownList').html('');
+                    var options = '';
+                    options += '<option value="Select">   Select   </option>';
+                    $.each(response, function (key, item) {
+                        options += '<option value="' + item.Id + '">' + item.Name + '</option>';
+                    });
+                    $('#manuaDropDownList').html(options);
+
+                    // nếu khách chọn manuadatures sẽ show các mode tương ứng
+
+                    $("#manuaDropDownList").change(function () {
+                        data = $('#manuaDropDownList option:selected').val()
+                        console.log(data);
+
+                        AjaxCall('/Admin/Modes/GetDataByManua/' + data, null).done(function (response) {
+                            console.log("oke");
+                            console.log(response);
+                            if (response.length > 0) {
+                                $('#modeDropDownList').html('');
+                                var options = '';
+                                options += '<option value="Select">   Select   </option>';
+                                $.each(response, function (key, item) {
+                                    options += '<option value="' + item.Id + '">' + item.ModeName + '</option>';
+                                });
+                                $('#modeDropDownList').html(options);
+                            }
+                            else {
+                                var options = '';
+                                options += '<option value="Select">   Not data yet   </option>';
+                                $('#modeDropDownList').html(options);
+                            }
+                        }).fail(function (error) {
+                            alert(error.StatusText);
+                        });
+                    })
+                }
+            }).fail(function (error) {
+                alert(error.StatusText);
+            });
+        })
+        // xử lý logic kiểm tra mode có null hay không?
+        $('#modeDropDownList').click(function () {
+            data = $('#modeDropDownList option:selected').val();
+            if (data == undefined) {
+                alert("please select the manufacturer above!");
+            }
+
+        });
+
+        // xử lý logic thêm mới
+        $('#add').click(function () {
+
+            // start validate
+            //end validate
+
+            var formdata = new FormData(); //FormData object
+
+            if (window.FormData !== undefined) {
+                // upload file
+                var fileInput = document.getElementById('carInputFile');
+                for (i = 0; i < fileInput.files.length; i++) {
+                    var sfilename = fileInput.files[i].name;
+                    formdata.append(sfilename, fileInput.files[i]);
+
+                }
+
+                formdata.append("CarName", $('#Name').val());
+                formdata.append("Engine", $('#Enginer').val());
+                formdata.append("FuelType", $('#fuelType').val());
+                formdata.append("Transmission", $('#Transmission').val());
+                formdata.append("Descriptions", $('#Descriptions').val());
+                formdata.append("Status", 1);
+                formdata.append("CatId", $('#cateDropDownList').val());
+                formdata.append("ModeId", $('#modeDropDownList').val());
+
+
+
+
+                console.log(formdata);
+                $.ajax({
+                    url: "/Admin/Cars/Add",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: formdata,
+                    enctype: 'multipart/form-data',
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
+
+
+            }
+        })
+
+    </script>
+
+}
+

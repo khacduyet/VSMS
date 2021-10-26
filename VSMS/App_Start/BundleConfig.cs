@@ -33,7 +33,11 @@ namespace VSMS
                       "~/Areas/Admin/Content/dist/css/adminlte.min.css",
                       "~/Areas/Admin/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
                       "~/Areas/Admin/Content/plugins/daterangepicker/daterangepicker.css",
-                      "~/Areas/Admin/Content/plugins/summernote/summernote-bs4.min.css"));
+                      "~/Areas/Admin/Content/plugins/summernote/summernote-bs4.min.css",
+                      "~/Areas/Admin/Content/plugins/select2/css/select2.min.css",
+                      "~/Areas/Admin/Content/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css",
+                      "~/Areas/Admin/Content/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css"
+                      )) ;
             bundles.Add(new ScriptBundle("~/Admin/js").Include(
                       "~/Areas/Admin/Content/plugins/jquery/jquery.min.js",
                       "~/Areas/Admin/Content/plugins/jquery-ui/jquery-ui.min.js",
@@ -48,9 +52,12 @@ namespace VSMS
                       "~/Areas/Admin/Content/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
                       "~/Areas/Admin/Content/plugins/summernote/summernote-bs4.min.js",
                       "~/Areas/Admin/Content/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
+                      "~/Areas/Admin/Content/plugins/select2/js/select2.full.min.js",
+                      "~/Areas/Admin/Content/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",
                       "~/Areas/Admin/Content/dist/js/adminlte.js",
                       "~/Areas/Admin/Content/dist/js/demo.js",
-                      "~/Areas/Admin/Content/dist/js/pages/dashboard.js"));
+                      "~/Areas/Admin/Content/dist/js/pages/dashboard.js"
+                      ));
         }
     }
 }

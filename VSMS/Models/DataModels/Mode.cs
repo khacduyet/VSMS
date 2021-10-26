@@ -28,6 +28,7 @@ namespace VSMS.Models.DataModels
         public string Note{ get; set; }
 
         [ForeignKey("Manuafature")]
+        [DisplayName("Manuafature Name")]
         public int ManafatureId { get; set; }
 
         [DisplayName("Status")]

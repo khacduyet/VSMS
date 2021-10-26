@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "CarFeature";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Bootstrap Duallistbox</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Multiple</label>
+                        <div class="bootstrap-duallistbox-container row moveonselect moveondoubleclick">
+                    
+                           
+                        </div>
+                        <select class="duallistbox" multiple="multiple" style="display: none;" id="featureDropdownList">
+                            <option >Alabama</option>
+                            <option>Alaska</option>
+                            <option>California</option>
+                            <option>Delaware</option>
+                            <option>Tennessee</option>
+                            <option>Texas</option>
+                            <option>Washington</option>
+                        </select>
+
+                        <button id="addFeatureCar" class="btn btn-primary">Submit</button>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+@section Scripts{
+    <script>
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
+        $(document).ready(function () {
+            $('#addFeatureCar').click(function () {
+                var selected = [];
+                for (var option of document.getElementById('featureDropdownList').options) {
+                    if (option.selected) {
+                        selected.push(option.value);
+                    }
+                }
+                //var value = $('#featureDropdownList option:selected').val();
+                console.log(selected);
+            });
+
+            // hiển thị tất cả tính năng của ô tô
+
+        });
+    </script>
+}

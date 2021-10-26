@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
@@ -15,10 +16,23 @@ namespace VSMS.Areas.Admin.Controllers
     {
         private VSMS_Entities db = new VSMS_Entities();
 
+        private Repository<Category> dbCat;
+
+        public CategoriesController()
+        {
+            dbCat = new Repository<Category>();
+        }
+
         // GET: Admin/Categories
         public ActionResult Index()
         {
             return View(db.Categories.ToList());
+        }
+
+        public JsonResult GetAllData()
+        {
+            var data = dbCat.GetAll();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/Categories/Details/5

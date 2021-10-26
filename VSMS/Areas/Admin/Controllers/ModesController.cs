@@ -8,12 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
     public class ModesController : Controller
     {
         private VSMS_Entities db = new VSMS_Entities();
+
+        private Repository<Mode> dbMode;
+        private Repository<Manuafature> dbManua;
+
+        public ModesController()
+        {
+            dbMode = new Repository<Mode>();
+            dbManua = new Repository<Manuafature>();
+        }
+
 
         // GET: Admin/Modes
         public ActionResult Index()
@@ -22,6 +33,17 @@ namespace VSMS.Areas.Admin.Controllers
             return View(modes.ToList());
         }
 
+        public JsonResult GetAllData()
+        {
+            var _mode = dbMode.GetAll();
+            return Json(_mode, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataByManua(int id)
+        {
+            var data = dbMode.GetAll().Where(x => x.ManafatureId.Equals(id));
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         // GET: Admin/Modes/Details/5
         public ActionResult Details(int? id)
         {

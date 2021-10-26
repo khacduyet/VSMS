@@ -17,5 +17,6 @@ namespace VSMS.Models.Repository
         bool Remove(object id);
         bool Remove(T entity);
         void Save();
+        T SaveObject(T entity);
     }
 }

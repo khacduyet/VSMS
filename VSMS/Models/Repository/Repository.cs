@@ -92,6 +92,21 @@ namespace VSMS.Models.Repository
             db.SaveChanges();
         }
 
+        public T SaveObject(T entity)
+        {
+            try
+            {
+                tbl.Add(entity);
+                Save();
+                db.Entry(entity).Reload();
+                return entity;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
