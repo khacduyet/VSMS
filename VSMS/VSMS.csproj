@@ -129,6 +129,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CarsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeaturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManuafaturesController.cs" />
@@ -141,6 +142,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110260240035_d1.cs" />
+    <Compile Include="Migrations\202110260240035_d1.Designer.cs">
+      <DependentUpon>202110260240035_d1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
     <Compile Include="Models\DataModels\AdminOrder.cs" />
@@ -149,6 +154,8 @@
     <Compile Include="Models\DataModels\Category.cs" />
     <Compile Include="Models\DataModels\DriveTest.cs" />
     <Compile Include="Models\DataModels\Feature.cs" />
+    <Compile Include="Models\DataModels\ImageProduct.cs" />
+    <Compile Include="Models\DataModels\ImageProductDetails.cs" />
     <Compile Include="Models\DataModels\keyAttribute.cs" />
     <Compile Include="Models\DataModels\Manuafature.cs" />
     <Compile Include="Models\DataModels\Member.cs" />
@@ -162,6 +169,7 @@
     <Compile Include="Models\Repository\IRepository.cs" />
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\ModeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2363,6 +2371,9 @@
     <Content Include="fonts\font\fonts\carleadera03a.eot" />
     <Content Include="fonts\font\fonts\carleadera03a.ttf" />
     <Content Include="fonts\font\fonts\carleadera03a.woff" />
+    <Content Include="Areas\Admin\Views\Cars\CarFeature.cshtml" />
+    <Content Include="Areas\Admin\Views\Cars\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Cars\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\external\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\external\bootstrap\js\bootstrap.min.js" />
@@ -2440,6 +2451,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202110260240035_d1.resx">
+      <DependentUpon>202110260240035_d1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
