@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageManager.cshtml";
+    ViewBag.NameTitle = "Index";
+}
+
+<h2>Index</h2>
+@if (@TempData["messenger"] != null)
+{
+    <div class="alert @TempData["dataType"]" id="alert" role="alert">
+        @TempData["messenger"]
+    </div>
+}
