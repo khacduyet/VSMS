@@ -20,7 +20,6 @@ namespace VSMS.Models
         [DisplayName("Status")]
         public bool Status { get; set; }
 
-        public ICollection<Permission_details> Permission_details { get; set; }
         public ICollection<Per_relationship> Per_relationship { get; set; }
     }
 }

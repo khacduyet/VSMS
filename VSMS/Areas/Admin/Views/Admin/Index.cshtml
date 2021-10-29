@@ -3,11 +3,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
     var admin = Session["admin"] as VSMS.Models.Admin;
-    ViewBag.Name = admin.Name;
-    ViewBag.Avatar = admin.Avatar;
+    if (ViewBag.Name != null && ViewBag.Avatar != null)
+    {
+        ViewBag.Name = admin.Name;
+        ViewBag.Avatar = admin.Avatar;
+    }
+
 }
-
-
 
 <!-- Small boxes (Stat box) -->
 <div class="row">

@@ -15,6 +15,7 @@ using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
+    [CustomAuthorize("ADMIN")]
     public class AccountController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();

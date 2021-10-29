@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
+    [CustomAuthorize("ADMIN", "MOD")]
     public class MembersController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();

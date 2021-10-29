@@ -15,12 +15,8 @@ namespace VSMS.Controllers
         {
             if (TempData["cus"] != null)
             {
-                TempData["info"] = TempData["cus"].ToString() + " Hello";
+                TempData["info"] = "Hello " + TempData["cus"].ToString();
                 ViewBag.Name = TempData["cus"].ToString();
-            }
-            if (TempData["loginFail"] != null)
-            {
-                TempData["error"] = TempData["loginFail"];
             }
             return View();
         }

@@ -27,9 +27,5 @@ namespace VSMS.Models
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Per_relationship> Per_Relationships { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Permission_details> Permission_Details { get; set; }
-       
-
-
     }
 }
