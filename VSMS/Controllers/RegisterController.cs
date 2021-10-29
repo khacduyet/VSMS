@@ -12,7 +12,7 @@ using VSMS.Models.DataModels;
 
 namespace VSMS.Controllers
 {
-    public class RegisterController : Controller
+    public class RegisterController : BaseController
     {
         VSMS_Entities db = new VSMS_Entities();
         // GET: Register
@@ -39,12 +39,6 @@ namespace VSMS.Controllers
         {
             Session["customer"] = null;
             return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult ManagerMember(int id)
-        {
-            var mem = db.Members.SingleOrDefault(x=> x.Id == id);
-            return View(mem);
         }
 
         public ActionResult SaveMember(Member mem)
@@ -76,6 +70,18 @@ namespace VSMS.Controllers
             body = body.Replace("@ViewBag.ConfirmLink", url);
             body = body.ToString();
             BuildEmailTemplate("Your account is successfully created!", body, regInfo.Email);
+        }
+
+        public ActionResult ResendEmail(int id)
+        {
+            string body = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Views/Register/Template.cshtml"));
+            var regInfo = db.Members.Where(x => x.Id == id).FirstOrDefault();
+            var url = "http://localhost:63392" + Url.Action("Confirm", "Register") + "/" + id;
+            body = body.Replace("@ViewBag.ConfirmLink", url);
+            body = body.ToString();
+            BuildEmailTemplate("Your account is successfully created!", body, regInfo.Email);
+            getAlert("Check registered mailboxes to confirm email!", "warning");
+            return RedirectToAction("Index","ManagerMember");
         }
 
         public static void BuildEmailTemplate(string subText, string bodyText, string sendTo)

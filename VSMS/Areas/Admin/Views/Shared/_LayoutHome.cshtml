@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="~/Content/css/jquery.datetimepicker.min.css" rel="stylesheet" />
     @Styles.Render("~/Admin/css")
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     <!-- Tempusdominus Bootstrap 4 -->
@@ -396,6 +397,8 @@
     <!-- jQuery -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Admin/js")
+    <script src="~/Scripts/js/jquery.datetimepicker.full.min.js"></script>
+
     <script src="~/Scripts/toastr.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     @RenderSection("scripts", required: false)
