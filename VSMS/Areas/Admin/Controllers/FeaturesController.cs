@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
@@ -15,11 +16,36 @@ namespace VSMS.Areas.Admin.Controllers
     {
         private VSMS_Entities db = new VSMS_Entities();
 
+        private Repository<Feature> _feature;
+
+        public FeaturesController()
+        {
+            _feature = new Repository<Feature>();
+        }
+
+
         // GET: Admin/Features
         public ActionResult Index()
         {
             return View(db.Features.ToList());
         }
+
+        #region crud ajax
+        public JsonResult Add(Feature fea)
+        {
+            var data = _feature.Add(fea);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAllData()
+        {
+            var data = _feature.GetAll();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+
 
         // GET: Admin/Features/Details/5
         public ActionResult Details(int? id)

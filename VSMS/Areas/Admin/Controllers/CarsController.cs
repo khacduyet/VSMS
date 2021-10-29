@@ -31,10 +31,11 @@ namespace VSMS.Areas.Admin.Controllers
         {
             return View();
         }
-        //public JsonResult GetAllData()
-        //{
-
-        //}
+        public JsonResult GetAllData()
+        {
+            var data = _Car.GetAll();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Create()
         {
@@ -98,6 +99,13 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult CarFeature()
         {
             return View("CarFeature");
+        }
+
+        // phương thức show dữ liệu detail lên modal của sản phẩm
+        public JsonResult ShowDesModal(int id)
+        {
+            var data = _Car.Get(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
