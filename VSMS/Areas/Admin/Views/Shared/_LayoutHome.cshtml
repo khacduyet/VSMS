@@ -183,20 +183,20 @@
                                     if (admin != null)
                                     {
                                         var avt = admin.Avatar; var name = admin.Name;
-                                        <img src="@avt" class="img-circle elevation-2" alt="User Image">
+                                        <img src="@avt" class="img-circle elevation-2" alt="Img">
                                         <p style="padding-left:10px">@name<i style="padding: 5px 0;" class="right fas fa-angle-left"></i></p>
                                     }
                                 }
                             </a>
                             <ul class="nav nav-treeview" style="padding-left: 10px">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="@Url.Action("MyProfile","Admin")" class="nav-link">
                                         <i class="far fa-user nav-icon"></i>
                                         <p>Profile</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="@Url.Action("ChangePassword","Admin")" class="nav-link">
                                         <i class="fa fa-unlock-alt nav-icon"></i>
                                         <p>Change Password</p>
                                     </a>

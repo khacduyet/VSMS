@@ -6,12 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models.DataModels;
 using VSMS.Models.Repository;
+using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-
-
-
+    [CustomAuthorize("ADMIN","MOD")]
     public class CarsController : CommonController
     {
         private Repository<Car> _Car;

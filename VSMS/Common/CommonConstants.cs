@@ -9,6 +9,7 @@ namespace VSMS.Common
 {
     public static class CommonConstants
     {
+        // SESSION COMMON ADMIN
         public static string USER_SESSION;
         // Mã hóa mật khẩu
         public static string ParseMD5(string pass)

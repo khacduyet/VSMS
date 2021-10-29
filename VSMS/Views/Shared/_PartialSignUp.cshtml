@@ -1,0 +1,27 @@
+﻿@model VSMS.Models.DataModels.Member
+
+@Html.AntiForgeryToken()
+
+<div class="group">
+    <label for="user" class="label">Username</label>
+    <input id="user" name="UserName" type="text" class="input">
+</div>
+<div class="group">
+    <label for="pass" class="label">Password</label>
+    <input id="pass" name="PassWord" type="password" class="input" data-type="password">
+</div>
+<div class="group">
+    <label for="pass" class="label">Repeat Password</label>
+    <input id="re-pass" name="RePass" type="password" class="input" data-type="password">
+</div>
+<div class="group">
+    <label for="email" class="label">Email Address</label>
+    <input id="email" name="Email" type="text" class="input">
+</div>
+@if (ViewBag.Msg != null)
+{
+    <div class="group">
+        <!-- Error Message -->
+        <p style="color: red">@ViewBag.Msg</p>
+    </div>
+}

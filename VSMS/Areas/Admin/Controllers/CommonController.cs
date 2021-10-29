@@ -20,13 +20,9 @@ namespace VSMS.Areas.Admin.Controllers
             base.OnActionExecuting(filterContext);
         }
         // GET: Admin/Common
-        public ActionResult GetSession()
+        public ActionResult UnAuthorized()
         {
-            if (Session["admin"] == null)
-            {
-                return RedirectToAction("Login","Admin");
-            }
-            return Json(true,JsonRequestBehavior.AllowGet);
+            return View();
         }
 
     }

@@ -146,9 +146,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110260254141_t1.cs" />
-    <Compile Include="Migrations\202110260254141_t1.Designer.cs">
-      <DependentUpon>202110260254141_t1.cs</DependentUpon>
+    <Compile Include="Migrations\202110290417493_d1.cs" />
+    <Compile Include="Migrations\202110290417493_d1.Designer.cs">
+      <DependentUpon>202110290417493_d1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
@@ -167,13 +167,14 @@
     <Compile Include="Models\DataModels\Order.cs" />
     <Compile Include="Models\DataModels\OrderDetails.cs" />
     <Compile Include="Models\DataModels\Permission.cs" />
-    <Compile Include="Models\DataModels\Permission_details.cs" />
     <Compile Include="Models\DataModels\Per_relationship.cs" />
     <Compile Include="Models\DataModels\VSMS_Entities.cs" />
     <Compile Include="Models\Repository\IRepository.cs" />
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
+    <Compile Include="Models\ViewModels\MyProfile.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2383,6 +2384,9 @@
     <Content Include="Areas\Admin\Views\Cars\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Features\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Cars\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Common\UnAuthorized.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\MyProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ChangePassword.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\external\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\external\bootstrap\js\bootstrap.min.js" />
@@ -2407,6 +2411,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2448,13 +2454,13 @@
     <Content Include="Views\ManagerMember\Email.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Error\Error500.cshtml" />
-    <Content Include="Views\Error\Error401.cshtml" />
+    <Content Include="Views\Shared\_PartialSignUp.cshtml" />
+    <Content Include="Views\Shared\_PartialSignIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\Images\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Common\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
@@ -2471,8 +2477,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110260254141_t1.resx">
-      <DependentUpon>202110260254141_t1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110290417493_d1.resx">
+      <DependentUpon>202110290417493_d1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

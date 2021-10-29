@@ -164,7 +164,7 @@ D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.csproj.CopyComplete
 D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.dll
 D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.pdb
 D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.csproj.AssemblyReference.cache
-D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.csproj.GenerateResource.cache
 F:\DocumentCode\SEM III\DoAn\VSMS\VSMS\obj\Debug\VSMS.Migrations.t1.resources
 F:\DocumentCode\SEM III\DoAn\VSMS\VSMS\obj\Debug\VSMS.csproj.GenerateResource.cache
-D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.Migrations.t1.resources
+D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.Migrations.d1.resources
+D:\Project Sem III\VSMS\VSMS\obj\Debug\VSMS.csproj.GenerateResource.cache

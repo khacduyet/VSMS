@@ -35,6 +35,15 @@ namespace VSMS.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignUp([Bind(Include = "UserName, PassWord,Email")] Member mem, string RePass)
+        {
+
+            ViewBag.Msg = "Please check all fields!";
+            return PartialView("_PartialSignUp", mem);
+        }
+
         public ActionResult Logout()
         {
             Session["customer"] = null;
@@ -50,6 +59,7 @@ namespace VSMS.Controllers
             db.Members.Add(mem);
             db.SaveChanges();
             BuildEmailTemplate(mem.Id);
+            TempData["success"] = "Successfully";
             return RedirectToAction("Index", "Home");
         }
 

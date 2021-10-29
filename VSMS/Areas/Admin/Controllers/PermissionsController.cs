@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
+using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
+    [CustomAuthorize("ADMIN")]
     public class PermissionsController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();

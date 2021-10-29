@@ -771,30 +771,18 @@
                                     </div>
                                 </div>
                             </form>
-                            <form id="frmSignUp" method="post">
+                            @using (Ajax.BeginForm("SignUp", "Register", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "frmSignUp", OnSuccess = "OnSuccess" }))
+                            {
                                 <div class="sign-up-htm">
-                                    <div class="group">
-                                        <label for="user" class="label">Username</label>
-                                        <input id="user" name="UserName" type="text" class="input">
+                                    <div id="frmSignUp">
+                                        @Html.Partial("_PartialSignUp")
                                     </div>
                                     <div class="group">
-                                        <label for="pass" class="label">Password</label>
-                                        <input id="pass" name="PassWord" type="password" class="input" data-type="password">
-                                    </div>
-                                    <div class="group">
-                                        <label for="pass" class="label">Repeat Password</label>
-                                        <input id="re-pass" type="password" class="input" data-type="password">
-                                    </div>
-                                    <div class="group">
-                                        <label for="email" class="label">Email Address</label>
-                                        <input id="email" name="Email" type="text" class="input">
-                                    </div>
-                                    <div class="group">
-                                        <button type="button" class="button" id="sign-up" onclick="submitSignUp()">Sign Up</button>
+                                        <button type="submit" class="button" id="sign-up">Sign Up</button>
                                     </div>
                                     <div class="hr"></div>
                                 </div>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
@@ -811,6 +799,9 @@
 
     <script src="~/Scripts/external/jquery/jquery.min.js"></script>
     <script src="~/Scripts/external/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/external/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="~/Scripts/external/slick/slick.min.js"></script>
     <script src="~/Scripts/external/panelmenu/panelmenu.js"></script>
@@ -830,6 +821,11 @@
     <script src="~/Scripts/toastr.min.js"></script>
     <script src="~/Scripts/js/script.js"></script>
     <script src="~/Areas/Admin/Content/dist/js/script.js"></script>
+    <script>
+        function OnSuccess() {
+            $("#SiginModal").modal("hide");
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 
