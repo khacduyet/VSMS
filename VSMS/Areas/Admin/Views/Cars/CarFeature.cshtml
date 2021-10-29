@@ -5,7 +5,9 @@
 <div class="container-fluid">
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">Bootstrap Duallistbox</h3>
+            <h3 class="card-title">Feature Duallistbox</h3> <br />
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add New</button>
+            <a href="@Url.Action("Index", "Features")" class="btn btn-success">List Feature</a>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -13,18 +15,12 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label>Multiple</label>
+
                         <div class="bootstrap-duallistbox-container row moveonselect moveondoubleclick">
-                    
-                           
+
                         </div>
                         <select class="duallistbox" multiple="multiple" style="display: none;" id="featureDropdownList">
-                            <option >Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
+                           
                         </select>
 
                         <button id="addFeatureCar" class="btn btn-primary">Submit</button>
@@ -37,13 +33,76 @@
         </div>
         <!-- /.card-body -->
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Feature</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Feature Name</label>
+                            <input type="text" class="form-control" id="featureName" placeholder="Enter name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Descriptions</label>
+                            <textarea class="form-control" id="Descriptions" rows="3" placeholder="Descriptions..."></textarea>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="status">
+                            <label class="form-check-label" for="exampleCheck1">Hide/Show</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="SaveRecord">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section Scripts{
     <script>
         //Bootstrap Duallistbox
-        $('.duallistbox').bootstrapDualListbox()
+       
 
         $(document).ready(function () {
+            $('.duallistbox').bootstrapDualListbox()
+            getURL();
+
+            // show option
+            function AjaxCall(url, data, type) {
+                return $.ajax({
+                    url: url,
+                    type: type ? type : 'GET',
+                    data: data,
+                    contentType: 'application/json'
+                });
+            };
+
+            // ajax call feature
+            AjaxCall('/Features/GetAllData', null).done(function (response) {
+                console.log("oke");
+                console.log(response);
+                if (response.length > 0) {
+                    $('#featureDropdownList').html('');
+                    var options = '';
+                    $.each(response, function (key, item) {
+                        options += '<option value="' + item.Id + '">' + item.Name + '</option>';
+                    });
+                    $('#featureDropdownList').html(options);
+                }
+            }).fail(function (error) {
+                alert(error.StatusText);
+            });
+
             $('#addFeatureCar').click(function () {
                 var selected = [];
                 for (var option of document.getElementById('featureDropdownList').options) {
@@ -55,8 +114,88 @@
                 console.log(selected);
             });
 
-            // hiển thị tất cả tính năng của ô tô
+           
 
+            // Thêm mới tính năng của ô tô
+            $('#SaveRecord').click(function () {
+                var res = Validate();
+                if (res == false) {
+                    return false;
+                };
+                var stt = 1;
+                var x = $('#status').is(":checked");
+                if (!x) {
+                    stt = 0;
+                }
+                var feaOjb = {
+                    Name: $('#featureName').val(),
+                    Descriptions: $('#Descriptions').val(),
+                    Status: stt
+                };
+                console.log("oke Feature add");
+                console.log(feaOjb);
+                $.ajax({
+                    url: "/Features/Add",
+                    data: feaOjb,
+                    type: "POST",
+                    success: function (result) {
+                        console.log(result);
+                        toastr.success('Thêm mới thành công !', 'Thông báo', { timeOut: 200 });
+                        $('#ModalAdd').modal('hide');
+                    },
+                    error: function (e) {
+                        alert(e.reponseText);
+                    }
+                });
+            });
+  
+            
         });
+
+        // chức năng xử lý url 
+        function parse_query_string(query) {
+            var vars = query.split("/");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+        // xử lý url để lấy tham số id của ô tô
+        function getURL() {
+            var query_string = "" + window.location.href;
+            console.log(query_string);
+            var parsed_qs = parse_query_string(query_string);
+            console.log(parsed_qs.id); // id cua oto khi chuyen tu trang danh sach  
+
+        }
+
+        
+
+        // validate data
+        function Validate() {
+            var isValid = true;
+            if ($('#featureName').val().trim() == "") {
+                $('#featureName').css('border-color', 'red');
+                isValid = false;
+            } else {
+                $('#featureName').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
     </script>
 }
