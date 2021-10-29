@@ -10,7 +10,7 @@ using VSMS.Models;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    public class PermissionsController : Controller
+    public class PermissionsController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();
 

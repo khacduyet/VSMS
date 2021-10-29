@@ -12,7 +12,7 @@ using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    public class ManuafaturesController : Controller
+    public class ManuafaturesController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();
 

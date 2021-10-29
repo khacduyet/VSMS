@@ -12,7 +12,7 @@ namespace VSMS.Areas.Admin.Controllers
 
 
 
-    public class CarsController : Controller
+    public class CarsController : CommonController
     {
         private Repository<Car> _Car;
         private Repository<ImageProduct> _ImageProduct;

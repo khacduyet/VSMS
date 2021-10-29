@@ -46,7 +46,7 @@ namespace VSMS.Areas.Admin.Controllers
                 {
                     Session["admin"] = acc;
                     TempData["userCurrent"] = acc.Name;
-                    //Session.Add(Common.CommonConstants.USER_SESSION, acc.Name);
+                    Session.Add(Common.CommonConstants.USER_SESSION,acc);
                     return RedirectToAction("Index");
                 }
             }
