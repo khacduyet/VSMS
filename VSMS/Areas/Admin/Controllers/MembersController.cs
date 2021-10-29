@@ -11,7 +11,7 @@ using VSMS.Models.DataModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    public class MembersController : Controller
+    public class MembersController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();
 

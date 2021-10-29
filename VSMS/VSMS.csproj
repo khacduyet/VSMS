@@ -2371,7 +2371,6 @@
     <Content Include="Areas\Admin\Views\Features\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Features\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Features\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Features\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Members\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Members\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Members\Details.cshtml" />
@@ -2382,6 +2381,7 @@
     <Content Include="fonts\font\fonts\carleadera03a.woff" />
     <Content Include="Areas\Admin\Views\Cars\CarFeature.cshtml" />
     <Content Include="Areas\Admin\Views\Cars\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Features\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Cars\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\external\bootstrap-datepicker\bootstrap-datepicker.js" />

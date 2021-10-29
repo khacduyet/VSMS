@@ -12,7 +12,7 @@ using VSMS.Models.Repository;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    public class FeaturesController : Controller
+    public class FeaturesController : CommonController
     {
         private VSMS_Entities db = new VSMS_Entities();
 
