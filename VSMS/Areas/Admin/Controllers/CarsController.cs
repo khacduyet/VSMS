@@ -4,21 +4,24 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VSMS.Models;
 using VSMS.Models.DataModels;
 using VSMS.Models.Repository;
 using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    [CustomAuthorize("ADMIN","MOD")]
+    [CustomAuthorize("ADMIN", "MOD")]
     public class CarsController : CommonController
     {
+        private VSMS_Entities db;
         private Repository<Car> _Car;
         private Repository<ImageProduct> _ImageProduct;
         private Repository<ImageProductDetails> _ImageProDetails;
 
         public CarsController()
         {
+            db = new VSMS_Entities();
             _Car = new Repository<Car>();
             _ImageProduct = new Repository<ImageProduct>();
             _ImageProDetails = new Repository<ImageProductDetails>();
@@ -69,7 +72,7 @@ namespace VSMS.Areas.Admin.Controllers
 
                         // Get the complete folder path and store the file inside it.  
                         file.SaveAs(Server.MapPath("~/Content/BackEnd/Uploads/product/") + imageName);
-                        imgPro.ImageName = ("~/Content/BackEnd/Uploads/product/" + imageName);
+                        imgPro.ImageName = ("/Content/BackEnd/Uploads/product/" + imageName);
 
                         var imgProName = imgPro.ImageName;
 
@@ -100,11 +103,35 @@ namespace VSMS.Areas.Admin.Controllers
             return View("CarFeature");
         }
 
+        //  hiển thị một partial view
+        public ActionResult CarDescriptionDetails()
+        {
+            var data = _Car.GetAll();
+            return View(data);
+        }
         // phương thức show dữ liệu detail lên modal của sản phẩm
         public JsonResult ShowDesModal(int id)
         {
             var data = _Car.Get(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        // json lấy data ảnh sản phẩm
+        public JsonResult ShowImageCar(int idCar)
+        {
+            var data = from idet in db.ImageProductDetails
+                       join c in db.Cars on idet.IdProduct equals c.Id
+
+                       join ip in db.ImageProducts on idet.IdImageProduct equals ip.Id
+                       where c.Id == idCar
+                       select new
+                       {
+                           ImageName = ip.ImageName
+                       };
+            var cc = data;
+            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(new { BB = "Dogs" }, JsonRequestBehavior.AllowGet);
+                       
+        }
+
     }
 }
