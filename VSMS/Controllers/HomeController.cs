@@ -18,6 +18,18 @@ namespace VSMS.Controllers
                 TempData["info"] = "Hello " + TempData["cus"].ToString();
                 ViewBag.Name = TempData["cus"].ToString();
             }
+            if (TempData["loginFail"] != null)
+            {
+                TempData["error"] = TempData["loginFail"];
+            }
+            if (TempData["saveSc"] != null)
+            {
+                TempData["success"] = TempData["saveSc"];
+            }
+            if (TempData["SaveEr"] != null)
+            {
+                TempData["error"] = TempData["SaveEr"];
+            }
             return View();
         }
         
