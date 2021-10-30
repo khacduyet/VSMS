@@ -24,7 +24,8 @@ namespace VSMS.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "UserName, PassWord")] Member mem)
         {
-            var cus = db.Members.SingleOrDefault(x => x.UserName == mem.UserName && x.PassWord == mem.PassWord);
+            var md5 = Common.CommonConstants.ParseMD5(mem.PassWord);
+            var cus = db.Members.SingleOrDefault(x => x.UserName == mem.UserName && x.PassWord == md5);
             if (cus != null)
             {
                 TempData["cus"] = cus.UserName;
@@ -35,15 +36,6 @@ namespace VSMS.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SignUp([Bind(Include = "UserName, PassWord,Email")] Member mem, string RePass)
-        {
-
-            ViewBag.Msg = "Please check all fields!";
-            return PartialView("_PartialSignUp", mem);
-        }
-
         public ActionResult Logout()
         {
             Session["customer"] = null;
@@ -52,15 +44,22 @@ namespace VSMS.Controllers
 
         public ActionResult SaveMember(Member mem)
         {
-            mem.Address = mem.BirthDay = mem.FullName = mem.Phone = "";
-            mem.CreatedAt = DateTime.Now;
-            mem.Status = 1;
-            mem.EmailConfirmed = false;
-            db.Members.Add(mem);
-            db.SaveChanges();
-            BuildEmailTemplate(mem.Id);
-            TempData["success"] = "Successfully";
-            return RedirectToAction("Index", "Home");
+            var chk = db.Members.Where(x=> x.UserName == mem.UserName).SingleOrDefault();
+            if (chk == null)
+            {
+                mem.Address = mem.BirthDay = mem.FullName = mem.Phone = "";
+                mem.CreatedAt = DateTime.Now;
+                mem.Status = 1;
+                mem.EmailConfirmed = false;
+                mem.PassWord = Common.CommonConstants.ParseMD5(mem.PassWord);
+                db.Members.Add(mem);
+                db.SaveChanges();
+                BuildEmailTemplate(mem.Id);
+                TempData["saveSc"] = "Signup successfully!";
+                return RedirectToAction("About", "Home");
+            }
+            TempData["SaveEr"] = "User name has already!";
+            return RedirectToAction("About", "Home");
         }
 
         public ActionResult Confirm(int id)

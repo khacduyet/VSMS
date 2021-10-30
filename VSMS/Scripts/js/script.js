@@ -7,7 +7,7 @@
     var valid = validateSignUp();
 
     if (valid == false) {
-        return false
+        return false;
     }
 
     $.ajax({
@@ -21,6 +21,7 @@
         success: function (rs) {
             $("#frmSignUp")[0].reset();
             $("#SiginModal").modal("hide");
+            location.reload(true);
         },
         error: function (ex) {
             alert("fail!");
@@ -68,6 +69,16 @@ function validateSignUp() {
         isValid = false;
     }
     else {
+        $('#email').css('border', 'lightgrey');
+    }
+    var re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+    var emailFormat = re.test($("#email").val()); // This return result in Boolean type
+
+    if (!emailFormat) {
+        $('#email').css('border', '1px solid red');
+        isValid = false;
+    } else {
         $('#email').css('border', 'lightgrey');
     }
     
