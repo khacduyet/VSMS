@@ -1,54 +1,7 @@
-﻿@model IEnumerable<VSMS.Models.DataModels.Car>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
-}
-
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">List Car</h3>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Car Name</th>
-                    <th>Mode Code</th>
-                    <th>Category</th>
-                    <th>Engine</th>
-                    <th>Fuel Type</th>
-                    <th>Transmission</th>
-                    <th>Descriptions</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody class="tbody">
-            </tbody>
-        </table>
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">«</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">»</a></li>
-        </ul>
-    </div>
-</div>
-
+﻿
+<h2>cc</h2>
 <!-- Modal -->
-<div class="modal fade" id="modalDesCar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="modalDesCar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,7 +10,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="dvProductDetails">
                 <div class="card card-solid">
                     <div class="card-body">
                         <div class="row">
@@ -66,13 +19,17 @@
                                 <div class="col-12">
                                     <img src="../../dist/img/prod-1.jpg" class="product-image" alt="Product Image">
                                 </div>
-                                <div class="col-12 product-image-thumbs" id="imgPro">
-                                    
+                                <div class="col-12 product-image-thumbs">
+                                    <div class="product-image-thumb active"><img src="../../dist/img/prod-1.jpg" alt="Product Image"></div>
+                                    <div class="product-image-thumb"><img src="../../dist/img/prod-2.jpg" alt="Product Image"></div>
+                                    <div class="product-image-thumb"><img src="../../dist/img/prod-3.jpg" alt="Product Image"></div>
+                                    <div class="product-image-thumb"><img src="../../dist/img/prod-4.jpg" alt="Product Image"></div>
+                                    <div class="product-image-thumb"><img src="../../dist/img/prod-5.jpg" alt="Product Image"></div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <h3 class="my-3" id="txtCarName"></h3>
-                                <p id="txtDescription"></p>
+                                <h3 class="my-3">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
 
                                 <hr>
                                 <h4>Available Colors</h4>
@@ -136,6 +93,15 @@
                                         Xtra-Large
                                     </label>
                                 </div>
+
+                                <div class="bg-gray py-2 px-3 mt-4">
+                                    <h2 class="mb-0">
+                                        $80.00
+                                    </h2>
+                                    <h4 class="mt-0">
+                                        <small>Ex Tax: $80.00 </small>
+                                    </h4>
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -152,9 +118,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- /.card-body -->
-                </div>
+                <!--</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -163,81 +129,11 @@
         </div>
     </div>
 </div>
-
 @section Scripts{
     <script>
-
         $(document).ready(function () {
-            //load data car
-            LoadData();
-            // Lấy ra id của sản phẩm để hiển thị thông tin chi tiết lên modal
-            $(document).on("click", "#DesShow", function () {
-                var dataId = $(this).attr("data-id");
-                console.log(dataId);
-                $.ajax({
-                    url: "/Cars/ShowDesModal/" + dataId,
-                    type: "GET",
-                    success: function (data) {
-                        console.log(data);
-                        $('#txtCarName').html(data.CarName);
-                        $('#txtDescription').html(data.Descriptions);
-                        // truy vấn ajax lồng lấy ra ảnh sản phẩm
-                        $.ajax({
-                            url: "/Admin/Cars/ShowImageCar",
-                            type: "GET",
-                            data: { idCar: dataId },
-                            success: function (result) {
-                                console.log(result);
-                                var html = '';
-                                $.each(result, function (key, item) {
-                                    html += '<div class="product-image-thumb active"> <img src="' + item.ImageName + '" alt="Product Image"> </div>';
-                                });
-                                $('#imgPro').html(html);
-
-
-                            }, error: function (e) {
-                                alert(e.responseText);
-                            }
-                        });
-                    }, error: function (e) {
-                        alert(e.responseText);
-                    }
-                });
-            });
-
+            // load data
 
         });
-
-
-        // get all data
-        function LoadData() {
-            $.ajax({
-                url: "/Cars/GetAllData",
-                type: "GET",
-                success: function (data) {
-                     console.log(data);
-                    var html = '';
-                    $.each(data, function (key, item) {
-                        html += '<tr>';
-                        html += '<td>' + item.Id + '</td>';
-                        html += '<td>' + item.CarName + '</td>';
-                        html += '<td>' + item.ModeId + '</td>';
-                        html += '<td>' + item.CatId + '</td>';
-                        html += '<td>' + item.Engine + '</td>';
-                        html += '<td>' + item.FuelType + '</td>';
-                        html += '<td>' + item.Transmission + '</td>';
-                        html += '<td class="text-center" data-toggle="modal" data-target="#modalDesCar"><a href="javascript:void(0)" id="DesShow" data-id="' + item.Id + '" class="btn btn-info"><i class="fas fa-eye"></i></a></td>';
-                        html += '<td>' + (item.Status == 1 ? 'Hiện' : 'Ẩn') + '</td>';
-                        html += '<td> <a id="edit" class ="fa fas-edit" href = "javascript:void(0)"  data-id="' + item.Id + '" > Edit </a> | <a class="del" href = "javascript:void(0)" data-id="' + item.Id + '" > Delete </a> | <a class="del" href = "/Admin/Cars/CarFeature/id=' + item.Id + '"  > Add Feature </a></td>';
-                        html += '</tr>';
-                    });
-                    $('.tbody').html(html);
-
-                }, error: function (e) {
-                    alert(e.responseText);
-                }
-            });
-        };
-
     </script>
-}
+}-->
