@@ -14,8 +14,8 @@ namespace VSMS.Areas.Admin.Controllers
             var session = (Models.Admin)Session[Common.CommonConstants.USER_SESSION];
             if (session == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new 
-                    System.Web.Routing.RouteValueDictionary( new { Controller = "Admin", Action = "Login", Area = "Admin"}));
+                filterContext.Result = new RedirectToRouteResult(new
+                    System.Web.Routing.RouteValueDictionary(new { Controller = "Admin", Action = "Login", Area = "Admin" }));
             }
             base.OnActionExecuting(filterContext);
         }

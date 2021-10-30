@@ -172,6 +172,7 @@
     <Compile Include="Models\Repository\IRepository.cs" />
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\CarDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
     <Compile Include="Models\ViewModels\MyProfile.cs" />
@@ -2387,6 +2388,7 @@
     <Content Include="Areas\Admin\Views\Common\UnAuthorized.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\MyProfile.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Cars\CarDescriptionDetails.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\external\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\external\bootstrap\js\bootstrap.min.js" />
@@ -2461,6 +2463,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\Images\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\BackEnd\Uploads\product\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

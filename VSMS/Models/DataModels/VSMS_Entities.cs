@@ -18,6 +18,8 @@ namespace VSMS.Models
         public DbSet<Car> Cars{ get; set; }
         public DbSet<CarDetails> CarDetails{ get; set; }
         public DbSet<Feature> Features{ get; set; } 
+        public DbSet<ImageProduct> ImageProducts{ get; set; } 
+        public DbSet<ImageProductDetails> ImageProductDetails{ get; set; } 
         public DbSet<Category> Categories{ get; set; } 
         public DbSet<DriveTest> DriveTests{ get; set; } 
         public DbSet<Member> Members{ get; set; } 
