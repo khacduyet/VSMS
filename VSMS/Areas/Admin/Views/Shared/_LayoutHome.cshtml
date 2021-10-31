@@ -13,6 +13,7 @@
     <link href="~/Content/css/jquery.datetimepicker.min.css" rel="stylesheet" />
     @Styles.Render("~/Admin/css")
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/chosen.css" rel="stylesheet" />
     <!-- Tempusdominus Bootstrap 4 -->
     <style>
         #menu .nav-item .nav-treeview {
@@ -179,7 +180,7 @@
                     <ul id="infoAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                @{ 
+                                @{
                                     if (admin != null)
                                     {
                                         var avt = admin.Avatar; var name = admin.Name;
@@ -232,7 +233,7 @@
                     <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Manuafatures" || ViewContext.RouteData.Values["controller"].ToString() == "Modes" || ViewContext.RouteData.Values["controller"].ToString() == "Categories")?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="fab fa-autoprefixer nav-icon"></i>
                                 <p>
@@ -242,62 +243,50 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Manuafatures")" class="nav-link">
+                                    <a href="@Url.Action("Index", "Manuafatures")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Manuafatures")?"active":"")">
                                         <i class="fas fa-cog  nav-icon"></i>
                                         <p>Manufacturer</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Modes")" class="nav-link">
+                                    <a href="@Url.Action("Index", "Modes")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Modes")?"active":"")">
                                         <i class="fab fa-monero  nav-icon"></i>
                                         <p>Modes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Categories")" class="nav-link">
+                                    <a href="@Url.Action("Index", "Categories")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Categories")?"active":"")">
                                         <i class="fab fa-cuttlefish  nav-icon"></i>
                                         <p>Categories</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Cars")?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Feature Management
+                                    Car Management
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-copy"></i>
-                                        <p>
-                                            Car Management
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
+                                    <a href="@Url.Action("Index", "Cars")" class="nav-link @((ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Cars" )?"active":"")">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Car List</p>
                                     </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", "Cars")" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Car List</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("CarFeature", "Cars")" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Car Feature</p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("CarFeature", "Cars")" class="nav-link @((ViewContext.RouteData.Values["action"].ToString() == "CarFeature")?"active":"")">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Car Feature</p>
+                                    </a>
                                 </li>
 
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Account" || ViewContext.RouteData.Values["controller"].ToString() == "Permissions" )?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tasks"></i>
                                 <p>
@@ -308,20 +297,20 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index","Account")" class="nav-link">
+                                    <a href="@Url.Action("Index","Account")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Account")?"active":"")">
                                         <i class="fas fa-users nav-icon"></i>
                                         <p>Account</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index","Permissions")" class="nav-link">
+                                    <a href="@Url.Action("Index","Permissions")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Permissions")?"active":"")">
                                         <i class="fab fa-critical-role nav-icon"></i>
                                         <p>Permission</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Members")?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-folder"></i>
                                 <p>
@@ -332,9 +321,33 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index","Members")" class="nav-link">
+                                    <a href="@Url.Action("Index","Members")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Members")?"active":"")">
                                         <i class="fas fa-user nav-icon"></i>
                                         <p>Member</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Tags" || ViewContext.RouteData.Values["controller"].ToString() == "Posts" )?"menu-open":"")">
+                            <a href="#" class="nav-link">
+                                <i class=" nav-icon fas fa-th"></i>
+                                <p>
+                                    Blogs
+                                    <i class=" fas fa-angle-left right"></i>
+                                    @*<span class="badge badge-info right">6</span>*@
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Posts")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Posts")?"active":"")">
+                                        <i class=" nav-icon  fab fa-blogger-b"></i>
+                                        <p>Blogs</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Tags")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Tags")?"active":"")">
+                                        <i class=" nav-icon fas fa-tags"></i>
+                                        <p>Tags</p>
                                     </a>
                                 </li>
                             </ul>
@@ -399,7 +412,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Admin/js")
     <script src="~/Scripts/js/jquery.datetimepicker.full.min.js"></script>
-
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/toastr.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     @RenderSection("scripts", required: false)

@@ -36,62 +36,69 @@ namespace VSMS.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Services()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult ServicesItem()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult Inventory()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult InventoryItem()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult Blog()
         {
-            ViewBag.Message = "Your application description page.";
-            return View();
+            var posts = db.Posts;
+            ViewBag.tags = db.Tags.Take(10);
+            return View(posts);
         }
-        public ActionResult BlogSingle()
+        public ActionResult BlogSingle(int id)
         {
-            ViewBag.Message = "Your application description page.";
-            return View();
+            var post = db.Posts.Find(id);
+            ViewBag.tags = db.Tags.Take(10);
+            ViewBag.posts = db.Posts;
+            var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
+            pt.selectedIdArray = pt.TagId.Split(',').ToArray();
+            List<int> num = new List<int>();
+            foreach (var item in pt.selectedIdArray)
+            {
+                num.Add(Int16.Parse(item));
+            }
+            List<Tags> listTag = new List<Tags>();
+            foreach (var item in num)
+            {
+                var tags = db.Tags.Find(item);
+                listTag.Add(tags);
+            }
+            ViewBag.tag = listTag;
+            return View(post);
         }
 
         public ActionResult Shop()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult Faq()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

@@ -1,0 +1,43 @@
+﻿@model VSMS.Models.DataModels.post_tag
+
+@{
+    ViewBag.Title = "SetTags";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+<h2>SetTags</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Post</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model=>model.Id)
+        <input type="text" hidden name="PostId" value="@ViewBag.postId" />
+
+        <div class="form-group">
+            <label>Tags</label>
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.selectedIdArray,(MultiSelectList)ViewBag.Tags, new {@id= "selectTags" ,@class = "form-control", @multiple = "multiple" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-warning"})
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $("#selectTags").chosen();
+    </script>
+}
