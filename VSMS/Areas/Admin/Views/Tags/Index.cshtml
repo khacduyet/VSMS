@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VSMS.Models.DataModels.Tags>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null, new { @class="btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Slug)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Slug)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit","Tags", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            <a href="@Url.Action("Details","Tags", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+            <a href="@Url.Action("Delete","Tags", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+}
+
+</table>

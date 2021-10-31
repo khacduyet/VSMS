@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using VSMS.Models.DataModels;
 
 namespace VSMS.Models
 {
@@ -34,5 +35,6 @@ namespace VSMS.Models
         public bool Status { get; set; }
 
         public ICollection<Per_relationship> Per_relationship { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }

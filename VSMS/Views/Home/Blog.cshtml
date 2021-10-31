@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<VSMS.Models.DataModels.Post>
 @{
     ViewBag.Title = "Blog";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,104 +22,34 @@
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-9 blog-center-right">
                     <div class="tt-listing-post">
-                        <div class="tt-post">
-                            <div class="tt-post-img">
-                                <a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_01.jpg" alt=""></a>
-                            </div>
-                            <div class="tt-post-content">
-                                <div class="tt-meta">
-                                    <div class="tt-time">
-                                        <span>16</span>
-                                        Apr
+                        @foreach (var item in Model)
+                        {
+                            var day = item.CreatedAt.Day; 
+                            var month = item.CreatedAt.ToString("MMM");
+                            <div class="tt-post">
+                                <div class="tt-post-img">
+                                    <a href="@Url.Action("BlogSingle","Home", new { id= item.Id})"><img src="@item.Image" alt=""></a>
+                                </div>
+                                <div class="tt-post-content">
+                                    <div class="tt-meta">
+                                        <div class="tt-time">
+                                            <span>@day</span>
+                                            @month
+                                        </div>
+                                        <div class="tt-autor">
+                                            Written by <span>Admin</span>
+                                        </div>
                                     </div>
-                                    <div class="tt-autor">
-                                        Written by <span>Admin</span>
+                                    <h2 class="tt-title"><a href="@Url.Action("BlogSingle","Home", new { id= item.Id})">@item.Title</a></h2>
+                                    <div class="tt-description">
+                                        @item.Summary
                                     </div>
-                                </div>
-                                <h2 class="tt-title"><a href="blog-single-post.html">5 Important CRM Trends That Will Rev Up Business</a></h2>
-                                <div class="tt-description">
-                                    CRM trends come and go in the automotive industry, but these five are sure to improve your bottom line – and that’s a trend we can all appreciate.
-                                </div>
-                                <div class="tt-btn">
-                                    <a href="blog-single-post.html" class="tt-link">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tt-post">
-                            <div class="tt-post-img">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/bQz2Er3K8t8" allowfullscreen></iframe>
+                                    <div class="tt-btn">
+                                        <a href="@Url.Action("BlogSingle","Home", new { id= item.Id})" class="tt-link">read more</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tt-post-content">
-                                <div class="tt-meta">
-                                    <div class="tt-time">
-                                        <span>25</span>
-                                        Apr
-                                    </div>
-                                    <div class="tt-autor">
-                                        Written by <span>Admin</span>
-                                    </div>
-                                </div>
-                                <h2 class="tt-title"><a href="blog-single-post.html">7 of the Best Car Salesman Tips for New Hires</a></h2>
-                                <div class="tt-description">
-                                    These car salesman tips are just what you need to help train new hires. It doesn’t matter who you employ; both experienced and amateur salespeople need training, and it’s your job to give them car salesman tips that will help them succeed at your dealership.
-                                </div>
-                                <div class="tt-btn">
-                                    <a href="blog-single-post.html" class="tt-link">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tt-post">
-                            <div class="tt-post-content">
-                                <div class="tt-meta">
-                                    <div class="tt-time">
-                                        <span>28</span>
-                                        Apr
-                                    </div>
-                                    <div class="tt-autor">
-                                        Written by <span>Admin</span>
-                                    </div>
-                                </div>
-                                <h2 class="tt-title"><a href="#">Prepping for the Walking Dead? Prep for the Retailpocalypse Instead!</a></h2>
-                                <div class="tt-description">
-                                    It doesn’t matter who you employ; both experienced and amateur salespeople need training, and it’s your job to give them car salesman tips that will help them succeed at your dealership.
-                                    <blockquote class="tt-blockquote">
-                                        The automotive industry is undergoing a dramatic transformation. Even longtime automotive executives like Bob Lutz think dealerships are ultimately doomed. And auto retail isn’t alone. Retail as a whole is in the midst of a crisis, with brands like Toys ‘R’ Us, American Apparel, and Claire’s declaring bankruptcy. These days, it seems we’re all attached at the hip to our smartphones. We rely on them for just about everything — shopping, reading, communicating, working and being entertained. Every driver should important to do some research before making any purchases. Understanding Auto…
-                                    </blockquote>
-                                </div>
-                                <div class="tt-btn">
-                                    <a href="blog-single-post.html" class="tt-link">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tt-post">
-                            <div class="tt-post-img">
-                                <div class="tt-slick-slider tt-slick-nav01" data-slick='{"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true,}'>
-                                    <div><a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_03.jpg" alt=""></a></div>
-                                    <div><a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_04.jpg" alt=""></a></div>
-                                    <div><a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_05.jpg" alt=""></a></div>
-                                </div>
-                            </div>
-                            <div class="tt-post-content">
-                                <div class="tt-meta">
-                                    <div class="tt-time">
-                                        <span>29</span>
-                                        Apr
-                                    </div>
-                                    <div class="tt-autor">
-                                        Written by <span>Admin</span>
-                                    </div>
-                                </div>
-                                <h2 class="tt-title"><a href="blog-single-post.html">How to Make a Vehicle Inventory Management Checklist</a></h2>
-                                <div class="tt-description">
-                                    A vehicle inventory management checklist will help you create flawless listings and stand out from the thousands of other dealerships online.
-                                </div>
-                                <div class="tt-btn">
-                                    <a href="blog-single-post.html" class="tt-link">read more</a>
-                                </div>
-                            </div>
-                        </div>
+                        }
                         <div class="tt-post">
                             <div class="tt-post-img">
                                 <div class="tt-post-music">
@@ -145,116 +75,52 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tt-post">
-                            <div class="tt-post-img">
-                                <a class="tt-img-link" target="_blank" href="www.yourlinktosite.html">
-                                    <span class="tt-wrapper-text"><i class="icon-3665"></i>www.yourlinktosite.com</span>
-                                    <img src="~/Content/images/blog/blog_img_06.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="tt-post-content">
-                                <div class="tt-meta">
-                                    <div class="tt-time">
-                                        <span>1</span>
-                                        MAY
-                                    </div>
-                                    <div class="tt-autor">
-                                        Written by <span>Admin</span>
-                                    </div>
-                                </div>
-                                <h2 class="tt-title"><a href="blog-single-post.html">How to use a Dealer Swap to Increase Sales</a></h2>
-                                <div class="tt-description">
-                                    It doesn’t matter who you employ; both experienced and amateur salespeople need training, and it’s your job to give them car salesman tips that will help them succeed at your dealership.
-                                </div>
-                                <div class="tt-btn">
-                                    <a href="blog-single-post.html" class="tt-link">read more</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4 col-lg-3 rightColumn">
                     <div class="tt-block02-aside">
-                        <h3 class="tt-block02-title">Post Categories</h3>
-                        <div class="tt-block02-content">
-                            <ul class="tt-list-arrow">
-                                <li><a href="#">Audios (2)</a></li>
-                                <li><a href="#">Daily Inspiration (7)</a></li>
-                                <li><a href="#">Freelance (3)</a></li>
-                                <li><a href="#">Links (1)</a></li>
-                                <li><a href="#">Mobile (1)</a></li>
-                                <li><a href="#">Photography (5)</a></li>
-                                <li><a href="#">Quotes (1)</a></li>
-                                <li><a href="#">Resources (3)</a></li>
-                                <li><a href="#">Status (1)</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tt-block02-aside">
                         <h3 class="tt-block02-title">Popular Tags</h3>
                         <div class="tt-block02-content">
                             <ul class="tt-list-box">
-                                <li><a href="#">car dealership</a></li>
-                                <li><a href="#">used cars</a></li>
-                                <li><a href="#">new cars</a></li>
-                                <li><a href="#">automobile</a></li>
-                                <li><a href="#">sales</a></li>
-                                <li><a href="#">car finance</a></li>
-                                <li><a href="#">trade-in service</a></li>
-                                <li><a href="#">test drive</a></li>
-                                <li><a href="#">pre-sale preparation</a></li>
+                                @foreach (var item in ViewBag.tags)
+                                {
+                                    <li><a href="#">@item.Slug</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
                     <div class="tt-block02-aside">
                         <h3 class="tt-block02-title">Featured Posts</h3>
                         <div class="tt-block02-content">
-                            <div class="tt-post">
-                                <div class="tt-post-img">
-                                    <a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_07.jpg" alt=""></a>
-                                </div>
-                                <div class="tt-post-content">
-                                    <div class="tt-meta">
-                                        <div class="tt-time">
-                                            <span>16</span>
-                                            Apr
-                                        </div>
-                                        <div class="tt-autor">
-                                            Written by <span>Admin</span>
-                                        </div>
+                            @foreach (var item in Model)
+                            {
+                                var day = item.CreatedAt.Day;
+                                var month = item.CreatedAt.ToString("MMM");
+                                <div class="tt-post">
+                                    <div class="tt-post-img">
+                                        <a href="@Url.Action("BlogSingle","Home", new { id= item.Id})"><img src="@item.Image" alt=""></a>
                                     </div>
-                                    <h2 class="tt-title"><a href="blog-single-post.html">5 of the Most Useful Auto Industry Trends for an  Efficient Dealership</a></h2>
-                                    <div class="tt-description">
-                                        5 of the Most Useful Auto Industry Trends for an Efficient Dealership
-                                    </div>
-                                    <div class="tt-btn">
-                                        <a href="#" class="tt-link">read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tt-post">
-                                <div class="tt-post-img">
-                                    <a href="blog-single-post.html"><img src="~/Content/images/blog/blog_img_08.jpg" alt=""></a>
-                                </div>
-                                <div class="tt-post-content">
-                                    <div class="tt-meta">
-                                        <div class="tt-time">
-                                            <span>18</span>
-                                            Apr
+                                    <div class="tt-post-content">
+                                        <div class="tt-meta">
+                                            <div class="tt-time">
+                                                <span>@day</span>
+                                                @month
+                                            </div>
+                                            <div class="tt-autor">
+                                                Written by <span>Admin</span>
+                                            </div>
                                         </div>
-                                        <div class="tt-autor">
-                                            Written by <span>Admin</span>
+                                        <h2 class="tt-title"><a href="@Url.Action("BlogSingle","Home", new { id= item.Id})">@item.Title</a></h2>
+                                        <div class="tt-description">
+                                            @item.Summary
+                                        </div>
+                                        <div class="tt-btn">
+                                            <a href="@Url.Action("BlogSingle","Home", new { id= item.Id})" class="tt-link">read more</a>
                                         </div>
                                     </div>
-                                    <h2 class="tt-title"><a href="blog-single-post.html">7 of the Best Car Salesman Tips for New Hires</a></h2>
-                                    <div class="tt-description">
-                                        CRM trends come and go in the automotive industry, but these five are sure to improve your bottom line – and that’s a trend we can all appreciate.
-                                    </div>
-                                    <div class="tt-btn">
-                                        <a href="#" class="tt-link">read more</a>
-                                    </div>
                                 </div>
-                            </div>
+                            }
+
                         </div>
                     </div>
                 </div>

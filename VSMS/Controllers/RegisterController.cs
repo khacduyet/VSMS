@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.POIFS.Crypt;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -24,7 +25,7 @@ namespace VSMS.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "UserName, PassWord")] Member mem)
         {
-            var md5 = Common.CommonConstants.ParseMD5(mem.PassWord);
+            var md5 = Encryptor(mem.PassWord);
             var cus = db.Members.SingleOrDefault(x => x.UserName == mem.UserName && x.PassWord == md5);
             if (cus != null)
             {

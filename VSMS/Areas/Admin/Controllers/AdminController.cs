@@ -19,7 +19,7 @@ namespace VSMS.Areas.Admin.Controllers
     {
         private VSMS_Entities db = new VSMS_Entities();
         // GET: Admin/Admin
-        
+
         public ActionResult Index()
         {
             if (Session["admin"] == null)
@@ -109,11 +109,13 @@ namespace VSMS.Areas.Admin.Controllers
             {
                 @TempData["error"] = "Old Password incorrect!";
                 return View(admin);
-            } else if (Password.Equals("") || ConPass.Equals(""))
+            }
+            else if (Password.Equals("") || ConPass.Equals(""))
             {
                 @TempData["error"] = "Password field not null!";
                 return View(admin);
-            } else if (!Password.Equals(ConPass))
+            }
+            else if (!Password.Equals(ConPass))
             {
                 @TempData["error"] = "Confirm password incorrect!";
                 return View(admin);
@@ -147,9 +149,14 @@ namespace VSMS.Areas.Admin.Controllers
                 var acc = db.Admins.SingleOrDefault(x => x.Username == admin.Username && x.Password == passMD5);
                 if (acc != null)
                 {
+                    if (acc.Status == false)
+                    {
+                        ViewBag.Error = "Your account has locked!";
+                        return View();
+                    }
                     Session["admin"] = acc;
                     TempData["userCurrent"] = acc.Name;
-                    Session.Add(Common.CommonConstants.USER_SESSION,acc);
+                    Session.Add(Common.CommonConstants.USER_SESSION, acc);
                     return RedirectToAction("Index");
                 }
             }
