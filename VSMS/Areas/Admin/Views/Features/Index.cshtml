@@ -8,8 +8,10 @@
 <h2>Index</h2>
 
 <p>
-    <a href="@Url.Action("CarFeature", "Cars")" class="btn btn-success">Add Feature Car</a>
+    <a href="@Url.Action("Index", "Cars")" class="btn btn-success">Add Feature Car</a>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add New</button>
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -46,3 +48,86 @@
     }
 
 </table>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create New Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Feature Name</label>
+                        <input type="text" class="form-control" id="featureName" placeholder="Enter name...">
+                    </div>
+                    <div class="form-group">
+                        <label>Descriptions</label>
+                        <textarea class="form-control" id="Descriptions" rows="3" placeholder="Descriptions..."></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="status">
+                        <label class="form-check-label" for="exampleCheck1">Hide/Show</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveRecord">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Thêm mới tính năng của ô tô
+            $('#SaveRecord').click(function () {
+                var res = Validate();
+                if (res == false) {
+                    return false;
+                };
+                var stt = 1;
+                var x = $('#status').is(":checked");
+                if (!x) {
+                    stt = 0;
+                }
+                var feaOjb = {
+                    Name: $('#featureName').val(),
+                    Descriptions: $('#Descriptions').val(),
+                    Status: stt
+                };
+                console.log("oke Feature add");
+                console.log(feaOjb);
+                $.ajax({
+                    url: "/Features/Add",
+                    data: feaOjb,
+                    type: "POST",
+                    success: function (result) {
+                        console.log(result);
+                        toastr.success('Thêm mới thành công !', 'Thông báo', { timeOut: 200 });
+                        $('#ModalAdd').modal('hide');
+                    },
+                    error: function (e) {
+                        alert(e.reponseText);
+                    }
+                });
+            });
+
+        });
+        // validate data
+        function Validate() {
+            var isValid = true;
+            if ($('#featureName').val().trim() == "") {
+                $('#featureName').css('border-color', 'red');
+                isValid = false;
+            } else {
+                $('#featureName').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+    </script>
+    }

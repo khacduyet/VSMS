@@ -36,7 +36,10 @@ namespace VSMS
                       "~/Areas/Admin/Content/plugins/summernote/summernote-bs4.min.css",
                       "~/Areas/Admin/Content/plugins/select2/css/select2.min.css",
                       "~/Areas/Admin/Content/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css",
-                      "~/Areas/Admin/Content/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css"
+                      "~/Areas/Admin/Content/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css",
+                      "~/Areas/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css",
+                      "~/Areas/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css",
+                      "~/Areas/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css"
                       )) ;
             bundles.Add(new ScriptBundle("~/Admin/js").Include(
                       "~/Areas/Admin/Content/plugins/jquery/jquery.min.js",
@@ -55,6 +58,18 @@ namespace VSMS
                       "~/Areas/Admin/Content/plugins/select2/js/select2.full.min.js",
                       "~/Areas/Admin/Content/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",
                       "~/Areas/Admin/Content/dist/js/adminlte.js",
+                      "~/Areas/Admin/Content/plugins/datatables/jquery.dataTables.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js",
+                      "~/Areas/Admin/Content/plugins/jszip/jszip.min.js",
+                      "~/Areas/Admin/Content/plugins/pdfmake/pdfmake.min.js",
+                      "~/Areas/Admin/Content/plugins/pdfmake/vfs_fonts.js",
+                      "~/Areas/Admin/Content/plugins/datatables-buttons/js/buttons.html5.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-buttons/js/buttons.print.min.js",
+                      "~/Areas/Admin/Content/plugins/datatables-buttons/js/buttons.colVis.min.js",
                       "~/Areas/Admin/Content/dist/js/demo.js",
                       "~/Areas/Admin/Content/dist/js/pages/dashboard.js"
                       ));

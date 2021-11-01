@@ -1,29 +1,39 @@
 ﻿@{
     ViewBag.Title = "CarFeature";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+    
 }
 <div class="container-fluid">
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">Feature Duallistbox</h3> <br />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add New</button>
+            <br />
             <a href="@Url.Action("Index", "Features")" class="btn btn-success">List Feature</a>
         </div>
+        <span class="text-danger">@TempData["error"]</span>
         <!-- /.card-header -->
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="form-group">
-                        <label>Multiple</label>
+                    <h3>Feature of Car</h3>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Feature Name</th>
+                                </tr>
+                            </thead>
+                           <tbody class="bodyFeature">
 
-                        <div class="bootstrap-duallistbox-container row moveonselect moveondoubleclick">
-
-                        </div>
-                        <select class="duallistbox" multiple="multiple" style="display: none;" id="featureDropdownList">
-                           
-                        </select>
-
-                        <button id="addFeatureCar" class="btn btn-primary">Submit</button>
+                           </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Feature Name</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <button id="addFeatureToCar" class="btn btn-primary">Add Feature Car</button>
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -34,47 +44,32 @@
         <!-- /.card-body -->
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New Feature</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label>Feature Name</label>
-                            <input type="text" class="form-control" id="featureName" placeholder="Enter name...">
-                        </div>
-                        <div class="form-group">
-                            <label>Descriptions</label>
-                            <textarea class="form-control" id="Descriptions" rows="3" placeholder="Descriptions..."></textarea>
-                        </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="status">
-                            <label class="form-check-label" for="exampleCheck1">Hide/Show</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="SaveRecord">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @section Scripts{
     <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script>
         //Bootstrap Duallistbox
-       
+
 
         $(document).ready(function () {
-            $('.duallistbox').bootstrapDualListbox()
+            $('.duallistbox').bootstrapDualListbox();
+
             getURL();
 
             // show option
@@ -87,72 +82,11 @@
                 });
             };
 
-            // ajax call feature
-            AjaxCall('/Features/GetAllData', null).done(function (response) {
-                console.log("oke");
-                console.log(response);
-                if (response.length > 0) {
-                    $('#featureDropdownList').html('');
-                    var options = '';
-                    $.each(response, function (key, item) {
-                        options += '<option value="' + item.Id + '">' + item.Name + '</option>';
-                    });
-                    $('#featureDropdownList').html(options);
-                }
-            }).fail(function (error) {
-                alert(error.StatusText);
-            });
+            LoadDataCheckBox();
 
-            $('#addFeatureCar').click(function () {
-                var selected = [];
-                for (var option of document.getElementById('featureDropdownList').options) {
-                    if (option.selected) {
-                        selected.push(option.value);
-                    }
-                }
-                //var value = $('#featureDropdownList option:selected').val();
-                console.log(selected);
-            });
-
-           
-
-            // Thêm mới tính năng của ô tô
-            $('#SaveRecord').click(function () {
-                var res = Validate();
-                if (res == false) {
-                    return false;
-                };
-                var stt = 1;
-                var x = $('#status').is(":checked");
-                if (!x) {
-                    stt = 0;
-                }
-                var feaOjb = {
-                    Name: $('#featureName').val(),
-                    Descriptions: $('#Descriptions').val(),
-                    Status: stt
-                };
-                console.log("oke Feature add");
-                console.log(feaOjb);
-                $.ajax({
-                    url: "/Features/Add",
-                    data: feaOjb,
-                    type: "POST",
-                    success: function (result) {
-                        console.log(result);
-                        toastr.success('Thêm mới thành công !', 'Thông báo', { timeOut: 200 });
-                        $('#ModalAdd').modal('hide');
-                    },
-                    error: function (e) {
-                        alert(e.reponseText);
-                    }
-                });
-            });
-  
-            
         });
 
-        // chức năng xử lý url 
+        // chức năng xử lý url
         function parse_query_string(query) {
             var vars = query.split("/");
             var query_string = {};
@@ -180,22 +114,76 @@
             var query_string = "" + window.location.href;
             console.log(query_string);
             var parsed_qs = parse_query_string(query_string);
-            console.log(parsed_qs.id); // id cua oto khi chuyen tu trang danh sach  
-
+            var idCar = parsed_qs.id;
+            if (idCar == null) {
+                toastr.error('Id của ô tô không tìm thấy !', 'Thông báo', { timeOut: 2000 });
+            } else {
+                AddFeatureCar(idCar);
+            }
         }
+
+
 
         
 
-        // validate data
-        function Validate() {
-            var isValid = true;
-            if ($('#featureName').val().trim() == "") {
-                $('#featureName').css('border-color', 'red');
-                isValid = false;
-            } else {
-                $('#featureName').css('border-color', 'lightgrey');
-            }
-            return isValid;
+        //Chức năng load data featute theo id ô tô checkbox
+
+        function LoadDataCheckBox() {
+            $.ajax({
+                url: "/Admin/Features/GetAllData",
+                type: "GET",
+                success: function (result) {
+                    console.log(result);
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td > <div class="form-group form-check"> <input type="checkbox" class="form-check-input" value="' + item.Id +'" id="featureSelected"> <label class="form-check-label">' + item.Id + '</label> </div> </td>';
+                        html += '<td>' + item.Name + '</td>';
+                        html += '</tr>';
+                    });
+                    /*DataTables instantiation.*/
+                    $(".bodyFeature").html(html);
+
+                }, error: function (e) {
+                    alert(e.responseText);
+                }
+            })
+
+        }
+
+        function AddFeatureCar(idCar) {
+            $('#addFeatureToCar').click(function () {
+                var _idCar = idCar;
+                var list = []
+                $("#example1 :checked").each(function (i, e) {
+                    list.push($(this).attr("value"));
+                })
+                var formData = new FormData;
+                for (var i = 0; i < list.length; i++) {
+                    formData.append('list[]', list[i]);
+                }
+                formData.append('IdCar', _idCar);
+                $.ajax({
+                    url: '@Url.Action("CreateFeatureDetails", "Cars")',
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: formData,
+                    success: function (rs) {
+                        //location.reload(true);
+                        if (rs.thangdog == 1) {
+                            toastr.error('Duplicate feature with code ' + rs.IdFeature, 'Thông báo', { timeOut: 2000 });
+                        } else {
+                            toastr.success('Add Feature Seccess', 'Thông báo', { timeOut: 2000 });
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
+
+            });
         }
     </script>
 }
