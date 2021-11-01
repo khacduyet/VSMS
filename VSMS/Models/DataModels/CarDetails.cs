@@ -24,5 +24,16 @@ namespace VSMS.Models.DataModels
 
         public Car Car{ get; set; }
         public Feature Feature{ get; set; }
+
+        public CarDetails()
+        {
+        }
+
+        public CarDetails(int idCar, int idFeature, string content)
+        {
+            IdCar = idCar;
+            IdFeature = idFeature;
+            Content = content;
+        }
     }
 }

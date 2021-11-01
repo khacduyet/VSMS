@@ -149,18 +149,15 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ManagerMemberController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110290417493_d1.cs" />
-    <Compile Include="Migrations\202110290417493_d1.Designer.cs">
-      <DependentUpon>202110290417493_d1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110310917326_d2.cs" />
-    <Compile Include="Migrations\202110310917326_d2.Designer.cs">
-      <DependentUpon>202110310917326_d2.cs</DependentUpon>
+    <Compile Include="Migrations\202111010323112_d1.cs" />
+    <Compile Include="Migrations\202111010323112_d1.Designer.cs">
+      <DependentUpon>202111010323112_d1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
@@ -3052,11 +3049,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110290417493_d1.resx">
-      <DependentUpon>202110290417493_d1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110310917326_d2.resx">
-      <DependentUpon>202110310917326_d2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111010323112_d1.resx">
+      <DependentUpon>202111010323112_d1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,6 +16,7 @@ namespace VSMS.Areas.Admin.Controllers
     {
         private VSMS_Entities db;
         private Repository<Car> _Car;
+        private Repository<CarDetails> _carDetails;
         private Repository<ImageProduct> _ImageProduct;
         private Repository<ImageProductDetails> _ImageProDetails;
 
@@ -25,6 +26,7 @@ namespace VSMS.Areas.Admin.Controllers
             _Car = new Repository<Car>();
             _ImageProduct = new Repository<ImageProduct>();
             _ImageProDetails = new Repository<ImageProductDetails>();
+            _carDetails = new Repository<CarDetails>();
         }
 
 
@@ -128,9 +130,59 @@ namespace VSMS.Areas.Admin.Controllers
                            ImageName = ip.ImageName
                        };
             var cc = data;
+            return Json(data, JsonRequestBehavior.AllowGet);           
+        }
+
+        // json lấy data tính năng của ô tô
+        public JsonResult ShowFeatureCar(int idCar)
+        {
+            var data = from cd in db.CarDetails
+                       join c in db.Cars on cd.IdCar equals c.Id
+
+                       join ft in db.Features on cd.IdFeature equals ft.Id
+                       where c.Id == idCar
+                       select new
+                       {
+                           Id = ft.Id,
+                           Name = ft.Name
+                       };
             return Json(data, JsonRequestBehavior.AllowGet);
-            return Json(new { BB = "Dogs" }, JsonRequestBehavior.AllowGet);
-                       
+        }
+        // thêm tính năng cho ô tô
+        public ActionResult CreateFeatureDetails(int idCar, int[] list) 
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                int  IdFeature = list[i];
+                // kiem tra trung id
+                var idCheck = db.CarDetails.Where(x => x.IdFeature == IdFeature && x.IdCar == idCar).FirstOrDefault();
+                if (idCheck != null)
+                {
+                    // @TempData["error"] = "Feature có mã bằng " + IdFeature + "đã tồn tại";
+                    // return RedirectToAction("CarFeature");
+                    // Chạy thử xem
+                    return Json(new { thangdog = 1, IdFeature }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var data = new CarDetails(idCar, IdFeature, "descript");
+                    _carDetails.Add(data);
+                }
+               
+            }
+            return RedirectToAction("Index");
+        }
+
+        // chức năng xóa một tính năng của sản phẩm
+        public ActionResult DeleteFeatureByCar(int idCar, int idFeature)
+        {
+            var data = db.CarDetails.Where(x => x.IdFeature == idFeature && x.IdCar == idCar).FirstOrDefault();
+            var _del = _carDetails.Remove(data.Id);
+            if (_del)
+            {
+                return Json(new { check = 1, idFeature }, JsonRequestBehavior.AllowGet);
+            }
+            return RedirectToAction("Index");
         }
 
     }

@@ -45,6 +45,12 @@ namespace VSMS.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult searchById(int id)
+        {
+            var data = db.Features.Find(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
 
