@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
 using VSMS.Models.DataModels;
+using VSMS.Models.ViewModels;
 
 namespace VSMS.Controllers
 {
@@ -32,7 +33,7 @@ namespace VSMS.Controllers
             }
             return View();
         }
-        
+
 
         public ActionResult About()
         {
@@ -51,12 +52,67 @@ namespace VSMS.Controllers
 
         public ActionResult Inventory()
         {
-            return View();
+            var CarList = db.Cars.ToList();
+            var imgList = (from i in db.ImageProducts
+                           join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
+                           where i.Status == 1
+                           select new ListCarViewModel
+                           {
+                               IdProduct = ipd.IdProduct,
+                               IdImageProduct = ipd.IdImageProduct,
+                               ImageName = i.ImageName
+                           }).ToList();
+            ViewBag.ip = imgList;
+            return View(CarList);
         }
 
-        public ActionResult InventoryItem()
+        public ActionResult InventoryItem(int id)
         {
-            return View();
+            var car = db.Cars.Find(id);
+            var imgList = from i in db.ImageProducts
+                          join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
+                          where i.Status == 1 && ipd.IdProduct == id
+                          select i.ImageName;
+            ViewBag.ip = imgList.FirstOrDefault();
+            ViewBag.ImageProduct = (from i in db.ImageProducts
+                                    join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
+                                    where ipd.IdProduct == id
+                                    select new DetailsCarViewModel
+                                    {
+                                        IdDetails = ipd.Id,
+                                        IdProduct = ipd.IdProduct,
+                                        IdImageProduct = ipd.IdImageProduct,
+                                        IdImage = i.Id,
+                                        ImageName = i.ImageName,
+                                        StatusImg = i.Status
+                                    }).ToList();
+            ViewBag.Cars = db.Cars.ToList();
+            var ImgL = (from i in db.ImageProducts
+                        join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
+                        where i.Status == 1
+                        select new ListCarViewModel
+                        {
+                            IdProduct = ipd.IdProduct,
+                            IdImageProduct = ipd.IdImageProduct,
+                            ImageName = i.ImageName
+                        }).ToList();
+            ViewBag.ipl = ImgL;
+
+            // Get Feature
+            var feature = (from ft in db.Features
+                           join cd in db.CarDetails on ft.Id equals cd.IdFeature
+                           where cd.IdCar == id
+                           select new FeatureViewModel
+                           {
+                               Id = ft.Id,
+                               Name = ft.Name
+                           }).ToList();
+            ViewBag.feature = feature;
+
+            // Get Mode
+            var mode = db.Modes.Where(x=>x.Id == car.ModeId).FirstOrDefault();
+            ViewBag.year = mode.Year;
+            return View(car);
         }
 
         public ActionResult Blog()

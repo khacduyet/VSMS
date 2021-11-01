@@ -86,7 +86,7 @@ namespace VSMS.Areas.Admin.Controllers
                         _ImageProDetails.SaveObject(imgDes);
                     }
                     // Returns message that successfully uploaded  
-                    return Json("File Uploaded Successfully!");
+                    return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception)
                 {

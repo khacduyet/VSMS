@@ -211,9 +211,6 @@
                             </ul>
                         </li>
                     </ul>
-
-
-
                 </div>
 
                 <!-- SidebarSearch Form -->
@@ -262,9 +259,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Cars")?"menu-open":"")">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Cars" || ViewContext.RouteData.Values["controller"].ToString() == "Features" )?"menu-open":"")">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Car Management
                                     <i class="fas fa-angle-left right"></i>
@@ -273,14 +270,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", "Cars")" class="nav-link @((ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Cars" )?"active":"")">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Car List</p>
+                                        <i class="fas fa-car nav-icon"></i>
+                                        <p>Car</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Features")" class="nav-link @((ViewContext.RouteData.Values["action"].ToString() == "CarFeature")?"active":"")">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>List Feature</p>
+                                    <a href="@Url.Action("Index", "Features")" class="nav-link @((ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Features" )?"active":"")">
+                                        <i class="fab fa-foursquare nav-icon"></i>
+                                        <p>Feature</p>
                                     </a>
                                 </li>
 

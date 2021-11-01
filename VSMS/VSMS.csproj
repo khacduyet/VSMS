@@ -159,6 +159,10 @@
     <Compile Include="Migrations\202111010323112_d1.Designer.cs">
       <DependentUpon>202111010323112_d1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111010852551_d2.cs" />
+    <Compile Include="Migrations\202111010852551_d2.Designer.cs">
+      <DependentUpon>202111010852551_d2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
     <Compile Include="Models\DataModels\AdminOrder.cs" />
@@ -186,6 +190,9 @@
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\CarDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Models\ViewModels\DetailsCarViewModel.cs" />
+    <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
+    <Compile Include="Models\ViewModels\ListCarViewModel.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
     <Compile Include="Models\ViewModels\MyProfile.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModels.cs" />
@@ -3051,6 +3058,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111010323112_d1.resx">
       <DependentUpon>202111010323112_d1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111010852551_d2.resx">
+      <DependentUpon>202111010852551_d2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

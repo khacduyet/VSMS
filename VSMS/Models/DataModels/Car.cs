@@ -24,7 +24,11 @@ namespace VSMS.Models.DataModels
 
         [ForeignKey("Category")]
         public int CatId { get; set; }
-
+        [Required(ErrorMessage = "This field cannot be left blank!")]
+        [Range(0,9999999999,ErrorMessage = "Price must be positive number!")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public double Price { get; set; }
         [DisplayName("Engine")]
         [StringLength(200)]
         public string Engine { get; set; } // Động cơ máy ô tô
