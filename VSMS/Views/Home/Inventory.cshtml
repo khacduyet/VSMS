@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<VSMS.Models.DataModels.Car>
 @{
     ViewBag.Title = "Inventory";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -155,84 +155,101 @@
                         </div>
                     </div>
                     <div id="tt-product-listing" class="tt-product-listing row">
-                        <div class="col-6 col-md-4 col-lg-3 tt-col-item">
-                            <div class="tt-product-02">
-                                <div class="tt-image-box">
-                                    <a href="inventory-item02.html" class="tt-img">
-                                        <img src="~/Content/images/product_02/product_02_img_01.jpg" alt="">
-                                        <span class="tt-label-location">
-                                            <span class="tt-label-promo">
-                                                Great Deal!
-                                            </span>
-                                        </span>
-                                        <span class="tt-data">118,000 miles</span>
-                                    </a>
-                                    <ul class="tt-icon">
-                                        <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
-                                        <li><a href="~/Content/images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
-                                        <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="tt-wrapper-description">
-                                    <div class="tt-row-01">
-                                        <div class="tt-box-title">
-                                            <h2 class="tt-title"><a href="inventory-item02.html">2016 Hunday Elentra </a></h2>
-                                            <div class="tt-description">
-                                                SE 4dr Sedan (1.8L 4cyl 6A)
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="col-6 col-md-4 col-lg-3 tt-col-item">
+                                <div class="tt-product-02">
+                                    <div class="tt-image-box">
+                                        @foreach (var ip in ViewBag.ip as IEnumerable<VSMS.Models.ViewModels.ListCarViewModel>)
+                                        {
+                                            if (ip.IdProduct == item.Id)
+                                            {
+                                                <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-img">
+
+                                                    <img src="@ip.ImageName" alt="" style="height: 170px">
+
+                                                    <span class="tt-label-location">
+                                                        <span class="tt-label-promo">
+                                                        </span>
+                                                    </span>
+                                                    <span class="tt-data"></span>
+                                                </a>
+
+                                                <ul class="tt-icon">
+                                                    <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                                    <li>
+                                                        <a href="@ip.ImageName" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a>
+                                                    </li>
+                                                    <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
+                                                </ul>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="tt-wrapper-description">
+                                        <div class="tt-row-01">
+                                            <div class="tt-box-title">
+                                                <h2 class="tt-title"><a href="@Url.Action("InventoryItem","Home", new { id = item.Id})">@item.CarName</a></h2>
+                                                <div class="tt-description">
+                                                    @item.Descriptions
+                                                </div>
+                                            </div>
+                                            <div class="tt-box-price">
+                                                <span class="tt-text">Price: </span>
+                                                <span class="tt-price">$@item.Price</span>
+                                                <span class="tt-info"><span></span></span>
                                             </div>
                                         </div>
-                                        <div class="tt-box-price">
-                                            <span class="tt-text">List:</span>
-                                            <span class="tt-price">$10,295</span>
-                                            <span class="tt-info">Estimated Loan Payment: <span>$192/mo</span></span>
+                                        <ul class="tt-icon">
+                                            <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                            <li><a href="~/Content/images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
+                                            <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
+                                        </ul>
+                                        <div class="tt-row-02">
+                                            <ul class="tt-add-info">
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                            </ul>
+                                            <ul class="tt-add-info">
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="col-title"></span>
+                                                    <span class="col-designation"></span>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </div>
-                                    <div class="tt-row-02">
-                                        <ul class="tt-add-info">
-                                            <li>
-                                                <span class="col-title">FUEL TYPE:</span>
-                                                <span class="col-designation">Gas</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">TRANSMission:</span>
-                                                <span class="col-designation">Automatic</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">Color:</span>
-                                                <span class="col-designation">Black</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">Drive Type:</span>
-                                                <span class="col-designation">Front Wheel Drive</span>
-                                            </li>
-                                        </ul>
-                                        <ul class="tt-add-info">
-                                            <li>
-                                                <span class="col-title">Int. Color:</span>
-                                                <span class="col-designation">Premium Leather</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">VIN:</span>
-                                                <span class="col-designation">JTJHY7AX6H4250229</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">Engine:</span>
-                                                <span class="col-designation">V6 EcoBoost TT</span>
-                                            </li>
-                                            <li>
-                                                <span class="col-title">Stock number:</span>
-                                                <span class="col-designation">215838</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="tt-btn">
-                                        <a href="inventory-item02.html" class="tt-btn-moreinfo">more info</a>
-                                        <a href="inventory-item02.html" class="tt-btn-moreinfo">Driver test</a>
-                                        <a href="inventory-item02.html" class="tt-btn-moreinfo">Compare</a>
+                                        <div class="tt-btn">
+                                            <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-btn-moreinfo">More info</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div class="tt-pagination">
                         <ul>
