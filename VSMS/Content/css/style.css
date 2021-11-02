@@ -22186,7 +22186,7 @@ body.modal-open {
 }
 
     .tt-filters-fullwidth .tt-col-select .tt-item {
-        width: calc(20% - 20px);
+        width: calc(50% - 20px);
         margin-left: 20px;
     }
 

@@ -36,64 +36,10 @@
                                 <div id="tt-filters-aside" class="tt-filters-aside">
                                     <div class="tt-col-select tt-skinSelect-01">
                                         <div class="tt-item">
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Condition</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Year</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
+                                            @Html.DropDownList("Cat", null, "-- Category --", new { @class = "tt-select" })
                                         </div>
                                         <div class="tt-item">
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Make</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Model</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                        </div>
-                                        <div class="tt-item">
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Type</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Mileage</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                        </div>
-                                        <div class="tt-item">
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Transmission</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Drivetrain</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                        </div>
-                                        <div class="tt-item">
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Exterior color</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
-                                            <select class="tt-select">
-                                                <option value="" disabled selected>Interior Color</option>
-                                                <option value="text 01">text 01</option>
-                                                <option value="text 02">text 02</option>
-                                            </select>
+                                            @Html.DropDownList("Mode", null, "-- Model --", new { @class = "tt-select" })
                                         </div>
                                     </div>
                                     <div class="tt-col-price">
@@ -107,8 +53,8 @@
                                         </div>
                                     </div>
                                     <div class="tt-col-btn">
-                                        <a href="#" class="btn btn-color02">RESET FILTERS</a>
-                                        <a href="#" class="btn"><i class="icon-filer"></i>FILTER</a>
+                                        <button type="button" class="btn btn-color02" id="BtnReset">RESET FILTERS</button>
+                                        <button type="button" class="btn" id="BtnFilter"><i class="icon-filer"></i>FILTER</button>
                                     </div>
                                 </div>
                             </div>
@@ -171,13 +117,14 @@
 
                                                     <span class="tt-label-location">
                                                         <span class="tt-label-promo">
+                                                            Good
                                                         </span>
                                                     </span>
                                                     <span class="tt-data"></span>
                                                 </a>
 
                                                 <ul class="tt-icon">
-                                                    <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                                    <li><a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a></li>
                                                     <li>
                                                         <a href="@ip.ImageName" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a>
                                                     </li>
@@ -201,7 +148,9 @@
                                             </div>
                                         </div>
                                         <ul class="tt-icon">
-                                            <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                            <li>
+                                                <a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a>
+                                            </li>
                                             <li><a href="~/Content/images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
                                             <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                                         </ul>
@@ -273,4 +222,12 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        $("#BtnReset").bind("click", function () {
+            
+        });
+    </script>
+}
 

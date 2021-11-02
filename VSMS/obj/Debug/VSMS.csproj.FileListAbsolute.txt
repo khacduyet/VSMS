@@ -256,11 +256,11 @@ D:\Project Sem III\VSMS\VSMS\VSMS\bin\System.Web.WebPages.Razor.xml
 D:\Project Sem III\VSMS\VSMS\VSMS\bin\Newtonsoft.Json.xml
 D:\Project Sem III\VSMS\VSMS\VSMS\bin\Antlr3.Runtime.pdb
 D:\Project Sem III\VSMS\VSMS\VSMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.csproj.AssemblyReference.cache
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.Migrations.d1.resources
+D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.Migrations.d2.resources
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.csproj.GenerateResource.cache
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.csproj.CoreCompileInputs.cache
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.csproj.CopyComplete
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.dll
 D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.pdb
-D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.Migrations.d2.resources
+D:\Project Sem III\VSMS\VSMS\VSMS\obj\Debug\VSMS.csproj.AssemblyReference.cache

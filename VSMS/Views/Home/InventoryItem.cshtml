@@ -1,9 +1,9 @@
 ﻿@model VSMS.Models.DataModels.Car
 @{
-    ViewBag.Title = "InventoryItem";
+    ViewBag.Title = Model.CarName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@Html.HiddenFor(model => model.Id)
 <div class="tt-breadcrumb">
     <div class="container">
         <ul>
@@ -24,7 +24,7 @@
                         <div class="tt-description">@Model.Engine</div>
                     </div>
                     <div class="tt-aside-btn visible-xs">
-                        <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive"><i class="icon-testdrive"></i>TEST DRIVE</a>
+                        <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
                         <a href="#" class="btn btn-color02 compare-toggle"><i class="icon-compare"></i>COMPARE</a>
                     </div>
                     <!-- mobile product slider  -->
@@ -126,7 +126,7 @@
                 <div class="col-12 col-md-4 js-sticky-sidebar">
                     <div class="tt-aside03-layout">
                         <div class="tt-aside-btn hidden-xs">
-                            <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive"><i class="icon-testdrive"></i>TEST DRIVE</a>
+                            <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
                             <a href="#" class="compare-toggle btn btn-color02"><i class="icon-compare"></i>COMPARE</a>
                         </div>
                         <div class="tt-aside-promo">
@@ -258,7 +258,7 @@
                                 {
                                     if (ip.IdProduct == item.Id)
                                     {
-                                        <a href="inventory-item.html" class="tt-img">
+                                        <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-img">
                                             <img src="@ip.ImageName" alt="" style="height: 170px">
                                             <span class="tt-label-location">
                                                 <span class="tt-label-promo">
@@ -268,7 +268,7 @@
                                             <span class="tt-data">118,000 miles</span>
                                         </a>
                                         <ul class="tt-icon">
-                                            <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                            <li><a href="#" class="tooltip" data-toggle="modal" title="TEST-DRIVE" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i></a></li>
                                             <li><a href="@ip.ImageName" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
                                             <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                                         </ul>
@@ -287,7 +287,7 @@
                                     <span class="tt-price">$@item.Price</span>
                                 </div>
                                 <ul class="tt-icon">
-                                    <li><a href="#" data-toggle="modal" data-target="#modalAddTestDrive" title="TEST-DRIVE" class="tooltip"><i class="icon-testdrive"></i></a></li>
+                                    <li><a href="#" class="tooltip" data-toggle="modal" title="TEST-DRIVE" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i></a></li>
                                     <li><a href="images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
                                     <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                                 </ul>
@@ -324,69 +324,3 @@
     </div>
 </div>
 <!-- modal (AddTestDrive) -->
-<div class="modal fade" id="modalAddTestDrive" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content ">
-            <div class="modal-body modal-layout-dafault">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon-close"></span></button>
-                <h5 class="modal-title">Book a Test Drive</h5>
-                <p class="tt-default-color02">
-                    Please complete the form below and an we will contact you to arrange your test drive.
-                </p>
-                <form>
-                    <div class="tt-form-default02">
-                        <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Your name*">
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <input type="email" name="name" class="form-control" placeholder="E-mail*">
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" name="name" class="form-control" placeholder="Phone #">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h6 class="tt-title">Preferred date and time of Test Drive</h6>
-                    <div class="tt-row-calendar tt-form-default tt-skinSelect-01">
-                        <input type="text" name="name" class="form-control" placeholder="12 / 12 / 2018">
-                        <select class="tt-select">
-                            <option value="01" disabled selected>12</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                        </select>
-                        <span class="tt-text-separator">:</span>
-                        <select class="tt-select">
-                            <option value="01" disabled selected>30</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                        </select>
-                    </div>
-                    <ul class="list-form-column">
-                        <li>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="checkBox12" name="checkbox" checked>
-                                <label for="checkBox12">
-                                    <span class="check"></span>
-                                    <span class="box"></span>
-                                    I AGREE TO RECEIVE EMAILS FROM CAR LEADER
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                    <a href="#" class="btn">SUBMIT</a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
