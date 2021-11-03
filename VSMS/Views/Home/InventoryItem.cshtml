@@ -108,18 +108,19 @@
                         <h6 class="tt-title-single-sub">
                             Contact Us About this Car
                         </h6>
-                        <form class="tt-form-default02 tt-form-review">
+                        <form id="contactfrm" method="post" novalidate="novalidate" action="" class="tt-form-default02 tt-form-review">
                             <div class="tt-form-aside">
+                                <input type="text" hidden name="CarId" id="CarId" value="@Model.Id" />
                                 <div class="form-group">
-                                    <input type="text" name="name" class="form-control" placeholder="Your name*">
+                                    <input type="text" name="Name" class="form-control" id="Name" minlength="5" required placeholder="Your name*">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="name" class="form-control" placeholder="E-mail*">
+                                    <input type="email" name="Email" class="form-control" id="Email" required placeholder="E-mail*">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" placeholder="Message" id="textareaMessage"></textarea>
+                                    <textarea name="Message" class="form-control" placeholder="Message" minlength="5" required id="Message"></textarea>
                                 </div>
-                                <a href="#" class="btn">ASK A QUESTION</a>
+                                <button type="button" id="submitContact" class="btn btn-wide">LEAVE A MESSAGE</button>
                             </div>
                         </form>
                     </div>
@@ -321,6 +322,38 @@
         </div>
     </div>
 </div>
-<button class="btn btn-primary" id="cc">Click test</button>
-<!-- modal (AddTestDrive) -->
-<!-- modal (AddTestDrive) -->
+@section scripts{
+    <script>
+        $("#contactfrm").validate();
+        $("#submitContact").click( function () {
+            var name = $("#Name").val();
+            var email = $("#Email").val();
+            var msg = $("#Message").val();
+            var cid = $("#CarId").val();
+            var obj = {
+                Name: name,
+                Email: email,
+                Message: msg,
+                CarId: cid
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SubmitContact","Home")",
+                data: obj,
+                success: function (rs) {
+                    if (rs.success == 1) {
+                        toastr.success("Success send message!", "Notification");
+                        $("#Name").val("");
+                        $("#Email").val("");
+                        $("#Message").val("");
+                        window.scrollTo(0, 0);
+                    }
+                },
+                error: function (ex) {
+                    toastr.error("Error send message!", "Notification");
+                }
+            });
+        });
+    </script>
+}

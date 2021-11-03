@@ -12,6 +12,7 @@ namespace VSMS.Controllers
     public class HomeController : Controller
     {
         VSMS_Entities db = new VSMS_Entities();
+        List<Car> car = new List<Car>();
         public ActionResult Index()
         {
             if (TempData["cus"] != null)
@@ -53,6 +54,7 @@ namespace VSMS.Controllers
         public ActionResult Inventory()
         {
             var CarList = db.Cars.ToList();
+            ViewBag.countResult = CarList.Count();
             var imgList = (from i in db.ImageProducts
                            join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
                            where i.Status == 1
@@ -66,6 +68,41 @@ namespace VSMS.Controllers
             ViewBag.Cat = new SelectList(db.Categories, "Id", "CateName");
             ViewBag.Mode = new SelectList(db.Modes, "Id", "ModeName");
             return View(CarList);
+        }
+
+        public PartialViewResult FilterProduct(IEnumerable<Car> CarList, int? idCat, int? idModel, double x, double y, int? sortType)
+        {
+            if (sortType == 2)
+            {
+                CarList = db.Cars.OrderBy(s => s.CarName).ToList();
+                if (idCat != null || idModel != null)
+                {
+                    CarList = db.Cars.Where(c => (c.CatId == idCat || c.ModeId == idModel) && (c.Price > x && c.Price < y)).OrderBy(s => s.CarName);
+                }
+            }
+            else
+            {
+                CarList = db.Cars.OrderByDescending(s => s.CarName).ToList();
+                if (idCat != null || idModel != null)
+                {
+                    CarList = db.Cars.Where(c => (c.CatId == idCat || c.ModeId == idModel) && (c.Price > x && c.Price < y)).OrderByDescending(s => s.CarName);
+                }
+            }
+
+            ViewBag.countResult = CarList.Count();
+            var imgList = (from i in db.ImageProducts
+                           join ipd in db.ImageProductDetails on i.Id equals ipd.IdImageProduct
+                           where i.Status == 1
+                           select new ListCarViewModel
+                           {
+                               IdProduct = ipd.IdProduct,
+                               IdImageProduct = ipd.IdImageProduct,
+                               ImageName = i.ImageName
+                           }).ToList();
+            ViewBag.ip = imgList;
+            ViewBag.Cat = new SelectList(db.Categories, "Id", "CateName", idCat);
+            ViewBag.Mode = new SelectList(db.Modes, "Id", "ModeName", idModel);
+            return PartialView("_PartialProduct", CarList);
         }
 
         public ActionResult InventoryItem(int id)
@@ -112,7 +149,7 @@ namespace VSMS.Controllers
             ViewBag.feature = feature;
 
             // Get Mode
-            var mode = db.Modes.Where(x=>x.Id == car.ModeId).FirstOrDefault();
+            var mode = db.Modes.Where(x => x.Id == car.ModeId).FirstOrDefault();
             ViewBag.year = mode.Year;
             return View(car);
         }
@@ -128,7 +165,7 @@ namespace VSMS.Controllers
             var post = db.Posts.Find(id);
             ViewBag.tags = db.Tags.OrderByDescending(x => Guid.NewGuid()).Take(10);
             ViewBag.posts = db.Posts;
-            
+
             if (db.post_Tags.Where(x => x.PostId == id).FirstOrDefault() != null)
             {
                 var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
@@ -163,6 +200,37 @@ namespace VSMS.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+        [HttpPost]
+        public JsonResult SubmitContact(Contact con)
+        {
+            if (con.Name.Length > 5 && con.Email.Length > 0 && con.Message.Length > 5)
+            {
+                db.Contacts.Add(con);
+                db.SaveChanges();
+                return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { error = 2 }, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult compareSlide()
+        {
+            ViewBag.car = car;
+            ViewBag.categories = db.Categories;
+            ViewBag.model = db.Modes;
+            ViewBag.feature = db.Features;
+            ViewBag.cd = db.CarDetails;
+            return PartialView("_PartialCompareSlide");
+        }
+
+        public void InsertCar(int id)
+        {
+            var c = db.Cars.Find(id);
+            if (c != null)
+            {
+                car.Add(c);
+                Session["carlist"] = car;
+            }
         }
     }
 }

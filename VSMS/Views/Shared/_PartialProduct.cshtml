@@ -1,0 +1,98 @@
+﻿@foreach (var item in Model)
+{
+    <input type="number" hidden id="CountResult" value="@ViewBag.countResult" />
+    <div class="col-6 col-md-4 col-lg-3 tt-col-item">
+        <div class="tt-product-02">
+            <div class="tt-image-box">
+                @foreach (var ip in ViewBag.ip as IEnumerable<VSMS.Models.ViewModels.ListCarViewModel>)
+                {
+                    if (ip.IdProduct == item.Id)
+                    {
+                        <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-img">
+
+                            <img src="@ip.ImageName" alt="" style="height: 170px">
+
+                            <span class="tt-label-location">
+                                <span class="tt-label-promo">
+                                    Good
+                                </span>
+                            </span>
+                            <span class="tt-data"></span>
+                        </a>
+
+                        <ul class="tt-icon">
+                            <li><a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a></li>
+                            <li>
+                                <a href="@ip.ImageName" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a>
+                            </li>
+                            <li><a href="@Url.Action("InsertCar","Home", new { id = item.Id})" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
+                        </ul>
+                    }
+                }
+            </div>
+            <div class="tt-wrapper-description">
+                <div class="tt-row-01">
+                    <div class="tt-box-title">
+                        <h2 class="tt-title"><a href="@Url.Action("InventoryItem","Home", new { id = item.Id})">@item.CarName</a></h2>
+                        <div class="tt-description">
+                            @item.Descriptions
+                        </div>
+                    </div>
+                    <div class="tt-box-price">
+                        <span class="tt-text">Price: </span>
+                        <span class="tt-price">$@item.Price</span>
+                        <span class="tt-info"><span></span></span>
+                    </div>
+                </div>
+                <ul class="tt-icon">
+                    <li>
+                        <a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a>
+                    </li>
+                    <li><a href="~/Content/images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
+                    <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
+                </ul>
+                <div class="tt-row-02">
+                    <ul class="tt-add-info">
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                    </ul>
+                    <ul class="tt-add-info">
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                        <li>
+                            <span class="col-title"></span>
+                            <span class="col-designation"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tt-btn">
+                    <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-btn-moreinfo">More info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

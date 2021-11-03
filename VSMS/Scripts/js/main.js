@@ -81,7 +81,17 @@
                     windowHeight = $(window).height();
                 $("#compareSlide").toggleClass('open');
                 $objScroll.height(windowHeight).perfectScrollbar();
-                $body.addClass('modal-open');
+                 $body.addClass('modal-open');
+                 $.ajax({
+                     type: "GET",
+                     url: "/Home/compareSlide",
+                     success: function (rs) {
+                         alert("OKE compare");
+                     },
+                     error: function () {
+                         alert("fail compare");
+                     }
+                 });
                 return false;
             });
         });

@@ -22186,7 +22186,7 @@ body.modal-open {
 }
 
     .tt-filters-fullwidth .tt-col-select .tt-item {
-        width: calc(50% - 20px);
+        width: calc(100% - 20px);
         margin-left: 20px;
     }
 
@@ -22226,7 +22226,7 @@ body.modal-open {
 }
 
 .tt-filters-fullwidth .tt-col-price {
-    min-width: 173px;
+    min-width: 250px;
 }
 
     .tt-filters-fullwidth .tt-col-price .tt-aside-title {
