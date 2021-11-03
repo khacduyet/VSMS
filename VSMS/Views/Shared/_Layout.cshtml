@@ -535,22 +535,7 @@
     </div>
     @* Modal show sigin *@
 
-    <div class="modal fade" id="SiginModal" tabindex="-1" role="dialog" aria-labelledby="SiginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="width: 500px ">
-            <div class="modal-content">
-                <div class="login-wrap">
-                    <div class="login-html">
-                        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-                        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                        <div class="login-form">
-                            @Html.Partial("_PartialSignIn")
-                            @Html.Partial("_PartialSignUp")
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     @*Toastr alert*@
     <div>
         <input type="hidden" id="success" value="@TempData["success"]" />
@@ -560,7 +545,7 @@
     </div>
 
     @* Modal Test Driver *@
-    @if (customer != null)
+    @if (customer != null) // thế làm cái else để nó hiện cái form login đc ko nhirchawcs đc
     {
         <div class="modal fade" id="modalAddTestDrive" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
@@ -573,6 +558,7 @@
                         </p>
                         <form>
                             <div class="tt-form-default02">
+                                <input type="text" name="IdMember" hidden id="IdMember" value="@customer.Id" />
                                 <input type="text" name="IdCar" hidden id="IdCar" value="" />
                                 <div class="form-group">
                                     <input type="text" name="@customer.FullName" value="@customer.FullName" readonly class="form-control" placeholder="Your name*">
@@ -592,7 +578,8 @@
                             </div>
                             <h6 class="tt-title">Preferred date and time of Test Drive</h6>
                             <div class="tt-row-calendar tt-form-default tt-skinSelect-01">
-                                <input type="text" name="name" class="form-control" placeholder="12 / 12 / 2018">
+                                <input type="date" name="dateTest" id="dateTest" class="form-control" placeholder="12 / 12 / 2018">
+                                <span class="text-danger" hidden id="txtTestDr">Choose Date</span>
                             </div>
                             <ul class="list-form-column">
                                 <li>
@@ -606,8 +593,27 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a href="#" id="submitDriveTest" class="btn">SUBMIT</a>
+                            <a href="javascript:void(0)" id="submitDriveTest" class="btn">SUBMIT</a>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="modal fade" id="SiginModal" tabindex="-1" role="dialog" aria-labelledby="SiginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width: 500px ">
+                <div class="modal-content">
+                    <div class="login-wrap">
+                        <div class="login-html">
+                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                            <div class="login-form">
+                                @Html.Partial("_PartialSignIn")
+                                @Html.Partial("_PartialSignUp")
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -642,15 +648,70 @@
     <script src="~/Scripts/js/script.js"></script>
     <script src="~/Areas/Admin/Content/dist/js/script.js"></script>
     @RenderSection("scripts", required: false)
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).on("click", "#open-Modal", function () {
             var id = $(this).data('id');
             $(".tt-form-default02 #IdCar").val(id);
-        });
-        $("#submitDriveTest").click(function () {
+
+            $("#submitDriveTest").click(function () {
+
+                console.log(id);
+                AddDriverTest(id);
+            })
 
         });
-    </script>
+
+
+        function AddDriverTest(idCar) {
+            var IdMem = $("#IdMember").val();
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            //var dateTest = new Date(today);
+            var res = Validate();
+            if (res == false) {
+                return false;
+            };
+                var drTestOjb = {
+                    IdMember: IdMem,
+                    IdCar: idCar,
+                    Note: $('#dateTest').val(),
+                    Status: 0,// trạng thái chưa accept drive test
+                    CreatedAt: today
+
+                };
+                console.log("submitDriveTest");
+                console.log(drTestOjb);
+                $.ajax({
+                    url: '@Url.Action("CreateDriverTest", "Inventory")',
+                    type: "POST",
+                    data: drTestOjb,
+                    success: function (rs) {
+                        if (!rs) {
+                            toastr.error('Register Drive Test False!', 'Thông báo', { timeOut: 2000 });
+                        } else {
+                            toastr.success('Register Success!', 'Thông báo', { timeOut: 2000 });
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
+    }
+    // validate data
+    function Validate() {
+        var isValid = true;
+        var valueDate = document.getElementById('dateTest').value;
+        if (!valueDate) {
+            toastr.error('Choose Date', 'Thông báo', { timeOut: 2000 });
+            isValid = false;
+        }
+        return isValid;
+    }
+</script>
 </body>
 
 <!-- Mirrored from websmirno.site/carleader/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Oct 2021 20:35:00 GMT -->

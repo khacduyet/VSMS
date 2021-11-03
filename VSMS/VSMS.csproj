@@ -138,6 +138,7 @@
     <Compile Include="Areas\Admin\Controllers\CarsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CommonController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DriveTestController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeaturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManuafaturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Models\ViewModels\CarDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\ViewModels\DetailsCarViewModel.cs" />
+    <Compile Include="Models\ViewModels\DriveTestViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
     <Compile Include="Models\ViewModels\ListCarViewModel.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
@@ -2467,6 +2469,7 @@
     <Content Include="Scripts\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Areas\Admin\Views\Posts\SetTags.cshtml" />
+    <Content Include="Areas\Admin\Views\DriveTest\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />

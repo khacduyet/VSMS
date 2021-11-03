@@ -1,4 +1,5 @@
 ﻿@model VSMS.Models.DataModels.Car
+@{ var customer = Session["customer"] as VSMS.Models.DataModels.Member;}
 @{
     ViewBag.Title = Model.CarName;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,7 +25,7 @@
                         <div class="tt-description">@Model.Engine</div>
                     </div>
                     <div class="tt-aside-btn visible-xs">
-                        <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
+                        <a href="#" class="btn btn-color02 cc" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
                         <a href="#" class="btn btn-color02 compare-toggle"><i class="icon-compare"></i>COMPARE</a>
                     </div>
                     <!-- mobile product slider  -->
@@ -126,7 +127,16 @@
                 <div class="col-12 col-md-4 js-sticky-sidebar">
                     <div class="tt-aside03-layout">
                         <div class="tt-aside-btn hidden-xs">
-                            <a href="#" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
+                            @if (customer != null)
+                            {
+                                <a href="javascript:void(0)" class="btn btn-color02" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
+
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" class="btn btn-color02" data-toggle="modal" data-target="#SiginModal" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i>TEST DRIVE</a>
+
+                            }
                             <a href="#" class="compare-toggle btn btn-color02"><i class="icon-compare"></i>COMPARE</a>
                         </div>
                         <div class="tt-aside-promo">
@@ -287,7 +297,7 @@
                                     <span class="tt-price">$@item.Price</span>
                                 </div>
                                 <ul class="tt-icon">
-                                    <li><a href="#" class="tooltip" data-toggle="modal" title="TEST-DRIVE" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i></a></li>
+                                    <li><a href="#" class="tooltip cc" data-toggle="modal" title="TEST-DRIVE" data-target="#modalAddTestDrive" id="open-Modal" data-id="@Model.Id"><i class="icon-testdrive"></i></a></li>
                                     <li><a href="images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
                                     <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                                 </ul>
@@ -323,4 +333,6 @@
         </div>
     </div>
 </div>
+<button class="btn btn-primary" id="cc">Click test</button>
+<!-- modal (AddTestDrive) -->
 <!-- modal (AddTestDrive) -->

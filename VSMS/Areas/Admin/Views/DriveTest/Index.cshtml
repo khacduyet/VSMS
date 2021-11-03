@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+<h2>Drive test Controller</h2>
+<div class="container-fluid">
+    <div class="card card-default">
+        <div class="card-header">
+
+        </div>
+        <span class="text-danger">@TempData["error"]</span>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Feature of Car</h3>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Car Name</th>
+                                    <th>Member Name</th>
+                                    <th>Date Registe Test</th>
+                                    <th>Date Create</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bodyDriveTest">
+                            </tbody>
+                            
+                        </table>
+
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            LoadData();
+        });
+
+        function LoadData() {
+            $.ajax({
+                url: "/Admin/DriveTest/GetAllData",
+                type: "GET",
+                success: function (result) {
+                    console.log(result);
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.Id + '</td>';
+                        html += '<td>' + item.CarName + '</td>';
+                        html += '<td>' + item.MemberName + '</td>';
+                        html += '<td>' + item.Note + '</td>';
+                        html += '<td>' + item.CreatedAt + '</td>';
+                        html += '<td> <span class="badge bg-danger">' + item.Status == 0 ? 'Await' : 'cc' + '</span></td>';
+                        html += '</tr>';
+                    });
+                    //<div class="custom-control custom-switch">
+                    //    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    //        <label class="custom-control-label" for="customSwitch1">Toggle this custom switch
+                    //        element</label>
+                    //                        </div>
+                    /*DataTables instantiation.*/
+                    $(".bodyDriveTest").html(html);
+
+                }, error: function (e) {
+                    alert(e.responseText);
+                }
+            })
+        }
+    </script>
+}
