@@ -7,9 +7,9 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
-</p>
+</p>*@
 <table class="table table-striped">
     <tr>
         <th>
@@ -37,9 +37,9 @@
             @((item.Status)?"Don't delete":"Can delete")
         </td>
         <td>
-            <a href="@Url.Action("Edit","Permissions", new { id = item.PerId})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            @*<a href="@Url.Action("Edit","Permissions", new { id = item.PerId})" class="btn btn-success"><i class="fas fa-edit"></i></a>*@
             <a href="@Url.Action("Details","Permissions", new { id = item.PerId})" class="btn btn-info"><i class="fas fa-info"></i></a>
-            <a href="@Url.Action("Delete","Permissions", new { id = item.PerId})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+            @*<a href="@Url.Action("Delete","Permissions", new { id = item.PerId})" class="btn btn-danger"><i class="fas fa-trash"></i></a>*@
         </td>
     </tr>
 }

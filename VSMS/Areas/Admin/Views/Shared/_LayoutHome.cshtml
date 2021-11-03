@@ -349,9 +349,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Tags" || ViewContext.RouteData.Values["controller"].ToString() == "Posts" )?"menu-open":"")">
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "DriveTest")?"menu-open":"")">
                             <a href="#" class="nav-link">
-                                <i class=" nav-icon fas fa-th"></i>
+                                <i class=" nav-icon fab fa-red-river"></i>
                                 <p>
                                     Driver Test
                                     <i class=" fas fa-angle-left right"></i>
@@ -361,7 +361,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index","DriveTest")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "DriveTest")?"active":"")">
-                                        <i class=" nav-icon  fab fa-blogger-b"></i>
+                                        <i class=" nav-icon  fas fa-car-side"></i>
                                         <p>List Drive Test</p>
                                     </a>
                                 </li>
