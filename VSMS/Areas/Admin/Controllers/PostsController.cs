@@ -174,10 +174,15 @@ namespace VSMS.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.postId = post.Id;
-            var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
-            pt.selectedIdArray = pt.TagId.Split(',').ToArray();
+            if (db.post_Tags.Where(x => x.PostId == id).FirstOrDefault() != null)
+            {
+                var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
+                pt.selectedIdArray = pt.TagId.Split(',').ToArray();
+                ViewBag.Tags = new MultiSelectList(db.Tags, "Id", "Slug");
+                return View(pt);
+            }
             ViewBag.Tags = new MultiSelectList(db.Tags, "Id", "Slug");
-            return View(pt);
+            return View();
         }
 
         [HttpPost]

@@ -126,22 +126,27 @@ namespace VSMS.Controllers
         public ActionResult BlogSingle(int id)
         {
             var post = db.Posts.Find(id);
-            ViewBag.tags = db.Tags.Take(10);
+            ViewBag.tags = db.Tags.OrderByDescending(x => Guid.NewGuid()).Take(10);
             ViewBag.posts = db.Posts;
-            var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
-            pt.selectedIdArray = pt.TagId.Split(',').ToArray();
-            List<int> num = new List<int>();
-            foreach (var item in pt.selectedIdArray)
+            
+            if (db.post_Tags.Where(x => x.PostId == id).FirstOrDefault() != null)
             {
-                num.Add(Int16.Parse(item));
+                var pt = db.post_Tags.Where(x => x.PostId == id).FirstOrDefault();
+                pt.selectedIdArray = pt.TagId.Split(',').ToArray();
+                List<int> num = new List<int>();
+                foreach (var item in pt.selectedIdArray)
+                {
+                    num.Add(Int16.Parse(item));
+                }
+                List<Tags> listTag = new List<Tags>();
+                foreach (var item in num)
+                {
+                    var tags = db.Tags.Find(item);
+                    listTag.Add(tags);
+                }
+                ViewBag.tag = listTag;
+                return View(post);
             }
-            List<Tags> listTag = new List<Tags>();
-            foreach (var item in num)
-            {
-                var tags = db.Tags.Find(item);
-                listTag.Add(tags);
-            }
-            ViewBag.tag = listTag;
             return View(post);
         }
 

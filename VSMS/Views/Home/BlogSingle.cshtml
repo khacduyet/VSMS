@@ -38,9 +38,12 @@
                                     @Model.Summary
                                     @Html.Raw(Model.Content)
                                     <ul class="tt-list-box">
-                                        @foreach (var item in ViewBag.tag)
+                                        @if (ViewBag.tag != null)
                                         {
-                                            <li><a href="#">@item.Slug</a></li>
+                                            foreach (var item in ViewBag.tag)
+                                            {
+                                                <li><a href="#">@item.Slug</a></li>
+                                            }
                                         }
                                     </ul>
                                 </div>
@@ -100,9 +103,12 @@
                         <h3 class="tt-block02-title">Popular Tags</h3>
                         <div class="tt-block02-content">
                             <ul class="tt-list-box">
-                                @foreach (var item in ViewBag.tags)
+                                @if (ViewBag.tags != null)
                                 {
-                                    <li><a href="#">@item.Slug</a></li>
+                                    foreach (var item in ViewBag.tags)
+                                    {
+                                        <li><a href="#">@item.Slug</a></li>
+                                    }
                                 }
                             </ul>
                         </div>
