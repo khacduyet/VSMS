@@ -368,6 +368,24 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "DriveTest")?"menu-open":"")">
+                            <a href="#" class="nav-link">
+                                <i class=" nav-icon fab fa-red-river"></i>
+                                <p>
+                                    Manager order
+                                    <i class=" fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Order")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Order")?"active":"")">
+                                        <i class=" nav-icon  fas fa-car-side"></i>
+                                        <p>List Order</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

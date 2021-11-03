@@ -24,5 +24,17 @@ namespace VSMS.Models.DataModels
         public Member Member{ get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
         public ICollection<AdminOrder> AdminOrders{ get; set; }
+
+        public Order()
+        {
+        }
+
+        public Order(float total, int memberId, DateTime createdAt, byte status)
+        {
+            Total = total;
+            MemberId = memberId;
+            CreatedAt = createdAt;
+            Status = status;
+        }
     }
 }

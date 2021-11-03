@@ -40,6 +40,12 @@ namespace VSMS.Areas.Admin.Controllers
             var data = _Car.GetAll();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        // lấy ra ô tô theo danh mục
+        public JsonResult GetDataByCate(int id)
+        {
+            var data = _Car.GetAll().Where(x => x.CatId.Equals(id));
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Create()
         {
