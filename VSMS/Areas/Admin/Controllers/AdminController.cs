@@ -28,6 +28,8 @@ namespace VSMS.Areas.Admin.Controllers
             }
             if (TempData.ContainsKey("userCurrent"))
                 TempData["info"] = "Hello " + TempData["userCurrent"].ToString() + "!";
+            ViewBag.Orders = db.OrderDetails.Where(x => x.Status == 0).Count();
+            ViewBag.Members = db.Members.Count();
             return View();
         }
 
@@ -155,6 +157,7 @@ namespace VSMS.Areas.Admin.Controllers
                         return View();
                     }
                     Session["admin"] = acc;
+                    Session["CountOrder"] = db.OrderDetails.Where(s => s.Status == 0).Count();
                     TempData["userCurrent"] = acc.Name;
                     Session.Add(Common.CommonConstants.USER_SESSION, acc);
                     return RedirectToAction("Index");

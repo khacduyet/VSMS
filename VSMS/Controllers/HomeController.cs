@@ -65,6 +65,7 @@ namespace VSMS.Controllers
                                ImageName = i.ImageName
                            }).ToList();
             ViewBag.ip = imgList;
+            ViewBag.CatList = db.Categories;
             ViewBag.Cat = new SelectList(db.Categories, "Id", "CateName");
             ViewBag.Mode = new SelectList(db.Modes, "Id", "ModeName");
             return View(CarList);

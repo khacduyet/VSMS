@@ -35,7 +35,13 @@
                     <div class="tt-box-title">
                         <h2 class="tt-title"><a href="@Url.Action("InventoryItem","Home", new { id = item.Id})">@item.CarName</a></h2>
                         <div class="tt-description">
-                            @item.Descriptions
+                            @foreach (var cl in ViewBag.CatList as IEnumerable<VSMS.Models.DataModels.Category>)
+                            {
+                                if (cl.Id == item.CatId)
+                                {
+                                    @cl.CateName
+                                }
+                            }
                         </div>
                     </div>
                     <div class="tt-box-price">

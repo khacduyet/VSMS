@@ -145,6 +145,7 @@
     <Compile Include="Areas\Admin\Controllers\ManuafaturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
     <Compile Include="Areas\Admin\Controllers\ModesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\PermissionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TagsController.cs" />
@@ -157,22 +158,6 @@
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111010323112_d1.cs" />
-    <Compile Include="Migrations\202111010323112_d1.Designer.cs">
-      <DependentUpon>202111010323112_d1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111010852551_d2.cs" />
-    <Compile Include="Migrations\202111010852551_d2.Designer.cs">
-      <DependentUpon>202111010852551_d2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111031445596_d3.cs" />
-    <Compile Include="Migrations\202111031445596_d3.Designer.cs">
-      <DependentUpon>202111031445596_d3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111031652431_d4.cs" />
-    <Compile Include="Migrations\202111031652431_d4.Designer.cs">
-      <DependentUpon>202111031652431_d4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
@@ -208,6 +193,7 @@
     <Compile Include="Models\ViewModels\ListCarViewModel.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
     <Compile Include="Models\ViewModels\MyProfile.cs" />
+    <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2481,6 +2467,8 @@
     <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Areas\Admin\Views\Posts\SetTags.cshtml" />
     <Content Include="Areas\Admin\Views\DriveTest\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\CreateOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -3070,20 +3058,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111010323112_d1.resx">
-      <DependentUpon>202111010323112_d1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111010852551_d2.resx">
-      <DependentUpon>202111010852551_d2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111031445596_d3.resx">
-      <DependentUpon>202111031445596_d3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111031652431_d4.resx">
-      <DependentUpon>202111031652431_d4.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
