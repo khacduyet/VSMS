@@ -32,5 +32,6 @@ namespace VSMS.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<post_tag> post_Tags { get; set; }
         public DbSet<Tags> Tags { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

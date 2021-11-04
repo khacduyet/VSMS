@@ -229,7 +229,7 @@
                 <nav class="mt-2">
                     <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Manuafatures" || ViewContext.RouteData.Values["controller"].ToString() == "Modes" || ViewContext.RouteData.Values["controller"].ToString() == "Categories")?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="fab fa-autoprefixer nav-icon"></i>
@@ -313,7 +313,6 @@
                                 <p>
                                     Member Management
                                     <i class="fas fa-angle-left right"></i>
-                                    @*<span class="badge badge-info right">6</span>*@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -363,6 +362,28 @@
                                     <a href="@Url.Action("Index","DriveTest")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "DriveTest")?"active":"")">
                                         <i class=" nav-icon  fas fa-car-side"></i>
                                         <p>List Drive Test</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Order")?"menu-open":"")">
+                            <a href="#" class="nav-link">
+                                <i class=" nav-icon fas fa-clipboard-check"></i>
+                                <p>
+                                    Manager order
+                                    <i class=" fas fa-angle-left right"></i>
+                                    @if (!Session["CountOrder"].Equals("0"))
+                                    {
+                                        <span class="badge badge-info right">@Session["CountOrder"]</span>
+                                    }
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Order")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Order")?"active":"")">
+                                        <i class=" nav-icon  fas fa-list-ol"></i>
+                                        <p>List Order</p>
                                     </a>
                                 </li>
                             </ul>

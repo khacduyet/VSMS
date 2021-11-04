@@ -10,7 +10,8 @@ using VSMS.Models.ViewModels;
 
 namespace VSMS.Areas.Admin.Controllers
 {
-    public class DriveTestController : Controller
+    [CustomAuthorize("ADMIN", "MOD")]
+    public class DriveTestController : CommonController
     {
         private VSMS_Entities db;
         private Repository<DriveTest> _drTest;

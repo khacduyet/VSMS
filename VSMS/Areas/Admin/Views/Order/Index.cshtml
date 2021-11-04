@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-default">
+        <div class="card-header">
+            <br />
+            <a href="@Url.Action("Index", "Members")" class="btn btn-success">Create Order</a>
+        </div>
+        <span class="text-danger">@TempData["error"]</span>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Orders of Car</h3>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id Member</th>
+                                    <th>Member Name</th>
+                                    <th>Car Name</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyOrder">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Info Pay</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You definitely want to pay this bill ! ^-^
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button id="sureInfoPay" type="button" class="btn btn-primary" data-dismiss="modal">I'm sure</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false, "searching": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("click", "#sureInfoPay", function () {
+                var dataIdPay = $("#paypay").attr("data-idOdPay");
+                $.ajax({
+                    url: "/Admin/Order/UpdatePay",
+                    type: "GET",
+                    data: { id: dataIdPay },
+                    success: function (rs) {
+                        console.log("cc");
+                        console.log(rs);
+                        loadData();
+                        if (rs.success == 1) {
+                            
+                            toastr.success('Pay Seccess!', 'Notification!', { timeOut: 2000 });
+                           
+                        } else {
+                            toastr.error('Pay False!', 'Notification!', { timeOut: 2000 });
+                        }
+
+                    }, error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+            });
+            loadData();
+        });
+
+        /**/
+        // hieenr thi thong tin order
+        function loadData() {
+            $.ajax({
+                url: "/Admin/Order/GetAllData",
+                type: "GET",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.IdMember + '</td>';
+                        html += '<td>' + item.MemberName + '</td>';
+                        html += '<td>' + item.CarName + '</td>';
+                        html += '<td>' + item.Total + '</td>';
+                        html += '<td>' + ((item.Status) ? "pay-success" : "non-pay") + '</td>';
+                        html += '<td class="text-center">' + ((item.Status) ? "" : '<a href="#"  data-idOdPay="' + item.IdOrder + '" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" id="paypay">Pay</a>') + ' <a href="javascript: void (0)" id="delFea" data-idDelFea="' + item.Id + '" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>' + '</td>';
+                        html += '</tr>';// đặt trong td mát a cả td
+                    });
+                    $('.tbodyOrder').html(html);
+                }, error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+        }
+
+        
+
+            //
+    </script>
+}
+
+
