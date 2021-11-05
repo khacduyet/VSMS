@@ -1,5 +1,5 @@
-﻿@model IEnumerable<VSMS.Models.DataModels.Tags>
-
+﻿@model PagedList.IPagedList<VSMS.Models.DataModels.Tags>
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
@@ -10,31 +10,45 @@
 <p>
     @Html.ActionLink("Create New", "Create",null, new { @class="btn btn-success" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Slug)
-        </th>
-        <th></th>
-    </tr>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">List Tag</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Slug
+                </th>
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Slug)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit","Tags", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
-            <a href="@Url.Action("Details","Tags", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
-            <a href="@Url.Action("Delete","Tags", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit","Tags", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                        <a href="@Url.Action("Details","Tags", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+                        <a href="@Url.Action("Delete","Tags", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
