@@ -14,6 +14,7 @@
     @Styles.Render("~/Admin/css")
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     <link href="~/Content/chosen.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     <!-- Tempusdominus Bootstrap 4 -->
     <style>
         #menu .nav-item .nav-treeview {
@@ -229,7 +230,7 @@
                 <nav class="mt-2">
                     <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                         <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Manuafatures" || ViewContext.RouteData.Values["controller"].ToString() == "Modes" || ViewContext.RouteData.Values["controller"].ToString() == "Categories")?"menu-open":"")">
                             <a href="#" class="nav-link">
                                 <i class="fab fa-autoprefixer nav-icon"></i>
@@ -248,7 +249,7 @@
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", "Modes")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Modes")?"active":"")">
                                         <i class="fab fa-monero  nav-icon"></i>
-                                        <p>Modes</p>
+                                        <p>Models</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -384,6 +385,24 @@
                                     <a href="@Url.Action("Index","Order")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Order")?"active":"")">
                                         <i class=" nav-icon  fas fa-list-ol"></i>
                                         <p>List Order</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item @((ViewContext.RouteData.Values["controller"].ToString() == "Contacts")?"menu-open":"")">
+                            <a href="#" class="nav-link">
+                                <i class=" nav-icon fas fa-file-signature"></i>
+                                <p>
+                                    Contacts Manager 
+                                    <i class=" fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Contacts")" class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Contacts")?"active":"")">
+                                        <i class=" nav-icon  fas fa-list-ol"></i>
+                                        <p>Contacts</p>
                                     </a>
                                 </li>
                             </ul>

@@ -10,47 +10,67 @@
 <p>
     @Html.ActionLink("Create New", "Create",null, new { @class="btn btn-success"})
 </p>
-<table class="table">
-    <tr>
-        <th width="20%">
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th width="35%">
-            @Html.DisplayNameFor(model => model.Summary)
-        </th>
-        <th width="15%">
-            @Html.DisplayNameFor(model => model.Admin.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th width="5%">Tags</th>
-        <th width="15%"></th>
-    </tr>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">List Post</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-striped">
+            <tr>
+                <th width="20%">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th width="35%">
+                    @Html.DisplayNameFor(model => model.Summary)
+                </th>
+                <th width="15%">
+                    @Html.DisplayNameFor(model => model.Admin.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th width="5%">Tags</th>
+                <th width="15%"></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Summary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Admin.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            <a href="@Url.Action("SetTags","Posts", new { id = item.Id})" class="btn btn-primary"><i class="fas fa-tag"></i></a>
-        </td>
-        <td>
-            <a href="@Url.Action("Edit","Posts", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
-            <a href="@Url.Action("Details","Posts", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
-            <a href="@Url.Action("Delete","Posts", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Admin.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("SetTags","Posts", new { id = item.Id})" class="btn btn-primary"><i class="fas fa-tag"></i></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit","Posts", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                        <a href="@Url.Action("Details","Posts", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+                        <a href="@Url.Action("Delete","Posts", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">«</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">»</a></li>
+        </ul>
+    </div>
+</div>
