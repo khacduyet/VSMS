@@ -21,12 +21,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.CateName)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Note)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
                 <th></th>
             </tr>
 
@@ -37,15 +31,9 @@
                         @Html.DisplayFor(modelItem => item.CateName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
                         <a href="@Url.Action("Edit","Categories", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
                         <a href="@Url.Action("Details","Categories", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
-                        <a href="@Url.Action("Delete","Categories", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="#" class="btn btn-danger delete-click" id="@item.Id"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             }
@@ -63,3 +51,37 @@
         </ul>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(".delete-click").click(function () {
+            var cf = confirm(" Are you sure delete this record?");
+            if (cf) {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("DeleteCategories")",
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs) {
+                            toastr.success(
+                                'Delete record successfully!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        }
+                    },
+                    error: function (msg) {
+                        toastr.error("Delete record fail!","Notification!");
+                    }
+                });
+            }
+        });
+    </script>
+}

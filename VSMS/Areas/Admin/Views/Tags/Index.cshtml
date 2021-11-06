@@ -5,10 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Tag Manager</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create",null, new { @class="btn btn-success" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
 </p>
 <div class="card">
     <div class="card-header">
@@ -39,7 +39,7 @@
                     <td>
                         <a href="@Url.Action("Edit","Tags", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
                         <a href="@Url.Action("Details","Tags", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
-                        <a href="@Url.Action("Delete","Tags", new { id = item.Id})" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="#" class="btn btn-danger delete-click" id="@item.Id"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             }
@@ -52,3 +52,37 @@
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(".delete-click").click(function () {
+            var cf = confirm(" Are you sure delete this record?");
+            if (cf) {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("DeleteTags")",
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs) {
+                            toastr.success(
+                                'Delete record successfully!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        }
+                    },
+                    error: function (msg) {
+                        toastr.error("Delete record fail!","Notification!");
+                    }
+                });
+            }
+        });
+    </script>
+}

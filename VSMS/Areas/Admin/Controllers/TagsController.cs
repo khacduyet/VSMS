@@ -22,7 +22,7 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult Index(int? page)
         {
             page = page ?? 1;
-            return View(db.Tags.OrderBy(x=>x.Slug).ToPagedList(page.Value,3));
+            return View(db.Tags.OrderBy(x=>x.Slug).ToPagedList(page.Value,5));
         }
 
         // GET: Admin/Tags/Details/5
@@ -123,6 +123,14 @@ namespace VSMS.Areas.Admin.Controllers
             db.SaveChanges();
             @TempData["success"] = "Delete success!";
             return RedirectToAction("Index");
+        }
+
+        public JsonResult DeleteTags(int id)
+        {
+            Tags tags = db.Tags.Find(id);
+            db.Tags.Remove(tags);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

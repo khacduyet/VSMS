@@ -118,6 +118,14 @@ namespace VSMS.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult DeleteMember(int id)
+        {
+            Member member = db.Members.Find(id);
+            db.Members.Remove(member);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

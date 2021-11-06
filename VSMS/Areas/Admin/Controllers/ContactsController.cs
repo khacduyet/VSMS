@@ -118,6 +118,14 @@ namespace VSMS.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult DeleteContact(int id)
+        {
+            Contact contact = db.Contacts.Find(id);
+            db.Contacts.Remove(contact);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

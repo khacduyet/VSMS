@@ -2120,7 +2120,11 @@
     <Content Include="Content\css\style-1.css" />
     <Content Include="Content\css\style-3.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\ico\a.png" />
+    <Content Include="Content\ico\carshowroom.gif" />
     <Content Include="Content\ico\favicon.ico" />
+    <Content Include="Content\ico\giphy.gif" />
+    <Content Include="Content\ico\source.gif" />
     <Content Include="Content\images\blog\blog_img_01.jpg" />
     <Content Include="Content\images\blog\blog_img_03.jpg" />
     <Content Include="Content\images\blog\blog_img_04.jpg" />

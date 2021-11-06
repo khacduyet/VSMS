@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Feature Manager</h2>
 
 <p>
     <a href="@Url.Action("Index", "Cars")" class="btn btn-success">Add Feature Car</a>
@@ -22,12 +22,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descriptions)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
                 <th></th>
             </tr>
 
@@ -39,15 +33,9 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Descriptions)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        <a href="@Url.Action("Edit","Features", new { id = item.Id})" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                        <a href="@Url.Action("Details","Features", new { id = item.Id})" class="btn btn-info"><i class="fas fa-info"></i></a>
+                        <a href="#" class="btn btn-danger delete-click" id="@item.Id"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             }
@@ -147,5 +135,36 @@
             }
             return isValid;
         }
+        $(".delete-click").click(function () {
+            var cf = confirm(" Are you sure delete this record?");
+            if (cf) {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("DeleteFeature")",
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs) {
+                            toastr.success(
+                                'Delete record successfully!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        } else {
+                            toastr.error("Cannot delete Admin account!");
+                        }
+                    },
+                    error: function (msg) {
+                        toastr.error("Delete record fail!","Notification!");
+                    }
+                });
+            }
+        });
     </script>
 }
