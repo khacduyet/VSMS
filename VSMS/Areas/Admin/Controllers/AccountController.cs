@@ -197,6 +197,21 @@ namespace VSMS.Areas.Admin.Controllers
             return View(admin);
         }
 
+        public JsonResult DeleteAccount(int id)
+        {
+            Models.Admin admin = db.Admins.Find(id);
+            if (!admin.Id.Equals(1))
+            {
+                db.Admins.Remove(admin);
+                Models.Per_relationship pr = db.Per_Relationships.Where(x => x.Id_admin == id).FirstOrDefault();
+                db.Per_Relationships.Remove(pr);
+                db.SaveChanges();
+                @TempData["success"] = "Erase successfully!";
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
         // Action New
         public ActionResult SetPermission(int? id)
         {
@@ -265,15 +280,19 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult ChangeStatus(int id)
         {
             var ad = db.Admins.Find(id);
-            ad.Name = ad.Name;
-            ad.Username = ad.Username;
-            ad.Password = ad.Password;
-            ad.Email = ad.Email;
-            ad.Avatar = ad.Avatar;
-            ad.ConfirmPassword = ad.Password;
-            ad.Status = !ad.Status;
-            db.SaveChanges();
-            TempData["info"] = "Change status successfully!";
+            if (ad.Id != 1)
+            {
+                ad.Name = ad.Name;
+                ad.Username = ad.Username;
+                ad.Password = ad.Password;
+                ad.Email = ad.Email;
+                ad.Avatar = ad.Avatar;
+                ad.ConfirmPassword = ad.Password;
+                ad.Status = !ad.Status;
+                db.SaveChanges();
+                TempData["info"] = "Change status successfully!";
+            }
+            TempData["error"] = "Don't lock admin!";
             return RedirectToAction("Index");
         }
 

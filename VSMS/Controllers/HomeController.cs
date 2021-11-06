@@ -76,17 +76,38 @@ namespace VSMS.Controllers
             if (sortType == 2)
             {
                 CarList = db.Cars.OrderBy(s => s.CarName).ToList();
-                if (idCat != null || idModel != null)
+                if (idCat != null && idModel != null)
                 {
-                    CarList = db.Cars.Where(c => (c.CatId == idCat || c.ModeId == idModel) && (c.Price > x && c.Price < y)).OrderBy(s => s.CarName);
+                    CarList = db.Cars.Where(c => c.CatId == idCat && c.ModeId == idModel && c.Price > x && c.Price < y).OrderBy(s => s.CarName);
+                } else if (idCat != null && idModel == null)
+                {
+                    CarList = db.Cars.Where(c => c.CatId == idCat && c.Price > x && c.Price < y).OrderBy(s => s.CarName);
+                } else if (idCat == null && idModel != null)
+                {
+                    CarList = db.Cars.Where(c => c.ModeId == idModel && c.Price > x && c.Price < y).OrderBy(s => s.CarName);
+                } else
+                {
+                    CarList = db.Cars.Where(c => c.Price > x && c.Price < y).OrderBy(s => s.CarName);
                 }
             }
             else
             {
                 CarList = db.Cars.OrderByDescending(s => s.CarName).ToList();
-                if (idCat != null || idModel != null)
+                if (idCat != null && idModel != null)
                 {
-                    CarList = db.Cars.Where(c => (c.CatId == idCat || c.ModeId == idModel) && (c.Price > x && c.Price < y)).OrderByDescending(s => s.CarName);
+                    CarList = db.Cars.Where(c => c.CatId == idCat && c.ModeId == idModel && c.Price > x && c.Price < y).OrderByDescending(s => s.CarName);
+                }
+                else if (idCat != null && idModel == null)
+                {
+                    CarList = db.Cars.Where(c => c.CatId == idCat && c.Price > x && c.Price < y).OrderBy(s => s.CarName);
+                }
+                else if (idCat == null && idModel != null)
+                {
+                    CarList = db.Cars.Where(c => c.ModeId == idModel && c.Price > x && c.Price < y).OrderBy(s => s.CarName);
+                }
+                else
+                {
+                    CarList = db.Cars.Where(c => c.Price > x && c.Price < y).OrderBy(s => s.CarName);
                 }
             }
 
@@ -101,6 +122,7 @@ namespace VSMS.Controllers
                                ImageName = i.ImageName
                            }).ToList();
             ViewBag.ip = imgList;
+            ViewBag.CatList = db.Categories;
             ViewBag.Cat = new SelectList(db.Categories, "Id", "CateName", idCat);
             ViewBag.Mode = new SelectList(db.Modes, "Id", "ModeName", idModel);
             return PartialView("_PartialProduct", CarList);

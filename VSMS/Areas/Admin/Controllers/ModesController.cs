@@ -144,7 +144,13 @@ namespace VSMS.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public JsonResult DeleteModel(int id)
+        {
+            Mode mode = db.Modes.Find(id);
+            db.Modes.Remove(mode);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

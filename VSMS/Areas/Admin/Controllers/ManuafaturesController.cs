@@ -132,7 +132,13 @@ namespace VSMS.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public JsonResult DeleteManufacturer(int id)
+        {
+            Manuafature manuafature = db.Manuafatures.Find(id);
+            db.Manuafatures.Remove(manuafature);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -150,6 +150,14 @@ namespace VSMS.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult DeleteFeature(int id)
+        {
+            Feature feature = db.Features.Find(id);
+            db.Features.Remove(feature);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

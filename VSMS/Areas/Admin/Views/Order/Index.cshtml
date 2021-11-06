@@ -92,13 +92,10 @@
                         console.log(rs);
                         loadData();
                         if (rs.success == 1) {
-                            
                             toastr.success('Pay Success!', 'Notification!', { timeOut: 2000 });
-                           
                         } else {
                             toastr.error('Pay False!', 'Notification!', { timeOut: 2000 });
                         }
-
                     }, error: function (e) {
                         alert(e.responseText);
                     }

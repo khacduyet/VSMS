@@ -132,6 +132,14 @@ namespace VSMS.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult DeleteCategories(int id)
+        {
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            return Json(true,JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
