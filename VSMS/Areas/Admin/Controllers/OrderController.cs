@@ -28,9 +28,54 @@ namespace VSMS.Areas.Admin.Controllers
 
 
         // GET: Admin/Order
+        [CustomAuthorize("ADMIN")]
         public ActionResult Index()
         {
-            return View();
+            var data = from od in db.OrderDetails
+                       join c in db.Cars on od.CarId equals c.Id
+                       join o in db.Orders on od.OrderId equals o.Id
+                       join mb in db.Members on o.MemberId equals mb.Id
+                       join ad in db.Admins on o.AdminId equals ad.Id
+                       select new ListOrderViewModel
+                       {
+                           IdAdmin = ad.Id,
+                           NameAdmin = ad.Name,
+                           IdOrderDetail = od.Id,
+                           IdOrder = o.Id,
+                           CarName = c.CarName,
+                           CreatedAt = o.CreatedAt,
+                           FullName = mb.FullName,
+                           IdCar = c.Id,
+                           IdMember = mb.Id,
+                           Quantity = od.Quantity,
+                           Status = o.Status,
+                           Total = (od.Quantity * c.Price)
+                       };
+            return View(data);
+        }
+
+        public ActionResult MyIndex()
+        {
+            var value = (Models.Admin)this.HttpContext.Session[Common.CommonConstants.USER_SESSION];
+            var data = from od in db.OrderDetails
+                       join c in db.Cars on od.CarId equals c.Id
+                       join o in db.Orders on od.OrderId equals o.Id
+                       join mb in db.Members on o.MemberId equals mb.Id
+                       where o.AdminId == value.Id
+                       select new ListOrderViewModel
+                       {
+                           IdOrderDetail = od.Id,
+                           IdOrder = o.Id,
+                           CarName = c.CarName,
+                           CreatedAt = o.CreatedAt,
+                           FullName = mb.FullName,
+                           IdCar = c.Id,
+                           IdMember = mb.Id,
+                           Quantity = od.Quantity,
+                           Status = o.Status,
+                           Total = (od.Quantity * c.Price)
+                       };
+            return View(data);
         }
         // lấy ra tất cả dữ liệu của order
 
@@ -38,20 +83,20 @@ namespace VSMS.Areas.Admin.Controllers
         {
             var data = from od in db.OrderDetails
                        join c in db.Cars on od.CarId equals c.Id
-
                        join o in db.Orders on od.OrderId equals o.Id
-
                        join mb in db.Members on o.MemberId equals mb.Id
-
-                       select new
+                       select new ListOrderViewModel
                        {
+                           IdOrderDetail = od.Id,
                            IdOrder = o.Id,
-                           IdMember = mb.Id,
-                           MemberName = mb.FullName,
                            CarName = c.CarName,
-                           Total = (c.Price * od.Quantity),
-                           Status = od.Status
-
+                           CreatedAt = o.CreatedAt,
+                           FullName = mb.FullName,
+                           IdCar = c.Id,
+                           IdMember = mb.Id,
+                           Quantity = od.Quantity,
+                           Status = o.Status,
+                           Total = (od.Quantity * c.Price)
                        };
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -61,39 +106,59 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult CreateOrder(int id)
         {
             var mem = db.Members.Find(id);
-            ViewBag.Member = mem;
-            return View();
+            ViewBag.CatId = new SelectList(db.Categories,"Id","CateName");
+            return View(mem);
         }
-        //Tạo mới một order do admin tạo
-        public JsonResult CreateNewOrderRecord(OrderViewModel vmOrderViewModel)
+        [HttpPost]
+        public ActionResult CreateOrder(Member or, int Quantity, int CarId)
         {
-            DateTime today = DateTime.Today;
-            var dataOrder = new Order { Total = 0, MemberId = vmOrderViewModel.MemberId, CreatedAt = today, Status = 0 };
+            var value = (Models.Admin)this.HttpContext.Session[Common.CommonConstants.USER_SESSION];
+            Order o = new Order();
+            o.MemberId = or.Id;
+            o.CreatedAt = DateTime.Now;
+            o.Status = 0;
+            o.AdminId = value.Id;
+            db.Orders.Add(o);
 
-            _order.SaveObject(dataOrder);
+            OrderDetails od = new OrderDetails();
+            od.OrderId = o.Id;
+            od.Quantity = Quantity;
+            od.CarId = CarId;
+            od.Status = 0;
+            db.OrderDetails.Add(od);
 
-            var dataOrderDeTails = new OrderDetails { CarId = vmOrderViewModel.CarId, OrderId = dataOrder.Id, Quantity = vmOrderViewModel.Quantity, Status = 0 };
-
-            _orderDetails.Add(dataOrderDeTails);
-
-            return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
+            db.SaveChanges();
+            return RedirectToAction("MyIndex");
         }
 
+        [HttpPost]
+        public JsonResult getCars(int? id)
+        {
+            var model = db.Cars.Where(x => x.CatId == id).ToList();
+            return Json(model);
+        }
 
         // set lai trang thai order khi thanh toan thanh cong
         public JsonResult UpdatePay(int id)
         {
-
-            var dataOd = db.OrderDetails
+            var dataOd = db.Orders
                         .Where(p => p.Id == id)
                         .SingleOrDefault();
             dataOd.Status = 1;
             db.SaveChanges();
-            //Chạy
             return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
         }
 
-
-
+        public JsonResult DeletePay(int id)
+        {
+            var odetails = db.OrderDetails.Where(x => x.OrderId == id).SingleOrDefault();
+            db.OrderDetails.Remove(odetails);
+            var dataOd = db.Orders
+                        .Where(p => p.Id == id)
+                        .SingleOrDefault();
+            db.Orders.Remove(dataOd);
+            db.SaveChanges();
+            return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
