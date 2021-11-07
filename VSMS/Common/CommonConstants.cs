@@ -11,6 +11,7 @@ namespace VSMS.Common
     {
         // SESSION COMMON ADMIN
         public static string USER_SESSION;
+        public static string MEMBER_SESSION;
         // Mã hóa mật khẩu
         public static string ParseMD5(string pass)
         {

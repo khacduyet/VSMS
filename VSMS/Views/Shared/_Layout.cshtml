@@ -139,7 +139,7 @@
                                 <div>
                                     <i class="icon-user"></i>
                                     @{ if (customer != null)
-                                        {@customer.UserName }}
+                                        {@customer.FullName }}
                                 </div>
                                 <hr style="margin: 0" />
                                 <ul>
@@ -419,7 +419,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="~/Scripts/js/main.js"></script>
     <!-- form validation and sending to mail -->
-    <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/external/form/jquery.form.js"></script>
@@ -474,7 +473,17 @@
                         if (!rs) {
                             toastr.error('Register Drive Test False!', 'Thông báo', { timeOut: 2000 });
                         } else {
-                            toastr.success('Register Success!', 'Thông báo', { timeOut: 2000 });
+                            toastr.success(
+                                'Register Success!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
                         }
                     },
                     error: function (e) {
@@ -492,6 +501,9 @@
         }
         return isValid;
     }
+
+        
+
     </script>
 </body>
 

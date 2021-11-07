@@ -39,9 +39,21 @@ namespace VSMS.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAllData()
+        public JsonResult GetAllData(int? id)
         {
-            var data = _feature.GetAll();
+            var ft = db.Features.ToList();
+            var cd = db.CarDetails.Where(x=>x.IdCar == id).ToList();
+            foreach (var item in cd)
+            {
+                var data = db.Features.Find(item.IdFeature);
+                ft.Remove(data);
+            }
+            return Json(ft, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetFeaturesChoose()
+        {
+            var data = db.Features;
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

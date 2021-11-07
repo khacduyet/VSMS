@@ -8,7 +8,9 @@ namespace VSMS.Models.ViewModels
     public class DriveTestViewModel
     {
         public int Id { get; set; }
+        public int? CarId{ get; set; }
         public string CarName{ get; set; }
+        public int? MemberId{ get; set; }
         public string MemberName{ get; set; }
         public string Note{ get; set; }
         public DateTime CreatedAt{ get; set; }

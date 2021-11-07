@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "CarFeature";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
-    
+
 }
 <div class="container-fluid">
     <div class="card card-default">
@@ -13,6 +13,7 @@
         <!-- /.card-header -->
         <div class="card-body">
             <div class="row">
+                <input type="text" hidden name="IdCar" id="IdCar" value="@ViewBag.CarId" />
                 <div class="col-12">
                     <h3>Feature of Car</h3>
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -23,9 +24,8 @@
                                     <th>Feature Name</th>
                                 </tr>
                             </thead>
-                           <tbody class="bodyFeature">
-
-                           </tbody>
+                            <tbody class="bodyFeature">
+                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>#</th>
@@ -34,6 +34,7 @@
                             </tfoot>
                         </table>
                         <button id="addFeatureToCar" class="btn btn-primary">Add Feature Car</button>
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-warning" })
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -65,12 +66,13 @@
     </script>
     <script>
         //Bootstrap Duallistbox
-
+        var IdCar = $("#IdCar").val();
 
         $(document).ready(function () {
             $('.duallistbox').bootstrapDualListbox();
 
-            getURL();
+            //getURL();
+
 
             // show option
             function AjaxCall(url, data, type) {
@@ -83,6 +85,48 @@
             };
 
             LoadDataCheckBox();
+            $('#addFeatureToCar').click(function () {
+                var _idCar = IdCar;
+                var list = []
+                $("#example1 :checked").each(function (i, e) {
+                    list.push($(this).attr("value"));
+                })
+                var formData = new FormData;
+                for (var i = 0; i < list.length; i++) {
+                    formData.append('list[]', list[i]);
+                }
+                formData.append('IdCar', _idCar);
+                console.log(formData);
+                $.ajax({
+                    url: '@Url.Action("CreateFeatureDetails", "Cars")',
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: formData,
+                    success: function (rs) {
+                        if (rs.thangdog == 1) {
+                            toastr.error('Duplicate feature with code ' + rs.IdFeature, 'Notification!', { timeOut: 2000 });
+
+                        } else {
+                            toastr.success(
+                                'Add Feature successfully!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
+            });
 
         });
 
@@ -109,29 +153,13 @@
             return query_string;
         }
 
-        // xử lý url để lấy tham số id của ô tô
-        function getURL() {
-            var query_string = "" + window.location.href;
-            console.log(query_string);
-            var parsed_qs = parse_query_string(query_string);
-            var idCar = parsed_qs.id;
-            if (idCar == null) {
-                toastr.error('Id của ô tô không tìm thấy !', 'Thông báo', { timeOut: 2000 });
-            } else {
-                AddFeatureCar(idCar);
-            }
-        }
-
-
-
-        
-
         //Chức năng load data featute theo id ô tô checkbox
 
         function LoadDataCheckBox() {
             $.ajax({
                 url: "/Admin/Features/GetAllData",
                 type: "GET",
+                data: { id: IdCar},
                 success: function (result) {
                     console.log(result);
                     var html = '';
@@ -143,47 +171,10 @@
                     });
                     /*DataTables instantiation.*/
                     $(".bodyFeature").html(html);
-
                 }, error: function (e) {
                     alert(e.responseText);
                 }
             })
-
-        }
-
-        function AddFeatureCar(idCar) {
-            $('#addFeatureToCar').click(function () {
-                var _idCar = idCar;
-                var list = []
-                $("#example1 :checked").each(function (i, e) {
-                    list.push($(this).attr("value"));
-                })
-                var formData = new FormData;
-                for (var i = 0; i < list.length; i++) {
-                    formData.append('list[]', list[i]);
-                }
-                formData.append('IdCar', _idCar);
-                $.ajax({
-                    url: '@Url.Action("CreateFeatureDetails", "Cars")',
-                    type: "POST",
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    data: formData,
-                    success: function (rs) {
-                        //location.reload(true);
-                        if (rs.thangdog == 1) {
-                            toastr.error('Duplicate feature with code ' + rs.IdFeature, 'Thông báo', { timeOut: 2000 });
-                        } else {
-                            toastr.success('Add Feature Seccess', 'Thông báo', { timeOut: 2000 });
-                        }
-                    },
-                    error: function (e) {
-                        console.log(e.responseText);
-                    }
-                });
-
-            });
         }
     </script>
 }

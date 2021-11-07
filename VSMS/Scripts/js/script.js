@@ -84,3 +84,28 @@ function validateSignUp() {
     
     return isValid;
 }
+
+function showPopUp(idCar) {
+    $.ajax({
+        type: "GET",
+        url: "/Inventory/Uploads",
+        data: { id: idCar },
+        success: function (rs) {
+            console.log(rs.result);
+            $.magnificPopup.open({
+                items: [
+                    {
+                        src: rs.result
+                    }
+                ],
+                gallery: {
+                    enabled: true
+                },
+                type: 'image'
+            });
+        },
+        error: function (msg) {
+
+        }
+    });
+}
