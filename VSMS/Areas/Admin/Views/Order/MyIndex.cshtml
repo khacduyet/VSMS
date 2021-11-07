@@ -22,7 +22,6 @@
                                     <th>Member Name</th>
                                     <th>Car Name</th>
                                     <th>Total</th>
-                                    <th>Created By</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -34,7 +33,6 @@
                                         <td><a class="btn btn-link" href="@Url.Action("Details","Members", new { id = item.IdMember})">@item.FullName</a></td>
                                         <td>@item.CarName</td>
                                         <td><b>$@item.Total</b></td>
-                                        <td><b>@item.NameAdmin</b></td>
                                         <td>
                                             @{
                                                 if (item.Status == 0)
@@ -58,7 +56,6 @@
                                                     <a href="#" data-idOdPay="@item.IdOrder" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" id="paypay">Pay</a>
                                                 }
                                             }
-                                            <a href="#" id="delOrder" data-idOdPay="@item.IdOrder" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -140,35 +137,6 @@
                         alert(e.responseText);
                     }
                 });
-            });
-            $("#delOrder").click(function () {
-                var dataIdPay = $(this).attr("data-idOdPay");
-                var cf = confirm("Are your sure?");
-                if (cf) {
-                    $.ajax({
-                        type: "GET",
-                        url: "@Url.Action("DeletePay")",
-                        data: { id: dataIdPay },
-                        success: function (rs) {
-                            if (rs.success == 1) {
-                                toastr.success(
-                                    'Delete Pay Success!',
-                                    'Notification!',
-                                    {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
-                                        onHidden: function () {
-                                            window.location.reload();
-                                        }
-                                    });
-                            } else {
-                                toastr.error('Delete Pay False!', 'Notification!', { timeOut: 2000 });
-                            }
-                        }, error: function (e) {
-                            alert(e.responseText);
-                        }
-                    });
-                }
             });
         });
     </script>

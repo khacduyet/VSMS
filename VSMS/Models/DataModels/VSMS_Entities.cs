@@ -25,7 +25,6 @@ namespace VSMS.Models
         public DbSet<Member> Members{ get; set; } 
         public DbSet<Order> Orders{ get; set; } 
         public DbSet<OrderDetails> OrderDetails{ get; set; } 
-        public DbSet<AdminOrder> AdminOrders{ get; set; } 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Per_relationship> Per_Relationships { get; set; }
         public DbSet<Permission> Permissions { get; set; }

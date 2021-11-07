@@ -233,9 +233,9 @@
                             idFeature: _idFeaDel
                        }, success: function (rs) {
                             if (rs.check == 1) {
-                                toastr.success('xoa oke', 'Thông báo', { timeOut: 2000 });
+                                toastr.success('Delete success!', 'Thông báo', { timeOut: 2000 });
                             } else {
-                                toastr.error('ko xoa duoc ' + rs.idFeature, 'Thông báo', { timeOut: 2000 });
+                                toastr.error('Dont success ' + rs.idFeature, 'Thông báo', { timeOut: 2000 });
                             }
                        },
                        error: function (e) {

@@ -1,4 +1,4 @@
-﻿@{var mem = ViewBag.Member as VSMS.Models.DataModels.Member;}
+﻿@model VSMS.Models.DataModels.Member
 @{
     ViewBag.Title = "CreateOrder";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
@@ -9,54 +9,49 @@
         <div class="col-lg-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Add New Record Order Of Member <span class="text-danger" id="txtNameMember">@mem.FullName</span></h3>
+                    <h3 class="card-title">Add New Record Order Of Member <span class="text-danger" id="txtNameMember">@Model.FullName</span></h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form method="POST" action="@Url.Action("CreateOrder","Order")">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-2"></div>
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <label>Member </label>
-                                    <input type="text" class="form-control" hidden name="IdMember" value="@mem.Id" readonly id="memberId">
-                                    <input type="text" class="form-control" value="@mem.FullName" readonly>
+                                    <input type="text" class="form-control" hidden name="IdMember" value="@Model.Id" disabled>
+                                    <input type="text" class="form-control" value="@Model.FullName" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select class="form-control" id="cateDropDownList">
-                                    </select>
+                                    @Html.DropDownList("CatId", null, "-- Select Cat --", new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
                                     <label>Car List By Category</label>
-                                    <select class="form-control" id="carByCateDropDownList">
+                                    <select class="form-control" name="CarId" id="carByCateDropDownList">
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" id="quantity" class="form-control" name="quantity" min="1" max="10">
+                                    <input type="number" id="quantity" class="form-control" name="Quantity" min="1" max="10">
                                 </div>
 
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="Status" checked>
+                                    <input type="checkbox" class="form-check-input" id="Status" name="Status" checked>
                                     <label class="form-check-label" for="exampleCheck1">
                                         Status(Waiting for review)
                                     </label>
                                 </div>
                                 <div class="card-footer">
-                                    <button id="addRecordOrder" type="button" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                     @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-warning" })
                                 </div>
                             </div>
                             <div class="col-lg-2"></div>
                         </div>
-
-
                     </div>
                     <!-- /.card-body -->
-
-
                 </form>
             </div>
         </div>
@@ -66,128 +61,31 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            //getURLPut();
-            function AjaxCall(url, data, type) {
-                return $.ajax({
-                    url: url,
-                    type: type ? type : 'GET',
-                    data: data,
-                    contentType: 'application/json'
-                });
-            };
-            $('#addRecordOrder').click(function () {
-                getURL();
+            $("#CatId").on("change", function () {
+                $('#carByCateDropDownList').empty();
+                var id = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getCars","Order")",
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs != "") {
+                            $.each(rs, function (i, item) {
+                                $('#carByCateDropDownList').append($('<option>', {
+                                    value: item.Id,
+                                    text: item.CarName
+                                }));
+                            });
+                        } else {
+                            $('#carByCateDropDownList').append($('<option>', {
+                                value: "",
+                                text: "-- Nothing --"
+                            }));
+                        }
+                    }
+                 });
             });
-
-
-            // ajax call category
-            AjaxCall('/Admin/Categories/GetAllData', null).done(function (response) {
-                console.log("oke");
-                console.log(response);
-                if (response.length > 0) {
-                    $('#cateDropDownList').html('');
-                    var options = '';
-                    options += '<option value="">   Select   </option>';
-                    $.each(response, function (key, item) {
-                        options += '<option value="' + item.Id + '">' + item.CateName + '</option>';
-                    });
-                    $('#cateDropDownList').html(options);
-
-                    // khách admin chọn category sẽ show ra các ô tô tương ứng danh sách category
-
-                    $("#cateDropDownList").change(function () {
-                        data = $('#cateDropDownList option:selected').val()
-                        console.log(data);
-
-                        AjaxCall('/Admin/Cars/GetDataByCate/' + data, null).done(function (response) {
-                            console.log("oke");
-                            console.log(response);
-                            if (response.length > 0) {
-                                $('#carByCateDropDownList').html('');
-                                var options = '';
-                                options += '<option value="">   Select   </option>';
-                                $.each(response, function (key, item) {
-                                    options += '<option value="' + item.Id + '">' + item.CarName + '</option>';
-                                });
-                                $('#carByCateDropDownList').html(options);
-                            }
-                            else {
-                                var options = '';
-                                options += '<option value="Select">There is no data corresponding to the category ^-^</option>';
-                                $('#carByCateDropDownList').html(options);
-                            }
-                        }).fail(function (error) {
-                            alert(error.StatusText);
-                        });
-                    })
-                }
-            }).fail(function (error) {
-                alert(error.StatusText);
-            });
-
         });
-
-
-
-
-
-        // xử lý logic kiểm tra car có null hay không
-        $('#carByCateDropDownList').click(function () {
-            data = $('#carByCateDropDownList option:selected').val();
-            if (data == undefined) {
-                alert("Please choose a category :))");
-            }
-
-        });
-        // chức năng xử lý url
-        function parse_query_string(query) {
-            var vars = query.split("/");
-            var query_string = {};
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                var key = decodeURIComponent(pair[0]);
-                var value = decodeURIComponent(pair[1]);
-                // If first entry with this name
-                if (typeof query_string[key] === "undefined") {
-                    query_string[key] = decodeURIComponent(value);
-                    // If second entry with this name
-                } else if (typeof query_string[key] === "string") {
-                    var arr = [query_string[key], decodeURIComponent(value)];
-                    query_string[key] = arr;
-                    // If third or later entry with this name
-                } else {
-                    query_string[key].push(decodeURIComponent(value));
-                }
-            }
-            return query_string;
-        }
-
-        // xử lý url để lấy tham số id của member
-        function getURL() {
-            var query_string = "" + window.location.href;
-            console.log(query_string);
-            var parsed_qs = parse_query_string(query_string);
-            var idMember = parsed_qs.id;
-            if (idMember == null) {
-                toastr.error('Id Member not Found!', 'Thông báo', { timeOut: 2000 });
-            } else {
-                AddNewRecordOrder(idMember);
-            }
-        }
-
-        // xử lý url lấy tham số id của member hiển thị lên ô input
-
-        //function getURLPut() {
-        //    var query_string = "" + window.location.href;
-        //    console.log(query_string);
-        //    var parsed_qs = parse_query_string(query_string);
-        //    var idMember = parsed_qs.id;
-        //    if (idMember == null) {
-        //        toastr.error('Id Member not Found!', 'Thông báo', { timeOut: 2000 });
-        //    } else {
-        //        document.getElementById("memberId").value = idMember + "";
-        //    }
-        //}
 
         // chuc nang them moi order
         function AddNewRecordOrder(idMember) {
@@ -213,7 +111,6 @@
                     } else {
                         toastr.error('Add Order False!', 'Notification!', { timeOut: 2000 });
                     }
-
                 },
                 error: function (e) {
                     console.log(e.responseText);
@@ -221,7 +118,7 @@
             });
         }
 
-       
+
 
         //Valdidation using jquery
         function validate() {
@@ -247,7 +144,6 @@
             else {
                 $('#quantity').css('border-color', 'lightgrey');
             }
-
             return isValid;
         }
     </script>

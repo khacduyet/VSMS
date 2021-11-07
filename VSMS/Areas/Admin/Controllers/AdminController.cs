@@ -157,7 +157,8 @@ namespace VSMS.Areas.Admin.Controllers
                         return View();
                     }
                     Session["admin"] = acc;
-                    Session["CountOrder"] = db.OrderDetails.Where(s => s.Status == 0).Count();
+                    Session["CountOrder"] = db.Orders.Where(s => s.Status == 0 && s.AdminId == acc.Id).Count();
+                    Session["Per_rel"] = db.Per_Relationships;
                     TempData["userCurrent"] = acc.Name;
                     Session.Add(Common.CommonConstants.USER_SESSION, acc);
                     return RedirectToAction("Index");

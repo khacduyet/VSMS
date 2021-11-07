@@ -13,8 +13,6 @@ namespace VSMS.Models.DataModels
         [Key]
         public int Id{ get; set; }
 
-        public float Total{ get; set; }
-
         [ForeignKey("Member")]
         public int MemberId{ get; set; }
         [ForeignKey("Admin")]
@@ -30,9 +28,8 @@ namespace VSMS.Models.DataModels
         {
         }
 
-        public Order(float total, int memberId, DateTime createdAt, byte status)
+        public Order(int memberId, DateTime createdAt, byte status)
         {
-            Total = total;
             MemberId = memberId;
             CreatedAt = createdAt;
             Status = status;
