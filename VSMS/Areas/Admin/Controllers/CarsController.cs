@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VSMS.Models;
@@ -33,7 +35,7 @@ namespace VSMS.Areas.Admin.Controllers
         // GET: Admin/Cars
         public ActionResult Index()
         {
-            return View();
+            return View(db.Cars);
         }
         public JsonResult GetAllData()
         {
@@ -51,7 +53,7 @@ namespace VSMS.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult Add(Car car,ImageProduct imgPro)
+        public ActionResult Add(Car car, ImageProduct imgPro)
         {
             if (Request.Files.Count > 0)
             {
@@ -83,9 +85,17 @@ namespace VSMS.Areas.Admin.Controllers
                         imgPro.ImageName = ("/Content/BackEnd/Uploads/product/" + imageName);
 
                         var imgProName = imgPro.ImageName;
-
+                        ImageProduct imgProduct = new ImageProduct();
                         // Thêm mới vào bảng ảnh sản phẩm
-                        var imgProduct = new ImageProduct(imgProName,0);
+                        if (i == 1)
+                        {
+                            imgProduct = new ImageProduct(imgProName, 1);
+                        }
+                        else
+                        {
+                            imgProduct = new ImageProduct(imgProName, 0);
+                        }
+                        
                         _ImageProduct.SaveObject(imgProduct);
 
                         var imgDes = new ImageProductDetails(imgProduct.Id, _car.Id, 0);
@@ -104,10 +114,104 @@ namespace VSMS.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var car = db.Cars.Find(id);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CatId = new SelectList(db.Categories, "Id", "CateName",car.CatId);
+            foreach (var item in db.Modes)
+            {
+                if (car.ModeId == item.Id)
+                {
+                    ViewBag.Manua = new SelectList(db.Manuafatures, "Id", "Name",item.ManafatureId);
+                }
+            }
+            return View(car);
+        }
+
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "Id, CarName, Engine, FuelType, Transmission, Price, Descriptions, Status, CatId, ModeId")] Car car, IEnumerable<HttpPostedFileBase> files)
+        {
+            var c = db.Cars.Find(car.Id);
+
+            if (files.Count() > 1)
+            {
+                var getOldImgDetails = db.ImageProductDetails.Where(x => x.IdProduct == car.Id);
+                foreach (var item in getOldImgDetails)
+                {
+                    db.ImageProductDetails.Remove(item);
+                    var getOldimg = db.ImageProducts.Find(item.IdImageProduct);
+                    db.ImageProducts.Remove(getOldimg);
+                }
+                var i = 1;
+                foreach (var file in files)
+                {
+                    string fname;
+                    // Checking for Internet Explorer  
+                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                    {
+                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                        fname = testfiles[testfiles.Length - 1];
+                    }
+                    else
+                    {
+                        fname = file.FileName;
+                    }
+                    var timeName = DateTime.Now.ToString("HHmmss");
+                    var imageName = timeName + file.FileName;
+                    // Get the complete folder path and store the file inside it.  
+                    file.SaveAs(Server.MapPath("~/Content/BackEnd/Uploads/product/") + imageName);
+                    ImageProduct ip = new ImageProduct();
+                    ip.ImageName = ("/Content/BackEnd/Uploads/product/" + imageName);
+                    if (i == 1)
+                    {
+                        ip.Status = 1;
+                    } else
+                    {
+                        ip.Status = 0;
+                    }
+                    i++;
+                    db.ImageProducts.Add(ip);
+                    ImageProductDetails ipd = new ImageProductDetails();
+                    ipd.IdImageProduct = ip.Id;
+                    ipd.IdProduct = car.Id;
+                    ipd.Status = 0;
+                    db.ImageProductDetails.Add(ipd);
+                    db.SaveChanges();
+                }
+            }
+            c.CarName = car.CarName;
+            c.Engine = car.Engine;
+            c.FuelType = car.FuelType;
+            c.Transmission = car.Transmission;
+            c.Price = car.Price;
+            c.Status = car.Status;
+            c.Descriptions = car.Descriptions;
+            c.CatId = car.CatId;
+            c.ModeId = car.ModeId;
+            db.SaveChanges();
+            @TempData["success"] = "Successfully!";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult getModel(int? id)
+        {
+            var model = db.Modes.Where(x => x.ManafatureId == id).ToList();
+            return Json(model);
+        }
 
         // phương thức thêm mới tính năng cho ô tô
-        public ActionResult CarFeature()
+        public ActionResult CarFeature(int id)
         {
+            ViewBag.CarId = id;
             return View("CarFeature");
         }
 
@@ -136,7 +240,15 @@ namespace VSMS.Areas.Admin.Controllers
                            ImageName = ip.ImageName
                        };
             var cc = data;
-            return Json(data, JsonRequestBehavior.AllowGet);           
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SoldOutCar(int? id)
+        {
+            var car = db.Cars.Find(id);
+            car.Status = 2;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         // json lấy data tính năng của ô tô
@@ -155,18 +267,15 @@ namespace VSMS.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         // thêm tính năng cho ô tô
-        public ActionResult CreateFeatureDetails(int idCar, int[] list) 
+        public ActionResult CreateFeatureDetails(int idCar, int[] list)
         {
             for (int i = 0; i < list.Length; i++)
             {
-                int  IdFeature = list[i];
+                int IdFeature = list[i];
                 // kiem tra trung id
                 var idCheck = db.CarDetails.Where(x => x.IdFeature == IdFeature && x.IdCar == idCar).FirstOrDefault();
                 if (idCheck != null)
                 {
-                    // @TempData["error"] = "Feature có mã bằng " + IdFeature + "đã tồn tại";
-                    // return RedirectToAction("CarFeature");
-                    // Chạy thử xem
                     return Json(new { thangdog = 1, IdFeature }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -174,7 +283,7 @@ namespace VSMS.Areas.Admin.Controllers
                     var data = new CarDetails(idCar, IdFeature, "descript");
                     _carDetails.Add(data);
                 }
-               
+
             }
             return RedirectToAction("Index");
         }
@@ -190,6 +299,8 @@ namespace VSMS.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
 
     }
 }

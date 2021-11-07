@@ -17,13 +17,14 @@ namespace VSMS.Models.DataModels
 
         [ForeignKey("Member")]
         public int MemberId{ get; set; }
-
+        [ForeignKey("Admin")]
+        public int AdminId { get; set; }
         public DateTime CreatedAt{ get; set; }
         public byte Status{ get; set; }
 
         public Member Member{ get; set; }
+        public Admin Admin{ get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
-        public ICollection<AdminOrder> AdminOrders{ get; set; }
 
         public Order()
         {

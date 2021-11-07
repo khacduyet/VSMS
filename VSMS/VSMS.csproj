@@ -168,7 +168,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataModels\Admin.cs" />
-    <Compile Include="Models\DataModels\AdminOrder.cs" />
     <Compile Include="Models\DataModels\Car.cs" />
     <Compile Include="Models\DataModels\CarDetails.cs" />
     <Compile Include="Models\DataModels\Category.cs" />
@@ -197,6 +196,7 @@
     <Compile Include="Models\ViewModels\DetailsCarViewModel.cs" />
     <Compile Include="Models\ViewModels\DriveTestViewModel.cs" />
     <Compile Include="Models\ViewModels\FeatureViewModel.cs" />
+    <Compile Include="Models\ViewModels\GetImageCarViewModel.cs" />
     <Compile Include="Models\ViewModels\ListCarViewModel.cs" />
     <Compile Include="Models\ViewModels\ModeViewModels.cs" />
     <Compile Include="Models\ViewModels\MyProfile.cs" />
@@ -2124,6 +2124,7 @@
     <Content Include="Content\ico\carshowroom.gif" />
     <Content Include="Content\ico\favicon.ico" />
     <Content Include="Content\ico\giphy.gif" />
+    <Content Include="Content\ico\imgUser.png" />
     <Content Include="Content\ico\source.gif" />
     <Content Include="Content\images\blog\blog_img_01.jpg" />
     <Content Include="Content\images\blog\blog_img_03.jpg" />
@@ -2486,6 +2487,7 @@
     <Content Include="Areas\Admin\Views\Contacts\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Contacts\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Cars\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
@@ -3055,6 +3057,7 @@
     <Content Include="Views\Shared\_PartialSignIn.cshtml" />
     <Content Include="Views\Shared\_PartialProduct.cshtml" />
     <Content Include="Views\Shared\_PartialCompareSlide.cshtml" />
+    <Content Include="Views\ManagerMember\MyDriveTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

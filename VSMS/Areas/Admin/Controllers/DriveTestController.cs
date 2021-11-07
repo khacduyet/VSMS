@@ -26,7 +26,35 @@ namespace VSMS.Areas.Admin.Controllers
         // GET: Admin/DriveTest
         public ActionResult Index()
         {
-            return View();
+            var driveTest = from dt in db.DriveTests
+                            join c in db.Cars on dt.IdCar equals c.Id
+                            join m in db.Members on dt.IdMember equals m.Id
+                            select new DriveTestViewModel
+                            {
+                                Id = dt.Id,
+                                CarId = c.Id,
+                                CarName = c.CarName,
+                                MemberId = m.Id,
+                                MemberName = m.FullName,
+                                Note = dt.Note,
+                                Status = dt.Status,
+                                CreatedAt = dt.CreatedAt
+                            };
+            return View(driveTest);
+        }
+
+        public JsonResult changeStatus(int? id, byte? status)
+        {
+            var drive = db.DriveTests.Find(id);
+            if (status == 0)
+            {
+                drive.Status = 1;
+            } else if (status == 1)
+            {
+                drive.Status = 2;
+            }
+            db.SaveChanges();
+            return Json(true,JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetAllData()
         {

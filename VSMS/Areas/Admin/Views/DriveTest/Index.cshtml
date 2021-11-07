@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<VSMS.Models.ViewModels.DriveTestViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
@@ -25,11 +25,50 @@
                                     <th>Date Registe Test</th>
                                     <th>Date Create</th>
                                     <th>Status</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody class="bodyDriveTest">
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td> @item.Id</td>
+                                        <td> @item.CarName</td>
+                                        <td> <a class="btn btn-link" href="@Url.Action("Details","Members", new { id = item.MemberId})">@item.MemberName</a></td>
+                                        <td> @item.Note</td>
+                                        <td> @item.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            @{
+                                                if (item.Status == 0)
+                                                {
+                                                    <span style="color: red">Unconfirmed</span>
+                                                }
+                                                else if (item.Status == 1)
+                                                {
+                                                    <span style="color: green">Confirmed</span>
+                                                }
+                                                else if (item.Status == 2)
+                                                {
+                                                    <span style="color: gray">Driven</span>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.Status == 0)
+                                                {
+                                                    <a href="#" class="btn btn-success accept-click" data-id="@item.Id" data-status="@item.Status">Confirm</a>
+                                                }
+                                                else if (item.Status == 1)
+                                                {
+                                                    <a href="#" class="btn btn-primary accept-click" data-id="@item.Id" data-status="@item.Status">Driven</a>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
-                            
+
                         </table>
 
                     </div>
@@ -63,38 +102,31 @@
     </script>
     <script>
         $(document).ready(function () {
-            LoadData();
-        });
-
-        function LoadData() {
-            $.ajax({
-                url: "/Admin/DriveTest/GetAllData",
-                type: "GET",
-                success: function (result) {
-                    console.log(result);
-                    var html = '';
-                    $.each(result, function (key, item) {
-                        html += '<tr>';
-                        html += '<td>' + item.Id + '</td>';
-                        html += '<td>' + item.CarName + '</td>';
-                        html += '<td>' + item.MemberName + '</td>';
-                        html += '<td>' + item.Note + '</td>';
-                        html += '<td>' + item.CreatedAt + '</td>';
-                        html += '<td> <span class="badge bg-danger">' + item.Status == 0 ? 'Await' : 'cc' + '</span></td>';
-                        html += '</tr>';
+            $(".accept-click").click(function () {
+                var id = $(this).attr("data-id");
+                var stt = $(this).attr("data-status");
+                var cf = confirm("Are you sure?");
+                if (cf) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("changeStatus")",
+                        data: { id: id, status: stt },
+                        success: function (rs) {
+                            toastr.success(
+                                'Change status success!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        }
                     });
-                    //<div class="custom-control custom-switch">
-                    //    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    //        <label class="custom-control-label" for="customSwitch1">Toggle this custom switch
-                    //        element</label>
-                    //                        </div>
-                    /*DataTables instantiation.*/
-                    $(".bodyDriveTest").html(html);
-
-                }, error: function (e) {
-                    alert(e.responseText);
                 }
-            })
-        }
+            });
+        });
     </script>
 }

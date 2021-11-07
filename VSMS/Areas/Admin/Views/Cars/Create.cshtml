@@ -13,55 +13,61 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form id="frmAddCar">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Car Name</label>
                                     <input type="text" class="form-control" id="Name" placeholder="Enter car name...">
+                                    <div class="invalid-feedback error-name">Please fill out this field</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Enginer</label>
                                     <input type="text" class="form-control" id="Enginer" placeholder="Enginer...">
+                                    <div class="invalid-feedback error-enginer">Please fill out this field</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Fuel Type</label>
                                     <input type="text" class="form-control" id="fuelType" placeholder="Fuel Type...">
+                                    <div class="invalid-feedback error-fuel">Please fill out this field</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Transmission</label>
                                     <input type="text" class="form-control" id="Transmission" placeholder="Transmission...">
+                                    <div class="invalid-feedback error-tran">Please fill out this field</div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Price</label>
                                     <input type="number" class="form-control" id="Price" name="Price" placeholder="Price...">
+                                    <div class="invalid-feedback error-price">Please fill out this field</div>
                                 </div>
 
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="Status">
-                                    <label class="form-check-label" for="exampleCheck1">
-                                        Status(Hide/Show)
-                                    </label>
+                                    <input type="radio" id="unavail" name="Status" value="0" checked>
+                                    <label for="Unavailable">Unavailable</label><br>
+                                    <input type="radio" id="avail" name="Status" value="1">
+                                    <label for="Available">Available</label><br>
                                 </div>
 
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select class="form-control" id="cateDropDownList">
+                                    <select class="form-control" id="cateDropDownList" name="CatId">
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Manuafature</label>
-                                    <select class="form-control" id="manuaDropDownList">
+                                    <select class="form-control" id="manuaDropDownList" name="Manu">
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Mode</label>
-                                    <select class="form-control" id="modeDropDownList">
+                                    <select class="form-control" id="modeDropDownList" name="ModeId">
                                     </select>
+                                    <div class="invalid-feedback error-mode">Please fill out this field</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Descriptions</label>
@@ -89,6 +95,7 @@
 
                     <div class="card-footer">
                         <button id="add" type="button" class="btn btn-primary">Submit</button>
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-warning" })
                     </div>
                 </form>
             </div>
@@ -97,9 +104,12 @@
 </div>
 
 @section Scripts{
+    <script>
 
+    </script>
     <script>
         $(document).ready(function () {
+            validform();
             function AjaxCall(url, data, type) {
                 return $.ajax({
                     url: url,
@@ -111,12 +121,10 @@
 
             // ajax call category
             AjaxCall('/Admin/Categories/GetAllData', null).done(function (response) {
-                console.log("oke");
-                console.log(response);
                 if (response.length > 0) {
                     $('#cateDropDownList').html('');
                     var options = '';
-                    options += '<option value="Select">   Select   </option>';
+                    options += '<option disabled >   Select   </option>';
                     $.each(response, function (key, item) {
                         options += '<option value="' + item.Id + '">' + item.CateName + '</option>';
                     });
@@ -128,12 +136,9 @@
 
             // ajax call mode
             AjaxCall('/Admin/Manuafatures/GetAllData', null).done(function (response) {
-                console.log("oke");
-                console.log(response);
                 if (response.length > 0) {
                     $('#manuaDropDownList').html('');
                     var options = '';
-                    options += '<option value="Select">   Select   </option>';
                     $.each(response, function (key, item) {
                         options += '<option value="' + item.Id + '">' + item.Name + '</option>';
                     });
@@ -143,15 +148,10 @@
 
                     $("#manuaDropDownList").change(function () {
                         data = $('#manuaDropDownList option:selected').val()
-                        console.log(data);
-
                         AjaxCall('/Admin/Modes/GetDataByManua/' + data, null).done(function (response) {
-                            console.log("oke");
-                            console.log(response);
                             if (response.length > 0) {
                                 $('#modeDropDownList').html('');
                                 var options = '';
-                                options += '<option value="Select">   Select   </option>';
                                 $.each(response, function (key, item) {
                                     options += '<option value="' + item.Id + '">' + item.ModeName + '</option>';
                                 });
@@ -159,7 +159,7 @@
                             }
                             else {
                                 var options = '';
-                                options += '<option value="Select">   Not data yet   </option>';
+                                options += '<option >   Not data yet   </option>';
                                 $('#modeDropDownList').html(options);
                             }
                         }).fail(function (error) {
@@ -177,24 +177,41 @@
             if (data == undefined) {
                 alert("please select the manufacturer above!");
             }
-
         });
 
         // xử lý logic thêm mới
         $('#add').click(function () {
-
+            var obj = [
+                $("#Name").val(),
+                $("#Enginer").val(),
+                $("#fuelType").val(),
+                 $("#Transmission").val(),
+                $("#Price").val(),
+                $("#modeDropDownList").val(),
+                $("#carInputFile").val()
+            ];
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].length == 0) {
+                    toastr.error("Please fill out all fields!","Notification!");
+                    return false;
+                }
+            }
             // start validate
+            
             //end validate
-
             var formdata = new FormData(); //FormData object
-
             if (window.FormData !== undefined) {
                 // upload file
                 var fileInput = document.getElementById('carInputFile');
                 for (i = 0; i < fileInput.files.length; i++) {
                     var sfilename = fileInput.files[i].name;
                     formdata.append(sfilename, fileInput.files[i]);
-
+                }
+                var status = 0;
+                if ($('#unavail').is(':checked')) {
+                    status = status;
+                } else {
+                    status = 1;
                 }
 
                 formdata.append("CarName", $('#Name').val());
@@ -203,10 +220,9 @@
                 formdata.append("Transmission", $('#Transmission').val());
                 formdata.append("Price", $('#Price').val());
                 formdata.append("Descriptions", $('#Descriptions').val());
-                formdata.append("Status", 1);
+                formdata.append("Status", status);
                 formdata.append("CatId", $('#cateDropDownList').val());
                 formdata.append("ModeId", $('#modeDropDownList').val());
-
 
                 $.ajax({
                     url: "/Admin/Cars/Add",
@@ -217,9 +233,17 @@
                     data: formdata,
                     enctype: 'multipart/form-data',
                     success: function (rs) {
-                        console.log(rs);
-                        toastr.success('Add Feature Seccess!', 'Notification!', { timeOut: 2000 });
-                        location.reload(true);
+                        toastr.success(
+                            'Add Car Success!',
+                            'Notification!',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -228,6 +252,77 @@
             }
         })
 
+
+
+        function validform() {
+            document.getElementById("Name").addEventListener("keyup", function (e) {
+                if ($("#Name").val().length == 0) {
+                    $('#Name').addClass("is-invalid");
+                    $('.error-name').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Name').removeClass("is-invalid");
+                    $('#Name').addClass("is-valid");
+                    $('.error-name').css('display', 'none');
+
+                }
+            });
+            document.getElementById("Enginer").addEventListener("keyup", function (e) {
+                if ($("#Enginer").val().length == 0) {
+                    $('#Enginer').addClass("is-invalid");
+                    $('.error-enginer').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Enginer').removeClass("is-invalid");
+                    $('#Enginer').addClass("is-valid");
+                    $('.error-enginer').css('display', 'none');
+                }
+            });
+            document.getElementById("fuelType").addEventListener("keyup", function (e) {
+                if ($("#fuelType").val().length == 0) {
+                    $('#fuelType').addClass("is-invalid");
+                    $('.error-fuel').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#fuelType').removeClass("is-invalid");
+                    $('#fuelType').addClass("is-valid");
+                    $('.error-fuel').css('display', 'none');
+                }
+            });
+            document.getElementById("Transmission").addEventListener("keyup", function (e) {
+                if ($("#Transmission").val().length == 0) {
+                    $('#Transmission').addClass("is-invalid");
+                    $('.error-tran').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Transmission').removeClass("is-invalid");
+                    $('#Transmission').addClass("is-valid");
+                    $('.error-tran').css('display', 'none');
+                }
+            });
+            document.getElementById("Price").addEventListener("keyup", function (e) {
+                if ($("#Price").val().length == 0) {
+                    $('#Price').addClass("is-invalid");
+                    $('.error-price').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Price').removeClass("is-invalid");
+                    $('#Price').addClass("is-valid");
+                    $('.error-price').css('display', 'none');
+                }
+            });
+            document.getElementById("modeDropDownList").addEventListener("change", function (e) {
+                if ($("#modeDropDownList").val() == null) {
+                    $('#modeDropDownList').addClass("is-invalid");
+                    $('.error-mode').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#modeDropDownList').removeClass("is-invalid");
+                    $('#modeDropDownList').addClass("is-valid");
+                    $('.error-mode').css('display', 'none');
+                }
+            });
+        };
     </script>
 
 }

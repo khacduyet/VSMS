@@ -36,5 +36,7 @@ namespace VSMS.Models
 
         public ICollection<Per_relationship> Per_relationship { get; set; }
         public ICollection<Post> Posts { get; set; }
+        public ICollection<Order> Orders { get; set; }
+
     }
 }

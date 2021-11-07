@@ -79,5 +79,38 @@ namespace VSMS.Controllers
             var cus = db.Members.Find(id);
             return View(cus);
         }
+
+        public ActionResult MyDriveTest(int? id)
+        {
+            var dt = db.DriveTests.Where(x=>x.IdMember == id && x.Status != 3).OrderByDescending(y=>y.Id);
+            ViewBag.Car = (from c in db.Cars
+                           join ipd in db.ImageProductDetails on c.Id equals ipd.IdProduct
+                           join ip in db.ImageProducts on ipd.IdImageProduct equals ip.Id
+                           where ip.Status == 1
+                           select new GetImageCarViewModel
+                           {
+                               IdCar = c.Id,
+                               CarName = c.CarName,
+                               IdImage = ip.Id,
+                               ImageName = ip.ImageName,
+                               Status = ip.Status
+                           }).ToList();
+            return View(dt);
+        }
+
+        public JsonResult RemoveDriveTest(int? id)
+        {
+            var dt = db.DriveTests.Find(id);
+            if (dt.Status == 0)
+            {
+                dt.Status = 3;
+                db.SaveChanges();
+                return Json(new { success = 0 }, JsonRequestBehavior.AllowGet);
+            } else if (dt.Status == 1)
+            {
+                return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = 2 }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

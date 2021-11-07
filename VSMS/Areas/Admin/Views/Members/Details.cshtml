@@ -5,87 +5,96 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
 }
 
-<h2>Details</h2>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
 
-<div>
-    <h4>Member</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="~/Content/ico/imgUser.png"
+                                alt="User profile picture">
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                        <h3 class="profile-username text-center">@Model.FullName</h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+                        <p class="text-muted text-center">Potential Customers</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Car bought</b> <a class="float-right">1</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Number of consultations</b> <a class="float-right">5</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Number of reviews</b> <a class="float-right">3</a>
+                            </li>
+                        </ul>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PassWord)
-        </dt>
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning btn-block" })
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- About Me Box -->
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Profile</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="settings">
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputName" disabled placeholder="Name" value="@Model.FullName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputEmail" disabled placeholder="Email" value="@Model.Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName2" class="col-sm-2 col-form-label">Username</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputName2" disabled placeholder="Username" value="@Model.UserName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputExperience" class="col-sm-2 col-form-label">Birth Day</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputName2" disabled placeholder="Birth Day" value="@Model.BirthDay">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Phone</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputSkills" disabled placeholder="Phone" value="@Model.Phone">
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.PassWord)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -32,5 +32,21 @@ namespace VSMS.Controllers
             var data = _driveTest.Add(driveTest);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Uploads(int id)
+        {
+            var ipd = db.ImageProductDetails.Where(x => x.IdProduct == id);
+            string src = "";
+            foreach (var item in db.ImageProducts)
+            {
+                foreach (var i in ipd)
+                {
+                    if (item.Id == i.IdImageProduct && item.Status == 1)
+                    {
+                        src = item.ImageName;
+                    }
+                }
+            }
+            return Json(new { result = src },JsonRequestBehavior.AllowGet);
+        }
     }
 }

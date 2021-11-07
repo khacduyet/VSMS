@@ -1,0 +1,116 @@
+﻿@model IEnumerable<VSMS.Models.DataModels.DriveTest>
+
+@{
+    ViewBag.Title = "List Drive Test Your Register";
+    Layout = "~/Views/Shared/_LayoutPageManager.cshtml";
+    ViewBag.NameTitle = "List Drive Test Your Register";
+}
+
+<div style="margin: 20px;">
+    <table class="table table-hover">
+        <tr class="table-danger">
+            <th>
+                Car Name
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Drive Register Date
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @foreach (var car in ViewBag.Car as IEnumerable<VSMS.Models.ViewModels.GetImageCarViewModel>)
+                    {
+                        if (item.IdCar == car.IdCar)
+                        {
+                            @car.CarName
+                        }
+                    }
+                </td>
+                <td>
+                    @foreach (var car in ViewBag.Car as IEnumerable<VSMS.Models.ViewModels.GetImageCarViewModel>)
+                    {
+                        if (item.IdCar == car.IdCar)
+                        {
+                            <img src="@car.ImageName" alt="Img car" style="width: 150px" />
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @{
+                        if (item.Status == 0)
+                        {
+                            <span style="color: red">Unconfirmed</span>
+                        }
+                        else if (item.Status == 1)
+                        {
+                            <span style="color: green">Confirmed</span>
+                        }
+                        else if (item.Status == 2)
+                        {
+                            <span style="color: gray">Driven</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @if (item.Status != 2)
+                    {
+                        <button class="btn delete-click" style="height: 20px;" id="@item.Id">Cancel</button>
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@section scripts{
+    <script>
+        $(".delete-click").click(function () {
+            var cf = confirm("Are you sure cancel this drive test?");
+            if (cf) {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("RemoveDriveTest")",
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success == 0) {
+                            toastr.success(
+                                'Cancel record successfully!',
+                                'Notification!',
+                                {
+                                    timeOut: 1000,
+                                    fadeOut: 1000,
+                                    onHidden: function () {
+                                        window.location.reload();
+                                    }
+                                }
+                            );
+                        } else if (rs.success == 1) {
+                            toastr.error('This test driver registration has been accepted. Call back to showroom staff to cancel!', 'Notification!');
+                        } else if (rs.success == 2) {
+                            toastr.error('This test driver registration has been tested by you!', 'Notification!');
+                        }
+                    },
+                    error: function (msg) {
+
+                    }
+                });
+            }
+
+        });
+    </script>
+}

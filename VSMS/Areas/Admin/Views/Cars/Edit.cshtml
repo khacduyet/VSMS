@@ -1,0 +1,228 @@
+﻿@model VSMS.Models.DataModels.Car
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHome.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Record</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" action="@Url.Action("Edit","Cars")" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                @Html.HiddenFor(md => md.Id)
+                                <div class="form-group">
+                                    <label>Car Name</label>
+                                    <input type="text" class="form-control" name="CarName" id="Name" placeholder="Enter car name..." value="@Model.CarName">
+                                </div>
+                                <div class="form-group">
+                                    <label>Enginer</label>
+                                    <input type="text" class="form-control" name="Engine" id="Enginer" placeholder="Enginer..." value="@Model.Engine">
+                                </div>
+                                <div class="form-group">
+                                    <label>Fuel Type</label>
+                                    <input type="text" class="form-control" name="FuelType" id="fuelType" placeholder="Fuel Type..." value="@Model.FuelType">
+                                </div>
+                                <div class="form-group">
+                                    <label>Transmission</label>
+                                    <input type="text" class="form-control" name="Transmission" id="Transmission" placeholder="Transmission..." value="@Model.Transmission">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control" id="Price" name="Price" placeholder="Price..." value="@Model.Price">
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="radio" id="unavail" name="Status" value="0" @((Model.Status==0)?"checked":"")>
+                                    <label for="Unavailable">Unavailable</label><br>
+                                    <input type="radio" id="avail" name="Status" value="1" @((Model.Status==1)?"checked":"")>
+                                    <label for="Available">Available</label><br>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    @Html.DropDownList("CatId", null, "-- Select Cat --", new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Manuafature</label>
+                                    @Html.DropDownList("Manua", null, "-- Select Manufacturer --", new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Mode</label>
+                                    <select class="form-control" name="ModeId" id="modeDropDownList">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Descriptions</label>
+                                    <textarea class="form-control" id="Descriptions" rows="4" name="Descriptions" placeholder="Descriptions...">@Model.Descriptions</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="files" class="custom-file-input" id="carInputFile" multiple>
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-warning" })
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        validform();
+        var loadId = $("#Manua").val();
+        $.ajax({
+                type: "POST",
+                url: "@Url.Action("getModel","Cars")",
+            data: { id: loadId },
+                success: function (rs) {
+                    console.log(rs);
+                    if (rs != "") {
+                        $.each(rs, function (i, item) {
+                            $('#modeDropDownList').append($('<option>', {
+                                value: item.Id,
+                                text: item.ModeName
+                            }));
+                        });
+                    } else {
+                        $('#modeDropDownList').append($('<option>', {
+                            value: "",
+                            text: "-- Nothing --"
+                        }));
+                    }
+                },
+                error: function (msg) {
+
+                }
+        });
+        $("#Manua").on("change", function () {
+            $('#modeDropDownList').empty();
+            var id = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("getModel","Cars")",
+                data: { id: id },
+                success: function (rs) {
+                    console.log(rs);
+                    if (rs != "") {
+                        $.each(rs, function (i, item) {
+                            $('#modeDropDownList').append($('<option>', {
+                                value: item.Id,
+                                text: item.ModeName
+                            }));
+                        });
+                    } else {
+                        $('#modeDropDownList').append($('<option>', {
+                            value: "",
+                            text: "-- Nothing --"
+                        }));
+                    }
+                },
+                error: function (msg) {
+
+                }
+            });
+        });
+
+        function validform() {
+            document.getElementById("Name").addEventListener("keyup", function (e) {
+                if ($("#Name").val().length == 0) {
+                    $('#Name').addClass("is-invalid");
+                    $('.error-name').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Name').removeClass("is-invalid");
+                    $('#Name').addClass("is-valid");
+                    $('.error-name').css('display', 'none');
+
+                }
+            });
+            document.getElementById("Enginer").addEventListener("keyup", function (e) {
+                if ($("#Enginer").val().length == 0) {
+                    $('#Enginer').addClass("is-invalid");
+                    $('.error-enginer').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Enginer').removeClass("is-invalid");
+                    $('#Enginer').addClass("is-valid");
+                    $('.error-enginer').css('display', 'none');
+                }
+            });
+            document.getElementById("fuelType").addEventListener("keyup", function (e) {
+                if ($("#fuelType").val().length == 0) {
+                    $('#fuelType').addClass("is-invalid");
+                    $('.error-fuel').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#fuelType').removeClass("is-invalid");
+                    $('#fuelType').addClass("is-valid");
+                    $('.error-fuel').css('display', 'none');
+                }
+            });
+            document.getElementById("Transmission").addEventListener("keyup", function (e) {
+                if ($("#Transmission").val().length == 0) {
+                    $('#Transmission').addClass("is-invalid");
+                    $('.error-tran').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Transmission').removeClass("is-invalid");
+                    $('#Transmission').addClass("is-valid");
+                    $('.error-tran').css('display', 'none');
+                }
+            });
+            document.getElementById("Price").addEventListener("keyup", function (e) {
+                if ($("#Price").val().length == 0) {
+                    $('#Price').addClass("is-invalid");
+                    $('.error-price').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#Price').removeClass("is-invalid");
+                    $('#Price').addClass("is-valid");
+                    $('.error-price').css('display', 'none');
+                }
+            });
+            document.getElementById("modeDropDownList").addEventListener("change", function (e) {
+                if ($("#modeDropDownList").val() == null) {
+                    $('#modeDropDownList').addClass("is-invalid");
+                    $('.error-mode').css('display', 'block');
+                    e.preventDefault();
+                } else {
+                    $('#modeDropDownList').removeClass("is-invalid");
+                    $('#modeDropDownList').addClass("is-valid");
+                    $('.error-mode').css('display', 'none');
+                }
+            });
+        };
+    </script>
+}

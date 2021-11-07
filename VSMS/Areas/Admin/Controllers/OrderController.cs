@@ -58,8 +58,10 @@ namespace VSMS.Areas.Admin.Controllers
         }
 
         // view tao moi order
-        public ActionResult CreateOrder()
+        public ActionResult CreateOrder(int id)
         {
+            var mem = db.Members.Find(id);
+            ViewBag.Member = mem;
             return View();
         }
         //Tạo mới một order do admin tạo

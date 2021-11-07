@@ -147,7 +147,7 @@
                                 <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Email" ? "active" : "")" href="@Url.Action("Email","ManagerMember", new { id = customer.Id})">Email</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Products" ? "active" : "")" href="#">My Products</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "MyDriveTest" ? "active" : "")" href="@Url.Action("MyDriveTest","ManagerMember", new { id = customer.Id})">My Drive Test</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled" href="@Url.Action("Logout","Register") ">Logout</a>

@@ -1,8 +1,9 @@
-﻿@foreach (var item in Model)
+﻿@{ var customer = Session["customer"] as VSMS.Models.DataModels.Member;}
+@foreach (var item in Model)
 {
     <input type="number" hidden id="CountResult" value="@ViewBag.countResult" />
     <div class="col-6 col-md-4 col-lg-3 tt-col-item">
-        <div class="tt-product-02">
+        <div class="tt-product-02 @((item.Status == 2) ? "tt-no-product" : "")">
             <div class="tt-image-box">
                 @foreach (var ip in ViewBag.ip as IEnumerable<VSMS.Models.ViewModels.ListCarViewModel>)
                 {
@@ -17,13 +18,26 @@
                                     Good
                                 </span>
                             </span>
+                            @if (item.Status == 2)
+                            {
+                                <span class="tt-label-custom"><i class="icon-soldout"></i></span>
+                            }
                             <span class="tt-data"></span>
                         </a>
 
                         <ul class="tt-icon">
-                            <li><a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a></li>
                             <li>
-                                <a href="@ip.ImageName" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a>
+                                @if (customer != null)
+                                {
+                                    <a href="javascript:void(0)" title="TEST-DRIVE" class="tooltip" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" title="TEST-DRIVE" class="tooltip" data-toggle="modal" data-target="#SiginModal" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a>
+                                }
+                            </li>
+                            <li>
+                                <a href="#" title="GALLERY" class="tooltip tt-btn-zomm" onclick="showPopUp(@item.Id)"><i class="icon-photo-camera"></i></a>
                             </li>
                             <li><a href="@Url.Action("InsertCar","Home", new { id = item.Id})" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                         </ul>
@@ -45,8 +59,16 @@
                         </div>
                     </div>
                     <div class="tt-box-price">
-                        <span class="tt-text">Price: </span>
-                        <span class="tt-price">$@item.Price</span>
+                        @if (item.Status == 2)
+                        {
+                            <span class="tt-price">Request</span>
+                        }
+                        else
+                        {
+                            <span class="tt-text">Price: </span>
+                            <span class="tt-price">$@item.Price</span>
+                        }
+
                         <span class="tt-info"><span></span></span>
                     </div>
                 </div>
@@ -54,7 +76,7 @@
                     <li>
                         <a href="#" class="tooltip" title="TEST-DRIVE" data-toggle="modal" data-target="#modalAddTestDrive" id="open-Modal" data-id="@item.Id"><i class="icon-testdrive"></i></a>
                     </li>
-                    <li><a href="~/Content/images/product_02/product_02_img_01.jpg" title="GALLERY" class="tooltip tt-btn-zomm"><i class="icon-photo-camera"></i></a></li>
+                    <li><a href="#" title="GALLERY" class="tooltip tt-btn-zomm" onclick="showPopUp(@item.Id)"><i class="icon-photo-camera"></i></a></li>
                     <li><a href="#" title="COMPARE" class="tooltip compare-toggle"><i class="icon-compare"></i></a></li>
                 </ul>
                 <div class="tt-row-02">
@@ -96,7 +118,7 @@
                     </ul>
                 </div>
                 <div class="tt-btn">
-                    <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-btn-moreinfo">More info</a>
+                    <a href="@Url.Action("InventoryItem","Home", new { id = item.Id})" class="tt-btn-moreinfo" onclick="@((item.Status == 2)? "return false;": "")">More info</a>
                 </div>
             </div>
         </div>
