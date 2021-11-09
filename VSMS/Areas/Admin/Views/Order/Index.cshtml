@@ -55,7 +55,7 @@
                                             @{
                                                 if (item.Status == 0)
                                                 {
-                                                    <a href="#" data-idOdPay="@item.IdOrder" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" id="paypay">Pay</a>
+                                                    <a href="#" data-idOdPay="@item.IdOrder" class="btn btn-info details-click" data-toggle="modal" data-target="#exampleModal" id="paypay">Pay</a>
                                                 }
                                             }
                                             <a href="#" id="delOrder" data-idOdPay="@item.IdOrder" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
@@ -77,20 +77,177 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Info Pay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
-                You definitely want to pay this bill ! ^-^
-            </div>
-            <div class="modal-footer">
-                <button id="sureInfoPay" type="button" class="btn btn-primary" data-dismiss="modal">I'm sure</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <!--Carousel Wrapper-->
+                        <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails"
+                             data-ride="carousel">
+                            <!--Slides-->
+                            <div class="carousel-inner add-carousel" role="listbox">
+                                @*Add carousel*@
+
+                            </div>
+                            <!--/.Slides-->
+                            <!--Controls-->
+                            <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <!--/.Controls-->
+                            @*<ol class="carousel-indicators">
+                                    <li data-target="#carousel-thumb" data-slide-to="0" class="active">
+                                        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(23).jpg" width="60">
+                                    </li>
+                                    <li data-target="#carousel-thumb" data-slide-to="1">
+                                        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(24).jpg" width="60">
+                                    </li>
+                                    <li data-target="#carousel-thumb" data-slide-to="2">
+                                        <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(25).jpg" width="60">
+                                    </li>
+                                </ol>*@
+                        </div>
+                        <!--/.Carousel Wrapper-->
+                    </div>
+                    <div class="col-lg-7">
+                        <h2 class="h2-responsive product-name">
+                            <strong id="PName"></strong>
+                        </h2>
+                        <h4 class="h4-responsive">
+                            <span class="green-text">
+                                Total: <strong id="PTotal"></strong>
+                            </span>
+                        </h4>
+
+                        <!--Accordion wrapper-->
+                        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                            <!-- Accordion card -->
+                            <div class="card">
+
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingOne1">
+                                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                                       aria-controls="collapseOne1">
+                                        <h5 class="mb-0">
+                                            Car Infomation <i class="fas fa-angle-down rotate-icon float-right"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                                     data-parent="#accordionEx">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Model: <b style="display: block"><span id="PModel">ABC</span></b></p>
+                                                <p>Category: <b style="display: block"><span id="PCategory">ABC</span></b></p>
+                                                <p>Year: <b style="display: block"><span id="PYear">ABC</span></b></p>
+                                                <p>Price: <b style="display: block"><span id="PPrice">ABC</span></b></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Engine: <b style="display: block"><span id="PEngine">ABC</span></b></p>
+                                                <p>FuelType: <b style="display: block"><span id="PFuelType">ABC</span></b></p>
+                                                <p>Transmission: <b style="display: block"><span id="PTransmission">ABC</span></b></p>
+                                                <p>Quantity: <b style="display: block"><span id="PQuantity">ABC</span></b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Accordion card -->
+                            <!-- Accordion card -->
+                            <div class="card">
+
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingTwo2">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                                       aria-expanded="false" aria-controls="collapseTwo2">
+                                        <h5 class="mb-0">
+                                            Customer Infomation <i class="fas fa-angle-down rotate-icon float-right"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                                     data-parent="#accordionEx">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Full Name: <b style="display: block"><span id="MFn">ABC</span></b></p>
+                                                <p>Email: <b style="display: block"><span id="MEmail">ABC</span></b></p>
+                                                <p>Address: <b style="display: block"><span id="MAdd">ABC</span></b></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Date of birth: <b style="display: block"><span id="MDob">ABC</span></b></p>
+                                                <p>Phone: <b style="display: block"><span id="MPhone">ABC</span></b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Accordion card -->
+                            <!-- Accordion card -->
+                            <div class="card">
+
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingThree3">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                                       aria-expanded="false" aria-controls="collapseThree3">
+                                        <h5 class="mb-0">
+                                            Agent Staff <i class="fas fa-angle-down rotate-icon float-right"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                                     data-parent="#accordionEx">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="card-img" style="border-radius: 50%;" src="" alt="Avatar" id="SImg" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p>Staff ID: <b><span id="SId" style="display:block;">ABC</span></b></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Name: <b><span id="SName" style="display:block;">ABC</span></b></p>
+                                                <p>Email: <b><span id="SEmail" style="display:block;">ABC</span></b></p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Accordion card -->
+
+                        </div>
+                        <!-- Accordion wrapper -->
+                        <!-- Add to Cart -->
+                        <div class="card-body">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style=" background-color: #a6c !important;">Close</button>
+                                <button class="btn btn-primary" id="sureInfoPay" data-dismiss="modal" type="button">
+                                    I'm sure
+                                    <i class="fas fa-check ml-2" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.Add to Cart -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -115,31 +272,87 @@
     </script>
     <script>
         $(document).ready(function () {
-            $(document).on("click", "#sureInfoPay", function () {
-                var dataIdPay = $("#paypay").attr("data-idOdPay");
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumSignificantDigits: 5
+            });
+            $(".details-click").click(function () {
+                var dataIdPay = $(this).attr("data-idOdPay");
                 $.ajax({
-                    url: "/Admin/Order/UpdatePay",
                     type: "GET",
+                    url: "@Url.Action("getInfOrder")",
                     data: { id: dataIdPay },
                     success: function (rs) {
-                        if (rs.success == 1) {
-                            toastr.success(
-                                'Pay Success!',
-                                'Notification!',
-                                {
-                                    timeOut: 1000,
-                                    fadeOut: 1000,
-                                    onHidden: function () {
-                                        window.location.reload();
-                                    }
-                                });
-                        } else {
-                            toastr.error('Pay False!', 'Notification!', { timeOut: 2000 });
-                        }
+                        // Car information
+                        $("#PName").text(rs.data.CarName);
+                        $("#PTotal").text(formatter.format(rs.data.Total));
+                        $("#PModel").text(rs.car.ModeName);
+                        $("#PCategory").text(rs.car.CateName);
+                        $("#PYear").text(rs.car.Year);
+                        $("#PPrice").text(rs.car.Price);
+                        $("#PEngine").text(rs.car.Engine);
+                        $("#PFuelType").text(rs.car.FuelType);
+                        $("#PTransmission").text(rs.car.Transmission);
+                        $("#PQuantity").text(rs.data.Quantity);
+                        // Customer information
+                        $("#MFn").text(rs.mem.FullName);
+                        $("#MEmail").text(rs.mem.Email);
+                        $("#MAdd").text(rs.mem.Address);
+                        $("#MDob").text(rs.mem.BirthDay);
+                        $("#MPhone").text(rs.mem.Phone);
+                        // Staff information
+                        $("#SImg").attr("src", rs.staff.Avatar);
+                        $("#SId").text(rs.staff.Id);
+                        $("#SName").text(rs.staff.Name);
+                        $("#SEmail").text(rs.staff.Email);
+                        var carousel = "";
+                        var count = 1;
+                        // Image processing
+                        $.each(rs.img, function (key, item) {
+                            if (count == 1) {
+                                carousel += '<div class="carousel-item active">';
+                            } else {
+                                carousel += '<div class="carousel-item">';
+                            }
+                            carousel += '<img class="d-block w-100" style="height: 200px" src="' + item.ImageName +'" alt = "'+ count +' slide" >';
+                            carousel += '</div>';
+                            count++;
+                        });
+                        $(".carousel-inner.add-carousel").html(carousel);
                     }, error: function (e) {
                         alert(e.responseText);
                     }
                 });
+            });
+            $(document).on("click", "#sureInfoPay", function () {
+                var dataIdPay = $("#paypay").attr("data-idOdPay");
+                var cf = confirm("Are your sure this pay car!");
+                if (cf) {
+                    $.ajax({
+                        url: "/Admin/Order/UpdatePay",
+                        type: "GET",
+                        data: { id: dataIdPay },
+                        success: function (rs) {
+                            if (rs.success == 1) {
+                                toastr.success(
+                                    'Pay Success!',
+                                    'Notification!',
+                                    {
+                                        timeOut: 1000,
+                                        fadeOut: 1000,
+                                        onHidden: function () {
+                                            window.location.reload();
+                                        }
+                                    });
+                            } else {
+                                toastr.error('Pay False!', 'Notification!', { timeOut: 2000 });
+                            }
+                        }, error: function (e) {
+                            alert(e.responseText);
+                        }
+                    });
+                }
             });
             $("#delOrder").click(function () {
                 var dataIdPay = $(this).attr("data-idOdPay");

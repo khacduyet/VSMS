@@ -272,7 +272,7 @@
                                 <p>
                                     Manager order
                                     <i class=" fas fa-angle-left right"></i>
-                                    @if (!Session["CountOrder"].Equals("0"))
+                                    @if (!Session["CountOrder"].ToString().Equals("0"))
                                     {
                                         <span class="badge badge-info right">@Session["CountOrder"]</span>
                                     }
@@ -298,7 +298,7 @@
                                         <i class=" nav-icon  fas fa-list-ol"></i>
                                         <p>
                                             My List Order
-                                            @if (!Session["CountOrder"].Equals("0"))
+                                            @if (!Session["CountOrder"].ToString().Equals("0"))
                                             {
                                                 <span class="badge badge-info right">@Session["CountOrder"]</span>
                                             }

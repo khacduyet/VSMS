@@ -54,6 +54,56 @@ namespace VSMS.Areas.Admin.Controllers
             return View(data);
         }
 
+        // Function get infomation order 
+        public JsonResult getInfOrder(int id)
+        {
+            var data = (from od in db.OrderDetails
+                        join c in db.Cars on od.CarId equals c.Id
+                        join o in db.Orders on od.OrderId equals o.Id
+                        join mb in db.Members on o.MemberId equals mb.Id
+                        join ad in db.Admins on o.AdminId equals ad.Id
+                        where o.Id == id
+                        select new
+                        {
+                            IdAdmin = ad.Id,
+                            IdOrderDetail = od.Id,
+                            IdOrder = o.Id,
+                            CarName = c.CarName,
+                            CreatedAt = o.CreatedAt,
+                            IdCar = c.Id,
+                            IdMember = mb.Id,
+                            Quantity = od.Quantity,
+                            Status = o.Status,
+                            Total = (od.Quantity * c.Price)
+                        }).SingleOrDefault();
+            var img = (from c in db.Cars
+                       join ipd in db.ImageProductDetails on c.Id equals ipd.IdProduct
+                       join ip in db.ImageProducts on ipd.IdImageProduct equals ip.Id
+                       where c.Id == data.IdCar
+                       select new
+                       {
+                           ImageId = ip.Id,
+                           ImageName = ip.ImageName
+                       }).ToList();
+            var car = (from c in db.Cars
+                       join m in db.Modes on c.ModeId equals m.Id
+                       join ca in db.Categories on c.CatId equals ca.Id
+                       where c.Id == data.IdCar
+                       select new
+                       {
+                           ModeName = m.ModeName,
+                           CateName = ca.CateName,
+                           Year = m.Year,
+                           Engine = c.Engine,
+                           FuelType = c.FuelType,
+                           Transmission = c.Transmission,
+                           Price = c.Price
+                       }).SingleOrDefault();
+            var mem = db.Members.Find(data.IdMember);
+            var staff = db.Admins.Find(data.IdAdmin);
+            return Json(new {car = car, data = data, img = img, mem = mem, staff = staff }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult MyIndex()
         {
             var value = (Models.Admin)this.HttpContext.Session[Common.CommonConstants.USER_SESSION];
@@ -106,7 +156,7 @@ namespace VSMS.Areas.Admin.Controllers
         public ActionResult CreateOrder(int id)
         {
             var mem = db.Members.Find(id);
-            ViewBag.CatId = new SelectList(db.Categories,"Id","CateName");
+            ViewBag.CatId = new SelectList(db.Categories, "Id", "CateName");
             return View(mem);
         }
         [HttpPost]
