@@ -83,6 +83,17 @@ namespace VSMS.Controllers
             body = body.ToString();
             BuildEmailTemplate("Your account is successfully created!", body, regInfo.Email);
         }
+        public void BuildEmailDriveTest(DriveTest driveTest)
+        {
+            string body = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Views/Register/TempDriveTest.cshtml"));
+            var driveInfo = db.DriveTests.Where(x => x.IdCar == driveTest.IdCar && x.IdMember == driveTest.IdMember).SingleOrDefault();
+            var mem = db.Members.Find(driveInfo.IdMember);
+            // Replace template
+            body = body.Replace("@ViewBag.Name", mem.FullName);
+            // 
+            body = body.ToString();
+            BuildEmailTemplate("You have successfully tested this test drive!", body, mem.Email);
+        }
 
         public ActionResult ResendEmail(int id)
         {

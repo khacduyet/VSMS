@@ -29,8 +29,13 @@ namespace VSMS.Controllers
         // phương thức đăng ký driver test
         public JsonResult CreateDriverTest(DriveTest driveTest)
         {
-            var data = _driveTest.Add(driveTest);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var checkExist = db.DriveTests.Where(x => x.IdCar == driveTest.IdCar && x.IdMember == driveTest.IdMember).SingleOrDefault();
+            if (checkExist == null)
+            {
+                var data = _driveTest.Add(driveTest);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Uploads(int id)
         {

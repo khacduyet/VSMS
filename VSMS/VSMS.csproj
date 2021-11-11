@@ -3065,6 +3065,7 @@
     <Content Include="Views\Shared\_PartialProduct.cshtml" />
     <Content Include="Views\Shared\_PartialCompareSlide.cshtml" />
     <Content Include="Views\ManagerMember\MyDriveTest.cshtml" />
+    <Content Include="Views\Register\TempDriveTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
