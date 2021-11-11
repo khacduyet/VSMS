@@ -327,7 +327,7 @@
     </div>
 
     @* Modal Test Driver *@
-    @if (customer != null) // thế làm cái else để nó hiện cái form login đc ko nhirchawcs đc
+    @if (customer != null) 
     {
         <div class="modal fade" id="modalAddTestDrive" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
@@ -338,7 +338,7 @@
                         <p class="tt-default-color02">
                             Please complete the form below and an we will contact you to arrange your test drive.
                         </p>
-                        <form>
+                        <form id="frmRegisterTest">
                             <div class="tt-form-default02">
                                 <input type="text" name="IdMember" hidden id="IdMember" value="@customer.Id" />
                                 <input type="text" name="IdCar" hidden id="IdCar" value="" />
@@ -434,7 +434,6 @@
             $(".tt-form-default02 #IdCar").val(id);
 
             $("#submitDriveTest").click(function () {
-
                 console.log(id);
                 AddDriverTest(id);
             })
@@ -470,9 +469,21 @@
                     type: "POST",
                     data: drTestOjb,
                     success: function (rs) {
-                        if (!rs) {
-                            toastr.error('Register Drive Test False!', 'Thông báo', { timeOut: 2000 });
+                        if (rs == false) {
+                            $("#frmRegisterTest")[0].reset();
+                            toastr.error('You has registered drive test this car!', 'Notification!', { timeOut: 2000, preventDuplicates: false });
                         } else {
+                            $.ajax({
+                                type: "GET",
+                                url: "@Url.Action("BuildEmailDriveTest","Register")",
+                                data: drTestOjb,
+                                success: function (rs) {
+                                    console.log("OKE");
+                                },
+                                error: function (msg) {
+                                    console.log("Fail");
+                                }
+                            });
                             toastr.success(
                                 'Register Success!',
                                 'Notification!',
